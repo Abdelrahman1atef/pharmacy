@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 
+
 ImageLoadingBuilder loadingBuilder() {
   return (context, child, loadingProgress) {
     if (loadingProgress == null) {
@@ -23,16 +24,11 @@ ImageLoadingBuilder loadingBuilder() {
   };
 }
 
-ImageErrorWidgetBuilder errorBuilder() {
+ImageErrorWidgetBuilder errorBuilder(String imagePath) {
   return (BuildContext context,
       Object error,
       StackTrace? stackTrace) {
-    return const Center(
-      child: Text(
-        'Failed to load image',
-        style: TextStyle(color: Colors.red),
-      ),
-    );
+    return Image.asset(imagePath);
 
   };
 

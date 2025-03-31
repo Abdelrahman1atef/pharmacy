@@ -3,9 +3,9 @@ part 'category_response.g.dart';
 @JsonSerializable()
 class CategoryResponse {
   @JsonKey(name: 'category_id')
-  final int categoryId;
-  @JsonKey(name: 'category_name')
-  final String categoryNameAr;
+  final int? categoryId;
+  @JsonKey(name: 'category_name_ar')
+  final String? categoryNameAr;
   @JsonKey(name: 'category_name_en')
   final String? categoryImage;
 
@@ -17,4 +17,7 @@ class CategoryResponse {
 
   factory CategoryResponse.fromJson(Map<String, dynamic> json) =>
       _$CategoryResponseFromJson(json);
+  static List<CategoryResponse> fromJsonList(List<dynamic> jsonList) {
+    return jsonList.map((json) => CategoryResponse.fromJson(json)).toList();
+  }
 }

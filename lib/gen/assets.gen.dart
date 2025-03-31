@@ -15,49 +15,78 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/P_WatermarkV2.png
+  AssetGenImage get pWatermarkV2 =>
+      const AssetGenImage('assets/images/P_WatermarkV2.png');
+
   /// File path: assets/images/RPIcon.png
   AssetGenImage get rPIcon => const AssetGenImage('assets/images/RPIcon.png');
 
-  /// File path: assets/images/clock.svg
-  SvgGenImage get clock => const SvgGenImage('assets/images/clock.svg');
+  /// File path: assets/images/arrow-left-svgrepo-com.svg
+  SvgGenImage get arrowLeftSvgrepoCom =>
+      const SvgGenImage('assets/images/arrow-left-svgrepo-com.svg');
+
+  /// File path: assets/images/arrow-right-svgrepo-com.svg
+  SvgGenImage get arrowRightSvgrepoCom =>
+      const SvgGenImage('assets/images/arrow-right-svgrepo-com.svg');
+
+  /// File path: assets/images/cart-large-minimalistic-svgrepo-com.svg
+  SvgGenImage get cartLargeMinimalisticSvgrepoCom => const SvgGenImage(
+      'assets/images/cart-large-minimalistic-svgrepo-com.svg');
+
+  /// File path: assets/images/category-default_icon.svg
+  SvgGenImage get categoryDefaultIcon =>
+      const SvgGenImage('assets/images/category-default_icon.svg');
 
   /// File path: assets/images/drug.png
   AssetGenImage get drug => const AssetGenImage('assets/images/drug.png');
 
-  /// File path: assets/images/menu.svg
-  SvgGenImage get menu => const SvgGenImage('assets/images/menu.svg');
+  /// File path: assets/images/heart-svgrepo-com.svg
+  SvgGenImage get heartSvgrepoCom =>
+      const SvgGenImage('assets/images/heart-svgrepo-com.svg');
 
-  /// File path: assets/images/notif.svg
-  SvgGenImage get notif => const SvgGenImage('assets/images/notif.svg');
+  /// File path: assets/images/home-selected.svg
+  SvgGenImage get homeSelected =>
+      const SvgGenImage('assets/images/home-selected.svg');
 
-  /// File path: assets/images/play.svg
-  SvgGenImage get play => const SvgGenImage('assets/images/play.svg');
+  /// File path: assets/images/home-unselected.svg
+  SvgGenImage get homeUnselected =>
+      const SvgGenImage('assets/images/home-unselected.svg');
 
-  /// File path: assets/images/star.svg
-  SvgGenImage get star => const SvgGenImage('assets/images/star.svg');
+  /// File path: assets/images/settings-selected.svg
+  SvgGenImage get settingsSelected =>
+      const SvgGenImage('assets/images/settings-selected.svg');
+
+  /// File path: assets/images/settings-unselected.svg
+  SvgGenImage get settingsUnselected =>
+      const SvgGenImage('assets/images/settings-unselected.svg');
+
+  /// File path: assets/images/share-svgrepo-com.svg
+  SvgGenImage get shareSvgrepoCom =>
+      const SvgGenImage('assets/images/share-svgrepo-com.svg');
 
   /// List of all assets
-  List<dynamic> get values => [rPIcon, clock, drug, menu, notif, play, star];
-}
-
-class $AssetsStringsGen {
-  const $AssetsStringsGen();
-
-  /// File path: assets/strings/strings_ar.json
-  String get stringsAr => 'assets/strings/strings_ar.json';
-
-  /// File path: assets/strings/strings_en.json
-  String get stringsEn => 'assets/strings/strings_en.json';
-
-  /// List of all assets
-  List<String> get values => [stringsAr, stringsEn];
+  List<dynamic> get values => [
+        pWatermarkV2,
+        rPIcon,
+        arrowLeftSvgrepoCom,
+        arrowRightSvgrepoCom,
+        cartLargeMinimalisticSvgrepoCom,
+        categoryDefaultIcon,
+        drug,
+        heartSvgrepoCom,
+        homeSelected,
+        homeUnselected,
+        settingsSelected,
+        settingsUnselected,
+        shareSvgrepoCom
+      ];
 }
 
 class Assets {
   const Assets._();
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
-  static const $AssetsStringsGen strings = $AssetsStringsGen();
 }
 
 class AssetGenImage {

@@ -36,9 +36,24 @@ class ApiServiceImpl implements ApiService {
   }
 
   @override
-  Future<ApiResult<List<CategoryResponse>>> fetchAllCategory() {
-    // TODO: implement fetchAllCategory
-    throw UnimplementedError();
+  Future<ApiResult<List<CategoryResponse>>> fetchAllCategory() async{
+    try {
+      Response response = await _dio.get(Constant.allCategoriesEndPoint);
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data as List<dynamic>;
+        final List<CategoryResponse> categoryResults = CategoryResponse.fromJsonList(data);
+        return ApiResult<List<CategoryResponse>>.success(categoryResults);
+      } else {
+        throw ApiException.fromJson(response.data);
+      }
+    } catch (e) {
+      if (e is DioException) {
+        print("Dio Error: ${e.message}");
+      } else {
+        print("Unexpected Error: $e");
+      }
+      rethrow;
+    }
   }
 
   @override

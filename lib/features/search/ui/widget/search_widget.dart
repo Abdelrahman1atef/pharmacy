@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../generated/l10n.dart';
 import '../../logic/search_cubit.dart';
 
 
@@ -52,10 +53,12 @@ class _SearchWidgetState extends State<SearchWidget> {
         child: SearchBar(
           controller:widget.searchController,
           autoFocus: true,
-          leading: const Icon(Icons.search, color: Colors.grey),
+          trailing:  [
+            Icon(Icons.search, color: Colors.grey)
+          ],
           hintStyle: const WidgetStatePropertyAll(
               TextStyle(color: Colors.grey)),
-          hintText: "Search for medicine",
+          hintText: S.of(context).search_for_medicine,
           enabled: widget.enabled, // Enable or disable interaction
         ),
       ),

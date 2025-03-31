@@ -1,0 +1,20 @@
+{
+  "app_name": "Ramzy Pharmacy",
+  "morning_welcome_message": "Good Morning",
+  "evening_welcome_message": "Good Evening",
+  "search_for_medicine": "Search for medicine(English or Arabic)",
+  "home_item": "Home",
+  "settings_item": "Settings",
+  "titles_category": "Categories",
+  "show_all": "Show All",
+  "best_seller": "Best seller",
+  "pound": "EGP",
+  "available": "in Stock",
+  "unavailable": "out of Stock",
+  "details": "Details",
+  "brandName": "Brand",
+  "unit": "Unit",
+  "productDescription": "Product Details:",
+  "addToCart": "Add To Cart",
+  "logout": "Logout"
+}

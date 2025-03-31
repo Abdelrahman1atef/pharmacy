@@ -1,0 +1,21 @@
+{
+  "app_name": "صيدلية د.رمزي",
+  "morning_welcome_message": "صباح الخير",
+  "evening_welcome_message": "مساء الخير",
+  "search_for_medicine": "البحث عن الدواء(عربى او انجليزى)",
+  "home_item": "الرئيسية",
+  "settings_item": "الاعدادات",
+  "titles_category": "الأقسام",
+  "show_all": "عرض الكل",
+  "best_seller": "الأكثر مبيعا",
+  "pound": "جنيه",
+  "available": "متوفر",
+  "unavailable": "غير متوفر",
+  "details": "التفاصيل",
+  "brandName": "العلامة التجارية",
+  "unit": "الوحدة",
+  "productDescription": "وصف المنتج:",
+  "addToCart": "اضف الى العربة",
+
+  "logout": "تسجيل الخروج"
+}

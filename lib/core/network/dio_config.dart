@@ -17,8 +17,28 @@ class DioConfig {
       ..options.receiveTimeout = timeout
       ..options.contentType = ContentType.json.toString()
       ..options.responseType = ResponseType.json
-      ..interceptors.add(
-          PrettyDioLogger(requestBody: true, responseBody: true, error: true));
+      ..interceptors.addAll([
+        // Logging Interceptor
+        PrettyDioLogger(
+          requestBody: true,
+          responseBody: true,
+          error: true,
+        ),
+        // Retry Interceptor
+        InterceptorsWrapper(
+          onError: (DioException e, ErrorInterceptorHandler handler) async {
+            int retries = e.requestOptions.extra['retries'] ?? 3;
+            if (retries > 0) {
+              e.requestOptions.extra['retries'] = retries - 1;
+              await Future.delayed(Duration(seconds: 2)); // Wait before retrying
+              handler.resolve(await Dio().fetch(e.requestOptions)); // Retry the request
+            } else {
+              handler.next(e); // Pass the error if max retries reached
+            }
+          },
+        ),
+      ]);
+
     return _dio!;
   }
 }

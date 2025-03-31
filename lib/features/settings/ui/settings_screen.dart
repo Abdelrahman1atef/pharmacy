@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/common_widgets/pharmacy_app_bar.dart';
-import '../../../core/routes/routes.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -24,11 +22,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PharmacyAppBar(
-                  searchEnabled: false,
-                  onSearchTap: () =>
-                      Navigator.pushNamed(context, Routes.searchScreen),
-                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
 

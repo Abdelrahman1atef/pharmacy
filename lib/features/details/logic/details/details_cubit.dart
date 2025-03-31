@@ -4,6 +4,7 @@ import 'package:pharmacy/features/details/repository/details_repository.dart';
 
 import 'details_state.dart';
 
+
 class DetailsCubit extends Cubit<DetailsState> {
   final DetailsRepository _detailsRepository;
   DetailsCubit(this._detailsRepository) : super(const Initial());

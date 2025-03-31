@@ -1,7 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:pharmacy/features/details/logic/details_cubit.dart';
+import 'package:pharmacy/features/details/logic/details/details_cubit.dart';
 import 'package:pharmacy/features/details/repository/details_repository.dart';
+import 'package:pharmacy/features/home/logic/best_seller/best_seller_cubit.dart';
+import 'package:pharmacy/features/home/logic/category/category_cubit.dart';
+import 'package:pharmacy/features/home/repository/best_seller/best_seller_repository.dart';
+import 'package:pharmacy/features/home/repository/category/category_repository.dart';
 
 import '../../features/search/logic/search_cubit.dart';
 import '../../features/search/repository/search_repository.dart';
@@ -16,8 +20,10 @@ void setupDependencies() {
   getIt.registerLazySingleton<ApiService>(() => ApiServiceImpl(getIt()));
   getIt.registerFactory<SearchRepository>(() => SearchRepository(getIt()));
   getIt.registerFactory<DetailsRepository>(() => DetailsRepository(getIt()));
+  getIt.registerFactory<CategoryRepository>(() => CategoryRepository(getIt()));
+  getIt.registerFactory<BestSellerRepository>(() => BestSellerRepository(getIt()));
   getIt.registerFactory<SearchCubit>(() => SearchCubit(getIt()));
   getIt.registerFactory<DetailsCubit>(() => DetailsCubit(getIt()));
-  // getIt.registerFactory<CastCubit>(() => CastCubit(getIt()));
-  // getIt.registerFactory<TrailerCubit>(() => TrailerCubit(getIt()));
+  getIt.registerFactory<CategoryCubit>(() => CategoryCubit(getIt()));
+  getIt.registerFactory<BestSellerCubit>(() => BestSellerCubit(getIt()));
 }

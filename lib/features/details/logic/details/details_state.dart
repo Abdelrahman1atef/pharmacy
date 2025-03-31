@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../core/network/api_exception.dart';
+import '../../../../core/network/api_exception.dart';
+
 part 'details_state.freezed.dart';
 @freezed
 class DetailsState<T> with _$DetailsState {

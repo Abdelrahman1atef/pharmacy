@@ -10,9 +10,6 @@
 class FontFamily {
   FontFamily._();
 
-  /// Font family: Merriweather
-  static const String merriweather = 'Merriweather';
-
-  /// Font family: Mulish
-  static const String mulish = 'Mulish';
+  /// Font family: Cairo
+  static const String cairo = 'Cairo';
 }

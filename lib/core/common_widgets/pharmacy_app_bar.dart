@@ -1,31 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacy/core/themes/text_styles.dart';
 import '../../features/search/ui/widget/search_widget.dart';
+import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
+import '../../generated/l10n.dart';
 import '../../utils/device_size.dart';
 
-class PharmacyAppBar extends StatelessWidget {
+class PharmacyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  static const Widget defaultChild = Icon(
+    Icons.arrow_back,
+    color: Colors.white,
+  );
   final bool searchEnabled;
+  final bool backEnabled;
   final VoidCallback? onSearchTap;
   final TextEditingController? searchController;
-  final Widget widget;
+  final Widget child;
 
   const PharmacyAppBar(
       {super.key,
-      this.searchEnabled = false, // Default behavior: disabled
+      this.searchEnabled = false,
+      this.backEnabled = true, // Default behavior: disabled
       this.onSearchTap,
       this.searchController,
-      this.widget = const Icon(
-        Icons.arrow_back,
-        color: Colors.white,
-      )});
+      this.child = defaultChild});
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 3);
 
   @override
   Widget build(BuildContext context) {
     DeviceSize deviceSize = DeviceSize(context);
-    // String? currentRoute = ModalRoute.of(context)?.settings.name;
     return Container(
-      height: deviceSize.height * 0.2,
+      height: deviceSize.height * 0.207,
       decoration: const BoxDecoration(
         borderRadius: BorderRadiusDirectional.only(
           bottomStart: Radius.circular(20),
@@ -34,43 +41,45 @@ class PharmacyAppBar extends StatelessWidget {
         gradient: LinearGradient(
           colors: [
             ColorName.primaryColor,
-            Colors.blue,
+            ColorName.secondaryColor,
           ],
         ),
       ),
       child: Column(
         children: [
           SizedBox(
-            height: deviceSize.topPadding,
-          ),
-          Text(
-            "Pharmacy",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20.sp,
-              fontWeight: FontWeight.bold,
-            ),
+            height: deviceSize.topPadding+8,
           ),
           Row(
-            textDirection: TextDirection.ltr,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(S.of(context).app_name, style: TextStyles.appTitle),
+              const SizedBox(
+                width: 8,
+              ),
+              SizedBox(
+                width: 35,
+                height: 35,
+                child: Image.asset(Assets.images.rPIcon.path),
+              ),
+            ],
+          ),
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              InkWell(
+                  onTap: () => {if (backEnabled) Navigator.pop(context)},
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: child,
+                  )),
               IconButton(
                 onPressed: () {},
-                icon: const Icon(
-                  Icons.shopping_cart_outlined,
-                  color: Colors.white,
-                ),
+                icon: Assets.images.cartLargeMinimalisticSvgrepoCom.svg(
+                    colorFilter:
+                        const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+                color: Colors.white,
               ),
-              InkWell(
-                onTap: () => {
-                  if(searchEnabled)
-                  Navigator.pop(context)
-                },
-                  child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: widget,
-              ))
             ],
           ),
           Padding(
