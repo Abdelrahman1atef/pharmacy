@@ -10,6 +10,7 @@ import 'package:pharmacy/features/details/logic/product/product_cubit.dart';
 import 'package:pharmacy/features/details/logic/product/product_state.dart';
 import 'package:pharmacy/gen/colors.gen.dart';
 import 'package:pharmacy/utils/device_size.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../../core/di/module.dart';
 import '../../../core/routes/routes.dart';
 import '../../../gen/assets.gen.dart';
@@ -26,7 +27,6 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DeviceSize deviceSize = DeviceSize(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider<DetailsCubit>(
@@ -46,7 +46,7 @@ class DetailScreen extends StatelessWidget {
           child: BlocBuilder<DetailsCubit, DetailsState>(
             builder: (context, state) {
               if (state is Loading) {
-                return const Center(child: CircularProgressIndicator());
+                return const DetailLoading();
               } else if (state is Error) {
                 return Center(
                   child: Text(
@@ -61,7 +61,7 @@ class DetailScreen extends StatelessWidget {
                     children: [
                       SizedBox(
                         width: double.infinity,
-                        height: deviceSize.height * 0.4,
+                        height: 385.h,
                         child: Stack(
                             alignment: AlignmentDirectional.center,
                             children: [
@@ -150,7 +150,7 @@ class DetailScreen extends StatelessWidget {
                           ..selectUnit("productUnit1", product.sellPrice!),
                         child: Container(
                           //P.Name/Share/price/discount
-                          width: deviceSize.width,
+                          width: 445.w,
                           margin:
                               EdgeInsetsDirectional.symmetric(horizontal: 8),
                           padding:
@@ -219,7 +219,7 @@ class DetailScreen extends StatelessWidget {
                       ),
                       Container(
                           //P.Name/Share/price/discount
-                          width: deviceSize.width,
+                          width:445.w,
                           margin:
                               EdgeInsetsDirectional.symmetric(horizontal: 8),
                           padding:
@@ -308,15 +308,36 @@ class MyToggleButtons extends StatelessWidget {
   }
 }
 
-//
-// ToggleButtons(
-// borderRadius: BorderRadius.all(Radius.circular(35)),
-// focusColor: Colors.blue,
-// isSelected: const [
-// true,
-// false
-// ],
-// children: [
-// Text(product.productUnit1!),
-// Text(product.productUnit2!),
-// ]);
+class DetailLoading extends StatelessWidget {
+  const DetailLoading({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 385,
+              width: double.infinity,
+              color: Colors.white,
+            ),
+            const SizedBox(height: 8),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              height: 200,
+              width: double.infinity,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

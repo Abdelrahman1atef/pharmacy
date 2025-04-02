@@ -5,8 +5,10 @@ part 'product_response.g.dart';
 @JsonSerializable()
 class ProductResponse {
   List<Results> results = [];
-
-  ProductResponse(this.results);
+  final int count;
+  final String? next;
+  final String? previous;
+  ProductResponse({required this.results, required this.count, this.next, this.previous});
 
   factory ProductResponse.formJson(Map<String, dynamic> json) =>
       _$ProductResponseFromJson(json);

@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy/features/home/logic/category/category_cubit.dart';
 import 'package:pharmacy/features/home/logic/category/category_state.dart';
 import 'package:pharmacy/gen/assets.gen.dart';
-import 'package:pharmacy/utils/device_size.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/common_widgets/header_widget.dart';
 import '../../../../../generated/l10n.dart';
@@ -15,7 +15,6 @@ class CategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DeviceSize deviceSize = DeviceSize(context);
     return Scaffold(
       body: Center(
         child: Padding(
@@ -30,12 +29,12 @@ class CategoryWidget extends StatelessWidget {
                 height: 12.h,
               ),
               SizedBox(
-                width: double.infinity,
-                height: deviceSize.height * 0.25,
+                width: 411.w,
+                height: 220.h,
                 child: BlocBuilder<CategoryCubit, CategoryState>(
                   builder: (context, state) {
                     if (state is Loading) {
-                      return const Center(child: CircularProgressIndicator());
+                      return const _ShimmerWidget();
                     } else if (state is Error) {
                       return Center(
                         child: Text(
@@ -99,3 +98,48 @@ class CategoryWidget extends StatelessWidget {
     );
   }
 }
+
+class _ShimmerWidget extends StatelessWidget {
+  const _ShimmerWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate:
+        const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4,
+          mainAxisSpacing: 8.0,
+          crossAxisSpacing: 8.0,
+        ),
+        itemCount: 8, // Show 8 shimmer items
+        itemBuilder: (BuildContext context, int index) {
+          return Card(
+            elevation: 5,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 30,
+                  width: 20,
+                  color: Colors.white,
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  height: 12,
+                  width: 40,
+                  color: Colors.white,
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+

@@ -3,10 +3,10 @@ import 'package:pharmacy/core/network/api_service.dart';
 import '../../../../core/models/product_response.dart';
 import '../../../../core/network/api_result.dart';
 
-class BestSellerRepository {
+class ItemListRepository {
   final ApiService _apiService;
 
-  BestSellerRepository(this._apiService);
+  ItemListRepository(this._apiService);
   Future<ApiResult<ProductResponse>> fetchAllProduct({required int page}) async{
     return _apiService.fetchAllProduct(page);
   }

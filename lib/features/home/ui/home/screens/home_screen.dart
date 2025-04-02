@@ -12,45 +12,42 @@ import '../widgets/category_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
+  Future<void> _onRefresh(BuildContext context) async {
+    await Future.wait([
+      Future(() => context.read<CategoryCubit>().emitCategoryState()),
+      Future(() => context.read<BestSellerCubit>().emitBestSellerState()),
+    ]);
+  }
   @override
   Widget build(BuildContext context) {
-    DeviceSize deviceSize =DeviceSize(context);
-    return MultiBlocProvider(
-      providers: [
-    BlocProvider<CategoryCubit>(
-    create: (context) => getIt<CategoryCubit>()..emitCategoryState(),),
-        BlocProvider<BestSellerCubit>(
-    create: (context) => getIt<BestSellerCubit>()..emitBestSellerState(),),
-        BlocProvider<FavoriteCubit>(
-          create: (context) => FavoriteCubit(), // Provide the FavoriteCubit
-        ),
-      ],
-      child: Scaffold(
-        body: SafeArea(
-            top: false,
+    return Scaffold(
+      body: SafeArea(
+          top: false,
+          child: RefreshIndicator(
+            onRefresh: () => _onRefresh(context),
             child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(), // Required for RefreshIndicator
               child: Column(
                 children: [
                   SizedBox(height: 10.h,),
                   SizedBox(
-                      height: deviceSize.height*0.3 ,
+                      height: 260.h ,
                       child: const CategoryWidget(),
                   ),
                   SizedBox(
-                    height: deviceSize.height*0.35 ,
+                    height: 340.h ,
                     child: const BestSellerWidget(),
                   ),
                   SizedBox(height: 20.h,),
 
                   SizedBox(
-                    height: deviceSize.height*0.35 ,
+                    height: 340.h ,
                     child: const BestSellerWidget(),
                   ),
                 ],
               ),
-            )),
-      ),
+            ),
+          )),
     );
   }
 }

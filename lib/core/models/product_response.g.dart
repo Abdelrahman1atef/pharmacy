@@ -8,14 +8,20 @@ part of 'product_response.dart';
 
 ProductResponse _$ProductResponseFromJson(Map<String, dynamic> json) =>
     ProductResponse(
-      (json['results'] as List<dynamic>)
+      results: (json['results'] as List<dynamic>)
           .map((e) => Results.fromJson(e as Map<String, dynamic>))
           .toList(),
+      count: (json['count'] as num).toInt(),
+      next: json['next'] as String?,
+      previous: json['previous'] as String?,
     );
 
 Map<String, dynamic> _$ProductResponseToJson(ProductResponse instance) =>
     <String, dynamic>{
       'results': instance.results,
+      'count': instance.count,
+      'next': instance.next,
+      'previous': instance.previous,
     };
 
 Results _$ResultsFromJson(Map<String, dynamic> json) => Results(

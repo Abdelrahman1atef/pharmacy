@@ -6,6 +6,8 @@ import 'package:pharmacy/features/home/logic/best_seller/best_seller_cubit.dart'
 import 'package:pharmacy/features/home/logic/category/category_cubit.dart';
 import 'package:pharmacy/features/home/repository/best_seller/best_seller_repository.dart';
 import 'package:pharmacy/features/home/repository/category/category_repository.dart';
+import 'package:pharmacy/features/items_list/logic/item_list_screen_cubit.dart';
+import 'package:pharmacy/features/items_list/repository/item_list/item_list.dart';
 
 import '../../features/search/logic/search_cubit.dart';
 import '../../features/search/repository/search_repository.dart';
@@ -22,8 +24,10 @@ void setupDependencies() {
   getIt.registerFactory<DetailsRepository>(() => DetailsRepository(getIt()));
   getIt.registerFactory<CategoryRepository>(() => CategoryRepository(getIt()));
   getIt.registerFactory<BestSellerRepository>(() => BestSellerRepository(getIt()));
+  getIt.registerFactory<ItemListRepository>(() => ItemListRepository(getIt()));
   getIt.registerFactory<SearchCubit>(() => SearchCubit(getIt()));
   getIt.registerFactory<DetailsCubit>(() => DetailsCubit(getIt()));
   getIt.registerFactory<CategoryCubit>(() => CategoryCubit(getIt()));
   getIt.registerFactory<BestSellerCubit>(() => BestSellerCubit(getIt()));
+  getIt.registerFactory<ItemListScreenCubit>(() => ItemListScreenCubit(getIt()));
 }

@@ -11,7 +11,7 @@ class BestSellerCubit extends Cubit<BestSellerState> {
 
   void emitBestSellerState() {
     emit(const Loading());
-    _bestSellerRepository.fetchAllProduct().then((result) {
+    _bestSellerRepository.fetchAllProduct(page: 1).then((result) {
       result.when(
           success: (ProductResponse data) => emit(Success(data)),
           failure: (error) => emit(Error(error)));

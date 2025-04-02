@@ -48,6 +48,7 @@ dependencies:
   debounce_throttle:
   equatable:
   animated_toggle_switch:
+  shimmer:
 dev_dependencies:
   flutter_test:
     sdk: flutter
