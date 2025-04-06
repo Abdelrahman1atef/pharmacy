@@ -4,6 +4,7 @@ import 'package:pharmacy/core/common_widgets/pharmacy_app_bar.dart';
 import 'package:pharmacy/core/di/module.dart';
 import 'package:pharmacy/core/routes/routes.dart';
 
+import '../../../../generated/l10n.dart';
 import '../../logic/search_cubit.dart';
 import '../../logic/search_state.dart';
 
@@ -98,7 +99,7 @@ class _SearchResults extends StatelessWidget {
                     trailing: SizedBox(
                       width: 100,
                       child: Text(
-                        'EGP ${product.sellPrice}',
+                        '${S.of(context).pound} ${product.sellPrice}',
                         textAlign: TextAlign.end,
                         style: const TextStyle(fontSize: 15),
                       ),

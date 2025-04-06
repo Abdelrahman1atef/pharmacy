@@ -3,7 +3,7 @@ class Constant {
  static const String allProductsEndPoint = '/api/product/allProducts/';
  static const String productDetailsEndPoint='/api/product/';
  static const String allCategoriesEndPoint = '/api/categories/';
- static const String allCategoriesProductEndPoint = '/api/productsByGroup_id/';
+ static const String allProductsOfCategoriesEndPoint = '/api/productsByGroup_id/';
  static const String searchEndPoint = '/api/products/search/';
 }
 

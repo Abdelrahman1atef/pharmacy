@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmacy/core/models/category_response.dart';
 import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/features/details/ui/DetailsScreen.dart';
 import 'package:pharmacy/features/items_list/ui/item_list_screen.dart';
@@ -17,9 +18,26 @@ class AppRouter {
       case Routes.productDetail:
         return MaterialPageRoute(
             builder: (context) => DetailScreen(settings.arguments as int));
-        case Routes.itemListScreen:
-        return MaterialPageRoute(
-            builder: (context) => ItemListScreen(widgetTitle: settings.arguments as String,));
+      case Routes.itemListScreen:
+        return MaterialPageRoute(builder: (context) {
+          final arguments = settings.arguments;
+
+          if (arguments is CategoryResponse) {
+            return ItemListScreen(
+              widgetTitle: arguments.categoryNameAr ?? "",
+              categoryId: arguments.categoryId,
+            );
+          } else if (arguments is String) {
+            return ItemListScreen(
+              widgetTitle: arguments,
+              categoryId: null, // No category, fetch all
+            );
+          } else {
+            return const Scaffold(
+              body: Center(child: Text('Invalid arguments')),
+            );
+          }
+        });
       default:
         return _undefineRoute();
     }

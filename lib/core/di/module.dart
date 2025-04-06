@@ -7,7 +7,7 @@ import 'package:pharmacy/features/home/logic/category/category_cubit.dart';
 import 'package:pharmacy/features/home/repository/best_seller/best_seller_repository.dart';
 import 'package:pharmacy/features/home/repository/category/category_repository.dart';
 import 'package:pharmacy/features/items_list/logic/item_list_screen_cubit.dart';
-import 'package:pharmacy/features/items_list/repository/item_list/item_list.dart';
+import 'package:pharmacy/features/items_list/repository/item_list/item_list_repository.dart';
 
 import '../../features/search/logic/search_cubit.dart';
 import '../../features/search/repository/search_repository.dart';

@@ -25,7 +25,6 @@ class AppBlocProviders extends StatelessWidget {
         BlocProvider(create: (_) => getIt<CategoryCubit>()),
         BlocProvider(create: (_) =>FavoriteCubit()),
         BlocProvider(create: (_) => getIt<ItemListScreenCubit>()),
-
       ],
       child: child,
     );

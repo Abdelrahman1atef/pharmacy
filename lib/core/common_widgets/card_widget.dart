@@ -5,7 +5,6 @@ import 'package:pharmacy/core/models/product_response.dart';
 
 import '../../features/details/logic/favorite/favorite_cubit.dart';
 import '../../features/details/logic/favorite/favorite_state.dart';
-import '../../features/home/ui/home/widgets/best_seller_widget.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../gen/fonts.gen.dart';
@@ -126,7 +125,12 @@ class CardWidget extends StatelessWidget {
                 padding: const EdgeInsetsDirectional
                     .symmetric(horizontal: 5),
                 child: GradientElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      print("""
+                      ${product.productId}
+                      """
+                      );
+                    },
                     text: S.of(context).addToCart),
               )
             ],

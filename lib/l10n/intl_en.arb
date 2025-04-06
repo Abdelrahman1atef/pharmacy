@@ -3,8 +3,11 @@
   "morning_welcome_message": "Good Morning",
   "evening_welcome_message": "Good Evening",
   "search_for_medicine": "Search for medicine(English or Arabic)",
+
   "home_item": "Home",
   "settings_item": "Settings",
+  "cart_item": "Cart",
+
   "titles_category": "Categories",
   "show_all": "Show All",
   "best_seller": "Best seller",

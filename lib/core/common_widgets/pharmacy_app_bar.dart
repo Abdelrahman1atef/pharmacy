@@ -75,7 +75,7 @@ class PharmacyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   )),
               IconButton(
                 onPressed: () {},
-                icon: Assets.images.cartLargeMinimalisticSvgrepoCom.svg(
+                icon: Assets.images.cartUnselected.svg(
                     colorFilter:
                         const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
                 color: Colors.white,

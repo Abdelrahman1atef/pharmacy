@@ -49,6 +49,7 @@ dependencies:
   equatable:
   animated_toggle_switch:
   shimmer:
+  persistent_bottom_nav_bar:
 dev_dependencies:
   flutter_test:
     sdk: flutter

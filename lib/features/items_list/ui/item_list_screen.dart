@@ -6,12 +6,14 @@ import 'package:pharmacy/core/common_widgets/header_widget.dart';
 import 'package:pharmacy/core/common_widgets/pharmacy_app_bar.dart';
 import 'package:pharmacy/features/items_list/logic/item_list_screen_cubit.dart';
 import 'package:pharmacy/features/items_list/logic/item_list_screen_state.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../core/models/product_response.dart';
 
 class ItemListScreen extends StatefulWidget {
   final String widgetTitle;
-  const ItemListScreen({super.key, required this.widgetTitle});
+  final int? categoryId;
+  const ItemListScreen({super.key, required this.widgetTitle,this.categoryId});
 
   @override
   State<ItemListScreen> createState() => _ItemListScreenState();
@@ -24,7 +26,7 @@ class _ItemListScreenState extends State<ItemListScreen> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    context.read<ItemListScreenCubit>().fetchInitialItems();
+    context.read<ItemListScreenCubit>().fetchInitialItems(categoryId: widget.categoryId);
   }
 
   @override
@@ -53,14 +55,29 @@ class _ItemListScreenState extends State<ItemListScreen> {
       body: Column(
         children: [
           SizedBox(height: 12.h,),
-          HeaderWidget(widgetTitle:widget.widgetTitle,showAllIsVisible: false,),
+          Padding(
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
+            child: HeaderWidget(widgetTitle:widget.widgetTitle,showAllIsVisible: false,),
+          ),
           SizedBox(height: 12.h,),
           Expanded(
             child: BlocBuilder<ItemListScreenCubit, ItemListScreenState>(
               builder: (context, state) {
                 return state.when(
-                  initial: () => const Center(child: CircularProgressIndicator()),
-                  loading: () => const Center(child: CircularProgressIndicator()),
+                  initial: () => const Center(child: _ShimmerWidget()),
+                  loading: () => GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      mainAxisExtent: 300,
+                    ),
+                    padding: const EdgeInsetsDirectional.symmetric(horizontal: 12),
+                    itemCount: 6, // Number of shimmer placeholders
+                    itemBuilder: (context, index) {
+                      return const _ShimmerWidget(); // Full grid of shimmer placeholders
+                    },
+                  ),
                   loadingMore: (data) => _buildProductList(data, true),
                   success: (data) => _buildProductList(data, false),
                   error: (error, previousData) {
@@ -68,7 +85,10 @@ class _ItemListScreenState extends State<ItemListScreen> {
                       return Column(
                         children: [
                           Expanded(child: _buildProductList(previousData, false)),
-                          Center(child: Text('Error: ${error.message}')),
+                          ElevatedButton(
+                            onPressed: () => context.read<ItemListScreenCubit>().fetchInitialItems(),
+                            child: const Text('Retry'),
+                          ),
                         ],
                       );
                     }
@@ -85,21 +105,87 @@ class _ItemListScreenState extends State<ItemListScreen> {
 
   Widget _buildProductList(ProductResponse data, bool isLoadingMore) {
     return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate:  const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 18,
-        mainAxisSpacing: 30,
-
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        mainAxisExtent: 300,
       ),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 12),
+
       controller: _scrollController,
-      itemCount: isLoadingMore ? data.results.length + 1 : data.results.length,
+      itemCount: isLoadingMore ? data.results.length + 4 : data.results.length,
       itemBuilder: (context, index) {
         if (index >= data.results.length) {
-          return const Center(child: CircularProgressIndicator());
+          return const _ShimmerWidget();
         }
         final product = data.results[index];
         return CardWidget(product: product);
       },
+    );
+  }
+}
+
+
+class _ShimmerWidget extends StatelessWidget {
+  const _ShimmerWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child:
+           Padding(
+            padding: const EdgeInsetsDirectional.only(end: 0, start: 5),
+            child: SizedBox(
+              width: 170,
+              child: Card(
+                color: Colors.grey[300],
+                elevation: 10,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(top: 8, bottom: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Image placeholder
+                      Container(
+                        height: 120,
+                        width: 100,
+                        color: Colors.white,
+                      ),
+                      const SizedBox(height: 8),
+                      // Title placeholder
+                      Container(
+                        width: 100,
+                        height: 16,
+                        color: Colors.white,
+                      ),
+                      const SizedBox(height: 8),
+                      // Price placeholder
+                      Container(
+                        width: 60,
+                        height: 14,
+                        color: Colors.white,
+                      ),
+                      const SizedBox(height: 20),
+                      // Button placeholder
+                      Container(
+                        width: 120,
+                        height: 44,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+           )
+
+
     );
   }
 }

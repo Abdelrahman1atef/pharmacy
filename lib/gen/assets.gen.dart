@@ -30,9 +30,13 @@ class $AssetsImagesGen {
   SvgGenImage get arrowRightSvgrepoCom =>
       const SvgGenImage('assets/images/arrow-right-svgrepo-com.svg');
 
-  /// File path: assets/images/cart-large-minimalistic-svgrepo-com.svg
-  SvgGenImage get cartLargeMinimalisticSvgrepoCom => const SvgGenImage(
-      'assets/images/cart-large-minimalistic-svgrepo-com.svg');
+  /// File path: assets/images/cart_selected.svg
+  SvgGenImage get cartSelected =>
+      const SvgGenImage('assets/images/cart_selected.svg');
+
+  /// File path: assets/images/cart_unselected.svg
+  SvgGenImage get cartUnselected =>
+      const SvgGenImage('assets/images/cart_unselected.svg');
 
   /// File path: assets/images/category-default_icon.svg
   SvgGenImage get categoryDefaultIcon =>
@@ -71,7 +75,8 @@ class $AssetsImagesGen {
         rPIcon,
         arrowLeftSvgrepoCom,
         arrowRightSvgrepoCom,
-        cartLargeMinimalisticSvgrepoCom,
+        cartSelected,
+        cartUnselected,
         categoryDefaultIcon,
         drug,
         heartSvgrepoCom,

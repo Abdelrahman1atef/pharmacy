@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "available": MessageLookupByLibrary.simpleMessage("in Stock"),
     "best_seller": MessageLookupByLibrary.simpleMessage("Best seller"),
     "brandName": MessageLookupByLibrary.simpleMessage("Brand"),
+    "cart_item": MessageLookupByLibrary.simpleMessage("Cart"),
     "details": MessageLookupByLibrary.simpleMessage("Details"),
     "evening_welcome_message": MessageLookupByLibrary.simpleMessage(
       "Good Evening",

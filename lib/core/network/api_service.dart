@@ -11,7 +11,7 @@ abstract class ApiService {
 
   Future<ApiResult<Results>> fetchProductDetails(int productId);
 
-  Future<ApiResult<ProductResponse>> fetchProductByCategory(int categoryId);
+  Future<ApiResult<ProductResponse>> fetchProductByCategory({required int categoryId, required int page});
 
   Future<ApiResult<List<CategoryResponse>>> fetchAllCategory();
 
@@ -65,9 +65,23 @@ class ApiServiceImpl implements ApiService {
   }
 
   @override
-  Future<ApiResult<ProductResponse>> fetchProductByCategory(int categoryId) {
-    // TODO: implement fetchProductByCategory
-    throw UnimplementedError();
+  Future<ApiResult<ProductResponse>> fetchProductByCategory({required int categoryId, required int page}) async {
+    try {
+      Response response = await _dio.get(
+          '${Constant.allProductsOfCategoriesEndPoint}$categoryId',
+          queryParameters: {'page': page});
+      if (response.statusCode == 200) {
+        return ApiResult<ProductResponse>.success(
+            ProductResponse.formJson(response.data));
+      } else {
+        return ApiResult<ProductResponse>.failure(
+            ApiException.fromJson(response.data));
+      }
+    } on DioException catch (e) {
+      return ApiResult<ProductResponse>.failure(ApiException(
+          message: e.message ?? "Unable to fetch Now Showing Movies",
+          code: e.response?.statusCode ?? 0));
+    }
   }
 
   @override

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/features/home/logic/category/category_cubit.dart';
 import 'package:pharmacy/features/home/logic/category/category_state.dart';
 import 'package:pharmacy/gen/assets.gen.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/common_widgets/header_widget.dart';
+import '../../../../../core/models/category_response.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../../utils/network_image_utils.dart';
 
@@ -55,31 +57,34 @@ class CategoryWidget extends StatelessWidget {
                         ),
                         itemCount: categories.length,
                         itemBuilder: (BuildContext context, int index) {
-                          final category = categories[index];
-                          return Card(
-                            elevation: 5,
-                            child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                                 SizedBox(
-                                   height: 30,
-                                   width: 20,
-                                   child: Image.network(
-                                     "URL",
-                                    fit: BoxFit.cover,
-                                     loadingBuilder: loadingBuilder(),
-                                     errorBuilder: (context, error, stackTrace) => Assets.images.categoryDefaultIcon.svg(),
-                                                                     ),
-                                 ),
-                              // Display product name
-                              Text(
-                                category.categoryNameAr,
-                                textAlign: TextAlign.center,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
+                          final category = categories[index] as CategoryResponse;
+                          return InkWell(
+                            onTap: () => Navigator.pushNamed(context,Routes.itemListScreen ,arguments: category),
+                            child: Card(
+                              elevation: 5,
+                              child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                   SizedBox(
+                                     height: 30,
+                                     width: 20,
+                                     child: Image.network(
+                                       "URL",
+                                      fit: BoxFit.cover,
+                                       loadingBuilder: loadingBuilder(),
+                                       errorBuilder: (context, error, stackTrace) => Assets.images.categoryDefaultIcon.svg(),
+                                                                       ),
+                                   ),
+                                // Display product name
+                                Text(
+                                  category.categoryNameAr ??"",
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                            ),
                           );
 
 

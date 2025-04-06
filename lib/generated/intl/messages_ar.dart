@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "available": MessageLookupByLibrary.simpleMessage("متوفر"),
     "best_seller": MessageLookupByLibrary.simpleMessage("الأكثر مبيعا"),
     "brandName": MessageLookupByLibrary.simpleMessage("العلامة التجارية"),
+    "cart_item": MessageLookupByLibrary.simpleMessage("العرية"),
     "details": MessageLookupByLibrary.simpleMessage("التفاصيل"),
     "evening_welcome_message": MessageLookupByLibrary.simpleMessage(
       "مساء الخير",

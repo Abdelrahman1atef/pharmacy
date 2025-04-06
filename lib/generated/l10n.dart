@@ -100,6 +100,11 @@ class S {
     return Intl.message('Settings', name: 'settings_item', desc: '', args: []);
   }
 
+  /// `Cart`
+  String get cart_item {
+    return Intl.message('Cart', name: 'cart_item', desc: '', args: []);
+  }
+
   /// `Categories`
   String get titles_category {
     return Intl.message(

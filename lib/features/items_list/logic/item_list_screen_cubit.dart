@@ -1,30 +1,38 @@
 import 'package:bloc/bloc.dart';
 import '../../../core/models/product_response.dart';
-import '../repository/item_list/item_list.dart';
+import '../repository/item_list/item_list_repository.dart';
 import 'item_list_screen_state.dart';
+
+enum FetchType { all, category }
 
 class ItemListScreenCubit extends Cubit<ItemListScreenState> {
   final ItemListRepository _itemListRepository;
   int _currentPage = 1;
   bool _hasReachedMax = false;
+  int? _selectedCategoryId;
+  FetchType _fetchType = FetchType.all;
 
   ItemListScreenCubit(this._itemListRepository) : super(const Initial());
 
-  Future<void> fetchInitialItems() async {
-
+  Future<void> fetchInitialItems({int? categoryId}) async {
     emit(const Loading());
+    _currentPage = 1;
+    _hasReachedMax = false;
+    _selectedCategoryId = categoryId;
+    _fetchType = categoryId == null ? FetchType.all : FetchType.category;
 
+    final result = categoryId == null
+        ? await _itemListRepository.fetchAllProduct(page: _currentPage)
+        : await _itemListRepository.fetchProductByCategory(
+        page: _currentPage, categoryId: categoryId);
 
-    _itemListRepository.fetchAllProduct(page: 1).then((result) {
-      result.when(
-        success: (ProductResponse data) {
-          _currentPage = 1;
-          _hasReachedMax = data.next == null;
-          emit(Success(data));
-        },
-        failure: (e) => emit(Error(e)),
-      );
-    });
+    result.when(
+      success: (data) {
+        _hasReachedMax = data.next == null;
+        emit(Success(data));
+      },
+      failure: (e) => emit(Error(e)),
+    );
   }
 
   Future<void> fetchMoreItems() async {
@@ -39,21 +47,23 @@ class ItemListScreenCubit extends Cubit<ItemListScreenState> {
     if (currentData == null) return;
 
     emit(ItemListScreenState.loadingMore(currentData));
-      _itemListRepository.fetchAllProduct(page: _currentPage+1).then((result){
-        result.when(success: (newData) {
+    _itemListRepository.fetchAllProduct(page: _currentPage + 1).then((result) {
+      result.when(
+        success: (newData) {
           _currentPage++;
           _hasReachedMax = newData.next == null;
 
           final updatedResults = ProductResponse(
-              count: newData.count,
-              next: newData.next,
-              previous: newData.previous,
-              results: [...currentData.results, ...newData.results],);
+            count: newData.count,
+            next: newData.next,
+            previous: newData.previous,
+            results: [...currentData.results, ...newData.results],
+          );
 
           emit(Success(updatedResults));
-        }, failure: (e) => emit(Error(e)),);
-      });
-      
-     
+        },
+        failure: (e) => emit(Error(e)),
+      );
+    });
   }
 }

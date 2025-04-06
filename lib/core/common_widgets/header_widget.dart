@@ -20,20 +20,21 @@ class HeaderWidget extends StatelessWidget {
         Text(widgetTitle, style: TextStyles.sectionTitles),
         Visibility(
           visible: showAllIsVisible,
-          child: Row(
-            children: [
-              InkWell(
-                onTap: () => Navigator.pushNamed(context, Routes.itemListScreen,arguments: widgetTitle),
-                child: Text(
+          child: InkWell(
+            onTap: () => Navigator.pushNamed(context, Routes.itemListScreen,arguments: widgetTitle),
+            borderRadius: BorderRadius.circular(12),
+            child: Row(
+              children: [
+                Text(
                   S.of(context).show_all,
                   style: TextStyles.showAllText,
                 ),
-              ),
-              const Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: ColorName.secondaryColor,
-              )
-            ],
+                const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: ColorName.secondaryColor,
+                )
+              ],
+            ),
           ),
         )
       ],
