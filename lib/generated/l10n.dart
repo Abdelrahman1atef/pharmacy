@@ -175,6 +175,21 @@ class S {
     return Intl.message('Add To Cart', name: 'addToCart', desc: '', args: []);
   }
 
+  /// `NO Item Add In Cart Until Now`
+  String get noItemInCart {
+    return Intl.message(
+      'NO Item Add In Cart Until Now',
+      name: 'noItemInCart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Brows Items`
+  String get browsItem {
+    return Intl.message('Brows Items', name: 'browsItem', desc: '', args: []);
+  }
+
   /// `Logout`
   String get logout {
     return Intl.message('Logout', name: 'logout', desc: '', args: []);

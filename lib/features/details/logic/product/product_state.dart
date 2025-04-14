@@ -10,7 +10,7 @@ class ProductState with _$ProductState {
   }) = _ProductState;
 
   // Default initial state
-  factory ProductState.initial() => ProductState(
+  factory ProductState.initial() => const ProductState(
     selectedUnit: 'productUnit1',
     price: 0,
   );

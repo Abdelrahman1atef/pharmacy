@@ -128,7 +128,7 @@ class _ItemListScreenState extends State<ItemListScreen> {
 
 
 class _ShimmerWidget extends StatelessWidget {
-  const _ShimmerWidget({super.key});
+  const _ShimmerWidget();
 
   @override
   Widget build(BuildContext context) {

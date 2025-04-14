@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "available": MessageLookupByLibrary.simpleMessage("متوفر"),
     "best_seller": MessageLookupByLibrary.simpleMessage("الأكثر مبيعا"),
     "brandName": MessageLookupByLibrary.simpleMessage("العلامة التجارية"),
+    "browsItem": MessageLookupByLibrary.simpleMessage("تصفح الامنتجات"),
     "cart_item": MessageLookupByLibrary.simpleMessage("العرية"),
     "details": MessageLookupByLibrary.simpleMessage("التفاصيل"),
     "evening_welcome_message": MessageLookupByLibrary.simpleMessage(
@@ -36,6 +37,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
     "morning_welcome_message": MessageLookupByLibrary.simpleMessage(
       "صباح الخير",
+    ),
+    "noItemInCart": MessageLookupByLibrary.simpleMessage(
+      "ليس هناك منتجات فى العربه حتى الان",
     ),
     "pound": MessageLookupByLibrary.simpleMessage("جنيه"),
     "productDescription": MessageLookupByLibrary.simpleMessage("وصف المنتج:"),

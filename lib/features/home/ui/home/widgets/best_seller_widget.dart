@@ -8,7 +8,6 @@ import 'package:pharmacy/features/home/logic/best_seller/best_seller_state.dart'
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/common_widgets/header_widget.dart';
-import '../../../../../core/di/module.dart';
 import '../../../../../core/routes/routes.dart';
 import '../../../../../generated/l10n.dart';
 
@@ -79,7 +78,7 @@ class BestSellerWidget extends StatelessWidget {
 }
 
 class _ShimmerWidget extends StatelessWidget {
-  const _ShimmerWidget({super.key});
+  const _ShimmerWidget();
 
   @override
   Widget build(BuildContext context) {

@@ -30,6 +30,10 @@ class $AssetsImagesGen {
   SvgGenImage get arrowRightSvgrepoCom =>
       const SvgGenImage('assets/images/arrow-right-svgrepo-com.svg');
 
+  /// File path: assets/images/cart-no_item.svg
+  SvgGenImage get cartNoItem =>
+      const SvgGenImage('assets/images/cart-no_item.svg');
+
   /// File path: assets/images/cart_selected.svg
   SvgGenImage get cartSelected =>
       const SvgGenImage('assets/images/cart_selected.svg');
@@ -75,6 +79,7 @@ class $AssetsImagesGen {
         rPIcon,
         arrowLeftSvgrepoCom,
         arrowRightSvgrepoCom,
+        cartNoItem,
         cartSelected,
         cartUnselected,
         categoryDefaultIcon,

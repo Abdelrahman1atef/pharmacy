@@ -10,7 +10,6 @@ import 'package:pharmacy/features/details/logic/product/product_cubit.dart';
 import 'package:pharmacy/features/details/logic/product/product_state.dart';
 import 'package:pharmacy/gen/colors.gen.dart';
 import 'package:shimmer/shimmer.dart';
-import '../../../core/di/module.dart';
 import '../../../core/routes/routes.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../generated/l10n.dart';
@@ -125,7 +124,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                 top: 8, // Adjust spacing from the top
                                 left: 8, // Adjust spacing from the left
                                 child: Container(
-                                  margin: EdgeInsetsDirectional.only(
+                                  margin: const EdgeInsetsDirectional.only(
                                       top: 5, start: 5),
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 4),
@@ -154,9 +153,9 @@ class _DetailScreenState extends State<DetailScreen> {
                         //P.Name/Share/price/discount
                         width: 445.w,
                         margin:
-                            EdgeInsetsDirectional.symmetric(horizontal: 8),
+                            const EdgeInsetsDirectional.symmetric(horizontal: 8),
                         padding:
-                            EdgeInsetsDirectional.symmetric(horizontal: 8),
+                            const EdgeInsetsDirectional.symmetric(horizontal: 8),
                         decoration: BoxDecoration(
                             color: Colors.grey.withOpacity(0.1),
                             borderRadius:
@@ -223,9 +222,9 @@ class _DetailScreenState extends State<DetailScreen> {
                         //P.Name/Share/price/discount
                         width:445.w,
                         margin:
-                            EdgeInsetsDirectional.symmetric(horizontal: 8),
+                            const EdgeInsetsDirectional.symmetric(horizontal: 8),
                         padding:
-                            EdgeInsetsDirectional.symmetric(horizontal: 8),
+                            const EdgeInsetsDirectional.symmetric(horizontal: 8),
                         decoration: BoxDecoration(
                             color: Colors.grey.withOpacity(0.1),
                             borderRadius:

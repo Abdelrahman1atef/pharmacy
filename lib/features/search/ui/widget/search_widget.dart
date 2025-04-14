@@ -53,7 +53,7 @@ class _SearchWidgetState extends State<SearchWidget> {
         child: SearchBar(
           controller:widget.searchController,
           autoFocus: true,
-          trailing:  [
+          trailing:  const [
             Icon(Icons.search, color: Colors.grey)
           ],
           hintStyle: const WidgetStatePropertyAll(

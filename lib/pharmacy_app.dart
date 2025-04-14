@@ -28,13 +28,14 @@ class PharmacyApp extends StatelessWidget {
         supportedLocales: S.delegate.supportedLocales,
           title: 'Pharmacy App',
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSwatch(
-              primarySwatch: Colors.deepPurple,
-            ),
-            useMaterial3: true,
-              navigationBarTheme: NavigationBarThemeData(
-                indicatorColor: Colors.blue.withOpacity(0.2), // Customize color
-              ),
+
+            // colorScheme: ColorScheme.fromSwatch(
+            //   primarySwatch: Colors.deepPurple,
+            // ),
+            // useMaterial3: true,
+            //   navigationBarTheme: NavigationBarThemeData(
+            //     indicatorColor: Colors.blue.withOpacity(0.2), // Customize color
+            //   ),
           ),
           initialRoute: Routes.main,
           onGenerateRoute: AppRouter.onGenerateRoute,

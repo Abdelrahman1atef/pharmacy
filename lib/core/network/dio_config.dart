@@ -7,7 +7,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 class DioConfig {
   DioConfig._();
 
-  static const timeout = Duration(milliseconds: 5000);
+  static const timeout = Duration(milliseconds: 50000);
   static Dio? _dio;
 
   static Dio getDio() {
@@ -30,7 +30,7 @@ class DioConfig {
             int retries = e.requestOptions.extra['retries'] ?? 3;
             if (retries > 0) {
               e.requestOptions.extra['retries'] = retries - 1;
-              await Future.delayed(Duration(seconds: 2)); // Wait before retrying
+              await Future.delayed(const Duration(seconds: 2)); // Wait before retrying
               handler.resolve(await Dio().fetch(e.requestOptions)); // Retry the request
             } else {
               handler.next(e); // Pass the error if max retries reached

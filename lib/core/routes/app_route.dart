@@ -11,7 +11,7 @@ class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.main:
-        return MaterialPageRoute(builder: (_) => const MainScreen());
+        return MaterialPageRoute(builder: (_) => MainScreen(key: mainPageKey,));
       case Routes.searchScreen:
         return MaterialPageRoute(
             builder: (context) => const SearchScreen(), settings: settings);

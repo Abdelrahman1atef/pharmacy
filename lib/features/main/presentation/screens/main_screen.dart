@@ -7,9 +7,11 @@ import '../../../../core/routes/routes.dart';
 import '../../../../core/themes/text_styles.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../generated/l10n.dart';
-import '../../../cart/ui/cart_screen.dart';
+import '../../../cart/ui/screen/cart_screen.dart';
 import '../../../home/ui/home/screens/home_screen.dart';
 
+
+final GlobalKey<_MainScreenState> mainPageKey=GlobalKey();
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -27,7 +29,11 @@ class _MainScreenState extends State<MainScreen> {
     const CartScreen(),
     const SettingsScreen(),
   ];
-
+  void changePage(int value){
+    setState(() {
+      _currentIndex = value;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,9 +64,7 @@ class _MainScreenState extends State<MainScreen> {
               child: NavigationBar(
                 selectedIndex: _currentIndex,
                 onDestinationSelected: (value) {
-                  setState(() {
-                    _currentIndex = value;
-                  });
+                  changePage(value);
                 },
                 destinations: [
                   NavigationDestination(

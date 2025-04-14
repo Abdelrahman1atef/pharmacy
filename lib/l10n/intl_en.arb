@@ -19,5 +19,8 @@
   "unit": "Unit",
   "productDescription": "Product Details:",
   "addToCart": "Add To Cart",
+  "noItemInCart": "NO Item Add In Cart Until Now",
+  "browsItem": "Brows Items",
+
   "logout": "Logout"
 }

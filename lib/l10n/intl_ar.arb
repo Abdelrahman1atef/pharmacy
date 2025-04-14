@@ -17,6 +17,7 @@
   "unit": "الوحدة",
   "productDescription": "وصف المنتج:",
   "addToCart": "اضف الى العربة",
-
+  "noItemInCart": "ليس هناك منتجات فى العربه حتى الان",
+  "browsItem": "تصفح الامنتجات",
   "logout": "تسجيل الخروج"
 }

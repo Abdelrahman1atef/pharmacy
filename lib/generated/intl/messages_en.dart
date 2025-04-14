@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "available": MessageLookupByLibrary.simpleMessage("in Stock"),
     "best_seller": MessageLookupByLibrary.simpleMessage("Best seller"),
     "brandName": MessageLookupByLibrary.simpleMessage("Brand"),
+    "browsItem": MessageLookupByLibrary.simpleMessage("Brows Items"),
     "cart_item": MessageLookupByLibrary.simpleMessage("Cart"),
     "details": MessageLookupByLibrary.simpleMessage("Details"),
     "evening_welcome_message": MessageLookupByLibrary.simpleMessage(
@@ -36,6 +37,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "logout": MessageLookupByLibrary.simpleMessage("Logout"),
     "morning_welcome_message": MessageLookupByLibrary.simpleMessage(
       "Good Morning",
+    ),
+    "noItemInCart": MessageLookupByLibrary.simpleMessage(
+      "NO Item Add In Cart Until Now",
     ),
     "pound": MessageLookupByLibrary.simpleMessage("EGP"),
     "productDescription": MessageLookupByLibrary.simpleMessage(

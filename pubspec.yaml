@@ -50,6 +50,8 @@ dependencies:
   animated_toggle_switch:
   shimmer:
   persistent_bottom_nav_bar:
+  sqflite:
+  path:
 dev_dependencies:
   flutter_test:
     sdk: flutter

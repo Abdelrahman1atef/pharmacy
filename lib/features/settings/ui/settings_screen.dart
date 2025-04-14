@@ -26,7 +26,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
 
                   children: [
-                    Text("Lang"),
+                    const Text("Lang"),
                     DropdownMenu(dropdownMenuEntries: langs,hintText: langs[0].label,)
                   ],
                 ),
