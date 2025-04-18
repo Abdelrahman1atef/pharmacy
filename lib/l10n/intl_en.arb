@@ -1,5 +1,12 @@
 {
   "app_name": "Ramzy Pharmacy",
+  "appLang": "App Language",
+  "arabic": "العربية",
+  "english": "English",
+  "language": "Language",
+  "appMode": "App Mode",
+  "light": "Light",
+  "dark": "Dark",
   "morning_welcome_message": "Good Morning",
   "evening_welcome_message": "Good Evening",
   "search_for_medicine": "Search for medicine(English or Arabic)",
@@ -21,6 +28,14 @@
   "addToCart": "Add To Cart",
   "noItemInCart": "NO Item Add In Cart Until Now",
   "browsItem": "Brows Items",
-
+  "deleteCartItemAlertP1": "Are you sure you want to remove",
+  "deleteCartItemAlertP2": "from your shopping cart?",
+  "deleteCartItem": "Remove Item",
+  "keepCartItem": "Keep Item",
+  "subtotal": "Subtotal",
+  "product": "Product",
+  "ofProducts": "of Products",
+  "checkout": "Checkout",
+  "continueShopping": "Continue Shopping",
   "logout": "Logout"
 }

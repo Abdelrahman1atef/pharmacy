@@ -49,9 +49,8 @@ class $AssetsImagesGen {
   /// File path: assets/images/drug.png
   AssetGenImage get drug => const AssetGenImage('assets/images/drug.png');
 
-  /// File path: assets/images/heart-svgrepo-com.svg
-  SvgGenImage get heartSvgrepoCom =>
-      const SvgGenImage('assets/images/heart-svgrepo-com.svg');
+  /// File path: assets/images/heart.svg
+  SvgGenImage get heart => const SvgGenImage('assets/images/heart.svg');
 
   /// File path: assets/images/home-selected.svg
   SvgGenImage get homeSelected =>
@@ -61,6 +60,9 @@ class $AssetsImagesGen {
   SvgGenImage get homeUnselected =>
       const SvgGenImage('assets/images/home-unselected.svg');
 
+  /// File path: assets/images/remove.svg
+  SvgGenImage get remove => const SvgGenImage('assets/images/remove.svg');
+
   /// File path: assets/images/settings-selected.svg
   SvgGenImage get settingsSelected =>
       const SvgGenImage('assets/images/settings-selected.svg');
@@ -69,9 +71,8 @@ class $AssetsImagesGen {
   SvgGenImage get settingsUnselected =>
       const SvgGenImage('assets/images/settings-unselected.svg');
 
-  /// File path: assets/images/share-svgrepo-com.svg
-  SvgGenImage get shareSvgrepoCom =>
-      const SvgGenImage('assets/images/share-svgrepo-com.svg');
+  /// File path: assets/images/share.svg
+  SvgGenImage get share => const SvgGenImage('assets/images/share.svg');
 
   /// List of all assets
   List<dynamic> get values => [
@@ -84,12 +85,13 @@ class $AssetsImagesGen {
         cartUnselected,
         categoryDefaultIcon,
         drug,
-        heartSvgrepoCom,
+        heart,
         homeSelected,
         homeUnselected,
+        remove,
         settingsSelected,
         settingsUnselected,
-        shareSvgrepoCom
+        share
       ];
 }
 

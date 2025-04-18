@@ -1,13 +1,12 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../../features/cart/data/cart_table_constants.dart';
+import '../cart/cart_table_constants.dart';
 import 'db_constants.dart';
 
 class DbHelper {
-  //1- get single instance
-  DbHelper._();
-  static final DbHelper helper = DbHelper._();
+
+
 
   //2- get Db Path
   Future<String> _getDbPath() async {

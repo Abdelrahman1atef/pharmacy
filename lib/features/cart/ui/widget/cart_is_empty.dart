@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/common_widgets/gradient_button.dart';
-import '../../../../core/themes/text_styles.dart';
+import '../../../../core/themes/text/text_styles.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../generated/l10n.dart';
 import '../../../main/presentation/screens/main_screen.dart';

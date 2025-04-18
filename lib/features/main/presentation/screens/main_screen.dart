@@ -4,7 +4,7 @@ import 'package:pharmacy/features/settings/ui/settings_screen.dart';
 
 import '../../../../core/common_widgets/pharmacy_app_bar.dart';
 import '../../../../core/routes/routes.dart';
-import '../../../../core/themes/text_styles.dart';
+import '../../../../core/themes/text/text_styles.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../generated/l10n.dart';
 import '../../../cart/ui/screen/cart_screen.dart';
@@ -50,46 +50,44 @@ class _MainScreenState extends State<MainScreen> {
           index: _currentIndex,
           children: _screens,
         ),
-        bottomNavigationBar: ClipRRect(
-            borderRadius: const BorderRadiusDirectional.only(
-                topStart: Radius.circular(20), topEnd: Radius.circular(20)),
-            child: NavigationBarTheme(
-              data: NavigationBarThemeData(
-                labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>(
-                  (Set<WidgetState> states) {
-                      return TextStyles.bottomNavLabel;
-                  },
-                ),
+        bottomNavigationBar: NavigationBarTheme(
+          data: NavigationBarThemeData(
+            labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>(
+              (Set<WidgetState> states) {
+                  return TextStyles.bottomNavLabel;
+              },
+            ),
+          ),
+          child: NavigationBar(
+            selectedIndex: _currentIndex,
+            onDestinationSelected: (value) {
+              changePage(value);
+            },
+            destinations: [
+              NavigationDestination(
+                icon: Assets.images.homeUnselected.svg(),
+                label: S.of(context).home_item,
+                selectedIcon: Assets.images.homeSelected.svg(),
+                tooltip: S.of(context).home_item,
               ),
-              child: NavigationBar(
-                selectedIndex: _currentIndex,
-                onDestinationSelected: (value) {
-                  changePage(value);
-                },
-                destinations: [
-                  NavigationDestination(
-                    icon: Assets.images.homeUnselected.svg(),
-                    label: S.of(context).home_item,
-                    selectedIcon: Assets.images.homeSelected.svg(),
-                    tooltip: S.of(context).home_item,
-                  ),
-                  NavigationDestination(
-                    icon: Assets.images.cartUnselected.svg(),
-                    label: S.of(context).cart_item,
-                    selectedIcon: Assets.images.cartSelected.svg(),
-                    tooltip: S.of(context).cart_item,
-                  ),
-                  NavigationDestination(
-                    icon: Assets.images.settingsUnselected.svg(),
-                    label: S.of(context).settings_item,
-                    selectedIcon: Assets.images.settingsSelected.svg(),
-                    tooltip: S.of(context).settings_item,
-                  ),
-                ],
-                height: 90.h,
-                indicatorColor: Colors.blue,
-                backgroundColor: Colors.blue[100],
+              NavigationDestination(
+                icon: Assets.images.cartUnselected.svg(),
+                label: S.of(context).cart_item,
+                selectedIcon: Assets.images.cartSelected.svg(),
+                tooltip: S.of(context).cart_item,
               ),
-            )));
+              NavigationDestination(
+                icon: Assets.images.settingsUnselected.svg(),
+                label: S.of(context).settings_item,
+                selectedIcon: Assets.images.settingsSelected.svg(),
+                tooltip: S.of(context).settings_item,
+              ),
+            ],
+            height: 70.h,
+            indicatorColor: Colors.blue,
+            backgroundColor: Colors.blue[200],
+            elevation: 5,
+          ),
+        ));
   }
 }

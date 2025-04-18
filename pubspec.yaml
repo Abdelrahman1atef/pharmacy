@@ -36,7 +36,7 @@ dependencies:
   dio:
   pretty_dio_logger:
   flutter_bloc:
-
+  provider:
   get_it:
   freezed:
   json_serializable:

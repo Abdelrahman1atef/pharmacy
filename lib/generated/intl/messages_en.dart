@@ -23,17 +23,36 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "addToCart": MessageLookupByLibrary.simpleMessage("Add To Cart"),
+    "appLang": MessageLookupByLibrary.simpleMessage("App Language"),
+    "appMode": MessageLookupByLibrary.simpleMessage("App Mode"),
     "app_name": MessageLookupByLibrary.simpleMessage("Ramzy Pharmacy"),
+    "arabic": MessageLookupByLibrary.simpleMessage("العربية"),
     "available": MessageLookupByLibrary.simpleMessage("in Stock"),
     "best_seller": MessageLookupByLibrary.simpleMessage("Best seller"),
     "brandName": MessageLookupByLibrary.simpleMessage("Brand"),
     "browsItem": MessageLookupByLibrary.simpleMessage("Brows Items"),
     "cart_item": MessageLookupByLibrary.simpleMessage("Cart"),
+    "checkout": MessageLookupByLibrary.simpleMessage("Checkout"),
+    "continueShopping": MessageLookupByLibrary.simpleMessage(
+      "Continue Shopping",
+    ),
+    "dark": MessageLookupByLibrary.simpleMessage("Dark"),
+    "deleteCartItem": MessageLookupByLibrary.simpleMessage("Remove Item"),
+    "deleteCartItemAlertP1": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to remove",
+    ),
+    "deleteCartItemAlertP2": MessageLookupByLibrary.simpleMessage(
+      "from your shopping cart?",
+    ),
     "details": MessageLookupByLibrary.simpleMessage("Details"),
+    "english": MessageLookupByLibrary.simpleMessage("English"),
     "evening_welcome_message": MessageLookupByLibrary.simpleMessage(
       "Good Evening",
     ),
     "home_item": MessageLookupByLibrary.simpleMessage("Home"),
+    "keepCartItem": MessageLookupByLibrary.simpleMessage("Keep Item"),
+    "language": MessageLookupByLibrary.simpleMessage("Language"),
+    "light": MessageLookupByLibrary.simpleMessage("Light"),
     "logout": MessageLookupByLibrary.simpleMessage("Logout"),
     "morning_welcome_message": MessageLookupByLibrary.simpleMessage(
       "Good Morning",
@@ -41,7 +60,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "noItemInCart": MessageLookupByLibrary.simpleMessage(
       "NO Item Add In Cart Until Now",
     ),
+    "ofProducts": MessageLookupByLibrary.simpleMessage("of Products"),
     "pound": MessageLookupByLibrary.simpleMessage("EGP"),
+    "product": MessageLookupByLibrary.simpleMessage("Product"),
     "productDescription": MessageLookupByLibrary.simpleMessage(
       "Product Details:",
     ),
@@ -50,6 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "settings_item": MessageLookupByLibrary.simpleMessage("Settings"),
     "show_all": MessageLookupByLibrary.simpleMessage("Show All"),
+    "subtotal": MessageLookupByLibrary.simpleMessage("Subtotal"),
     "titles_category": MessageLookupByLibrary.simpleMessage("Categories"),
     "unavailable": MessageLookupByLibrary.simpleMessage("out of Stock"),
     "unit": MessageLookupByLibrary.simpleMessage("Unit"),

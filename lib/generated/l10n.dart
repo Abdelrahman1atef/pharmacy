@@ -60,6 +60,41 @@ class S {
     return Intl.message('Ramzy Pharmacy', name: 'app_name', desc: '', args: []);
   }
 
+  /// `App Language`
+  String get appLang {
+    return Intl.message('App Language', name: 'appLang', desc: '', args: []);
+  }
+
+  /// `العربية`
+  String get arabic {
+    return Intl.message('العربية', name: 'arabic', desc: '', args: []);
+  }
+
+  /// `English`
+  String get english {
+    return Intl.message('English', name: 'english', desc: '', args: []);
+  }
+
+  /// `Language`
+  String get language {
+    return Intl.message('Language', name: 'language', desc: '', args: []);
+  }
+
+  /// `App Mode`
+  String get appMode {
+    return Intl.message('App Mode', name: 'appMode', desc: '', args: []);
+  }
+
+  /// `Light`
+  String get light {
+    return Intl.message('Light', name: 'light', desc: '', args: []);
+  }
+
+  /// `Dark`
+  String get dark {
+    return Intl.message('Dark', name: 'dark', desc: '', args: []);
+  }
+
   /// `Good Morning`
   String get morning_welcome_message {
     return Intl.message(
@@ -188,6 +223,71 @@ class S {
   /// `Brows Items`
   String get browsItem {
     return Intl.message('Brows Items', name: 'browsItem', desc: '', args: []);
+  }
+
+  /// `Are you sure you want to remove`
+  String get deleteCartItemAlertP1 {
+    return Intl.message(
+      'Are you sure you want to remove',
+      name: 'deleteCartItemAlertP1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `from your shopping cart?`
+  String get deleteCartItemAlertP2 {
+    return Intl.message(
+      'from your shopping cart?',
+      name: 'deleteCartItemAlertP2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove Item`
+  String get deleteCartItem {
+    return Intl.message(
+      'Remove Item',
+      name: 'deleteCartItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Keep Item`
+  String get keepCartItem {
+    return Intl.message('Keep Item', name: 'keepCartItem', desc: '', args: []);
+  }
+
+  /// `Subtotal`
+  String get subtotal {
+    return Intl.message('Subtotal', name: 'subtotal', desc: '', args: []);
+  }
+
+  /// `Product`
+  String get product {
+    return Intl.message('Product', name: 'product', desc: '', args: []);
+  }
+
+  /// `of Products`
+  String get ofProducts {
+    return Intl.message('of Products', name: 'ofProducts', desc: '', args: []);
+  }
+
+  /// `Checkout`
+  String get checkout {
+    return Intl.message('Checkout', name: 'checkout', desc: '', args: []);
+  }
+
+  /// `Continue Shopping`
+  String get continueShopping {
+    return Intl.message(
+      'Continue Shopping',
+      name: 'continueShopping',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Logout`

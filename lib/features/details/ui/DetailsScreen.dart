@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy/core/common_widgets/pharmacy_app_bar.dart';
 import 'package:pharmacy/core/models/product_response.dart';
-import 'package:pharmacy/core/themes/text_styles.dart';
+import 'package:pharmacy/core/themes/text/text_styles.dart';
 import 'package:pharmacy/features/details/logic/details/details_cubit.dart';
 import 'package:pharmacy/features/details/logic/product/product_cubit.dart';
 import 'package:pharmacy/features/details/logic/product/product_state.dart';
@@ -97,7 +97,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                     BlocBuilder<FavoriteCubit, FavoriteState>(
                                   builder: (context, state) {
                                     return IconButton(
-                                      icon: Assets.images.heartSvgrepoCom.svg(
+                                      icon: Assets.images.heart.svg(
                                           colorFilter: ColorFilter.mode(
                                               state.when(
                                                 initial: () => Colors.grey,
@@ -179,7 +179,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                         onPressed: () {
                                           //baseurl/productID
                                         },
-                                        icon: Assets.images.shareSvgrepoCom
+                                        icon: Assets.images.share
                                             .svg()),
                                     Text(
                                       product.amount != 0

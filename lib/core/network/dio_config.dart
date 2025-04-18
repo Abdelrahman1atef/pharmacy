@@ -6,9 +6,9 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class DioConfig {
   DioConfig._();
-
-  static const timeout = Duration(milliseconds: 50000);
   static Dio? _dio;
+  static const timeout = Duration(milliseconds: 50000);
+
 
   static Dio getDio() {
     _dio ??= Dio()

@@ -1,5 +1,12 @@
 {
   "app_name": "صيدلية د.رمزي",
+  "appLang": "لغة التطبيق",
+  "arabic": "العربية",
+  "english": "English",
+  "language": "اللغة",
+  "appMode": "وضع التطبيق",
+"light": "نهار",
+"dark": "ليل",
   "morning_welcome_message": "صباح الخير",
   "evening_welcome_message": "مساء الخير",
   "search_for_medicine": "البحث عن الدواء(عربى او انجليزى)",
@@ -19,5 +26,14 @@
   "addToCart": "اضف الى العربة",
   "noItemInCart": "ليس هناك منتجات فى العربه حتى الان",
   "browsItem": "تصفح الامنتجات",
+  "deleteCartItemAlertP1": "هل انت متأكد انك تريد ازالة",
+  "deleteCartItemAlertP2": "من سلة التسوق الخاصة بك؟",
+  "deleteCartItem": "ازالة المنتج",
+  "keepCartItem": "احتفظ بالمنتج",
+  "subtotal": "قيمة الطلب",
+  "product": "منتج",
+  "ofProducts": "من المنتجات",
+  "checkout": "الدفع",
+  "continueShopping": "متابعة التسوق",
   "logout": "تسجيل الخروج"
 }

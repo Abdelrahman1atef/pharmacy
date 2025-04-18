@@ -95,4 +95,40 @@ class TextStyles {
         color: ColorName.blackColor,
         fontWeight: FontWeight.bold,
       );
+  static TextStyle get cartProductType => TextStyle(
+    fontSize: 15.sp,
+    fontFamily: FontFamily.cairo,
+    color: ColorName.secondaryColor,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle get cartProductPrice => TextStyle(
+    fontSize: 15.sp,
+    fontFamily: FontFamily.cairo,
+    color: ColorName.primaryColor,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle get cartConfirmationDialogDelete => TextStyle(
+    fontSize: 15.sp,
+    fontFamily: FontFamily.cairo,
+    color: ColorName.errorTextColor,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle get cartConfirmationDialogKeep => TextStyle(
+    fontSize: 15.sp,
+    fontFamily: FontFamily.cairo,
+    color: ColorName.secondaryColor,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle get cartCheckout => TextStyle(
+    fontSize: 15.sp,
+    fontFamily: FontFamily.cairo,
+    color: ColorName.primaryColor,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle get settingsTitle => TextStyle(
+    fontSize: 20.sp,
+    fontFamily: FontFamily.cairo,
+    color: ColorName.blackColor,
+    fontWeight: FontWeight.bold,
+  );
 }

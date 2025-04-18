@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pharmacy/core/themes/text_styles.dart';
+import 'package:pharmacy/core/themes/text/text_styles.dart';
 import 'package:pharmacy/gen/colors.gen.dart';
 
 import '../../generated/l10n.dart';
