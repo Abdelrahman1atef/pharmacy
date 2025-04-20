@@ -78,7 +78,9 @@ class _CardWidgetState extends State<CardWidget> {
               height: 120.h,
               width: double.infinity,
               child: Image.network(
-                widget.product.productImageUrl ?? "",
+                (widget.product.productImages != null && widget.product.productImages!.isNotEmpty)
+                    ? widget.product.productImages!.first
+                    : "", // Or use a default image URL here
                 fit: BoxFit.cover,
                 loadingBuilder: loadingBuilder(),
                 errorBuilder: errorBuilder(Assets.images.pWatermarkV2.path),
@@ -132,7 +134,6 @@ class _CardWidgetState extends State<CardWidget> {
   }
 
   Widget _buildCartAction(BuildContext context, CartState state) {
-
     if (state is Success) {
       final isInCart = state.data.any((p) => p.productId == widget.product.toProduct().productId);
       if (isInCart) {

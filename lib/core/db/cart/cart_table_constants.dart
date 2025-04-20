@@ -10,6 +10,7 @@ const colProductUnit1_2 = "product_unit1_2";
 const colUnit2SellPrice = "unit2_sell_price";
 const colProductImageUrl = "product_image_url";
 const colQuantity = "quantity";
+const colProductImages="product_images";
 
 // sql statement
 // -----------------------------
@@ -24,7 +25,8 @@ CREATE TABLE $tableName (
     $colProductUnit1_2 INTEGER,                        -- Column for text data
     $colUnit2SellPrice INTEGER,                        -- Column for text data
     $colProductImageUrl TEXT,                          -- Column for larger text or binary data
-    $colQuantity INTEGER                               -- Column for color data
+    $colQuantity INTEGER,                               -- Column for color data
+    $colProductImages TEXT
 );
 """;
 

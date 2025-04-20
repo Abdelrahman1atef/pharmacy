@@ -67,6 +67,9 @@ class Results {
   @JsonKey(name: 'product_group')
   ProductGroup? productGroup;
 
+  @JsonKey(name: 'product_images')
+  List<String>? productImages;
+
   Results({
     required this.productId,
     required this.productCode,
@@ -85,6 +88,7 @@ class Results {
     required this.productDescription,
     required this.company,
     required this.productGroup,
+    required this.productImages,
   });
 
   factory Results.fromJson(Map<String, dynamic> json) =>

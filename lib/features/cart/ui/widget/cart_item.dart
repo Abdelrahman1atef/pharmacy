@@ -20,7 +20,7 @@ class CartItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 445.w,
-      height: 190.h,
+      height: 200.h,
       child: Card(
         elevation: 5,
         color: ColorName.whiteColor,
@@ -44,7 +44,7 @@ class CartItem extends StatelessWidget {
                       ),
                       child: Card(
                         child: Image.network(
-                          product.productImageUrl ?? "",
+                          product.productImages?[0] ?? "",
                           fit: BoxFit.cover,
                           loadingBuilder: loadingBuilder(),
                           errorBuilder:

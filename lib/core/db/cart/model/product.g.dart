@@ -17,6 +17,9 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       unit2SellPrice: (json['unit2_sell_price'] as num?)?.toDouble(),
       productImageUrl: json['product_image_url'] as String?,
       quantity: (json['quantity'] as num).toInt(),
+      productImages: (json['product_images'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
@@ -29,5 +32,6 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'product_unit1_2': instance.productUnit1_2,
       'unit2_sell_price': instance.unit2SellPrice,
       'product_image_url': instance.productImageUrl,
+      'product_images': instance.productImages,
       'quantity': instance.quantity,
     };

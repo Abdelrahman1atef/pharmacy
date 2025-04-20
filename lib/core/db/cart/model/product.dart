@@ -32,7 +32,8 @@ class Product {
 
   @JsonKey(name: 'product_image_url')
   String? productImageUrl;
-
+  @JsonKey(name: 'product_images')
+  List<String>? productImages;
   int quantity;
 
   Product(
@@ -45,7 +46,9 @@ class Product {
       this.productUnit1_2,
       this.unit2SellPrice,
       this.productImageUrl,
-      required this.quantity});
+      required this.quantity,
+      required this.productImages,
+      });
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);
@@ -66,6 +69,7 @@ extension ResultsToProduct on Results {
       unit2SellPrice: unit2SellPrice,
       productImageUrl: productImageUrl,
       quantity: quantity,
+      productImages: productImages,
     );
   }
 }

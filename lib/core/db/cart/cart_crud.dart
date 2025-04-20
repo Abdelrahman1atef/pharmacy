@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:pharmacy/core/db/dbHelper/db_result.dart';
 import 'package:sqflite/sqflite.dart';
 import '../dbHelper/db_helper.dart';
@@ -24,7 +26,16 @@ class CartCrud {
       );
     } else {
       // Otherwise, insert new product
-      await db.insert(tableName, product.toJson());
+      final data = product.toJson();
+
+      // ⚠️ Convert List<String> to JSON string before inserting
+      data['product_images'] = jsonEncode(product.productImages);
+
+      await db.insert(
+        tableName,
+        data,
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
     }
   }
 
@@ -32,10 +43,22 @@ class CartCrud {
   Future<DBResult<List<Product>>> read() async {
     Database db = await dbHelper.getDbInstance();
     final List<Map<String, dynamic>> results = await db.query(tableName);
-    final List<Product> cartResult =
-        results.map((e) => Product.fromJson(e)).toList();
+
+    final List<Product> cartResult = results.map((e) {
+      final fixedMap = Map<String, dynamic>.from(e);
+
+      // Decode the product_images JSON string back to List<String>
+      if (fixedMap['product_images'] != null) {
+        fixedMap['product_images'] =
+            jsonDecode(fixedMap['product_images'])?.cast<String>();
+      }
+
+      return Product.fromJson(fixedMap);
+    }).toList();
+
     return DBResult<List<Product>>.success(cartResult);
   }
+
   Future<Product?> fetchProductById(int productId) async {
     Database db = await dbHelper.getDbInstance();
     final result = await db.query(

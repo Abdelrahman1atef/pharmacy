@@ -76,7 +76,9 @@ class _DetailScreenState extends State<DetailScreen> {
                               padding: const EdgeInsetsDirectional.only(
                                   top: 10, start: 50, end: 50),
                               child: Image.network(
-                                  product.productImageUrl ?? "",
+                                  (product.productImages != null && product.productImages!.isNotEmpty)
+                                      ? product.productImages!.first
+                                      : "", // Or use a default image URL here
                                   fit: BoxFit.cover,
                                   loadingBuilder: loadingBuilder(),
                                   errorBuilder: errorBuilder(

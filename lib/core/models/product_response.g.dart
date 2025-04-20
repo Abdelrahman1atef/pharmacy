@@ -47,6 +47,9 @@ Results _$ResultsFromJson(Map<String, dynamic> json) => Results(
           ? null
           : ProductGroup.fromJson(
               json['product_group'] as Map<String, dynamic>),
+      productImages: (json['product_images'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$ResultsToJson(Results instance) => <String, dynamic>{
@@ -67,6 +70,7 @@ Map<String, dynamic> _$ResultsToJson(Results instance) => <String, dynamic>{
       'product_description': instance.productDescription,
       'company': instance.company,
       'product_group': instance.productGroup,
+      'product_images': instance.productImages,
     };
 
 Company _$CompanyFromJson(Map<String, dynamic> json) => Company(
