@@ -1,4 +1,4 @@
-import 'package:pharmacy/core/models/product_response.dart';
+import 'package:pharmacy/core/models/product/product_response.dart';
 import 'package:pharmacy/core/network/api_result.dart';
 import 'package:pharmacy/core/network/api_service.dart';
 

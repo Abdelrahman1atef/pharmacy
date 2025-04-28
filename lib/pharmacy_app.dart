@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pharmacy/core/themes/theme_mode/theme.dart';
+import 'package:pharmacy/core/controller/network_controller.dart';
 import 'package:pharmacy/utils/device_size.dart';
 import 'package:provider/provider.dart';
 import 'app_config_provider/app_config_provider.dart';
@@ -11,10 +12,11 @@ import 'generated/l10n.dart';
 
 class PharmacyApp extends StatelessWidget {
     const PharmacyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     DeviceSize deviceSize = DeviceSize(context);
-
+    NetworkController().onInit();
     return ScreenUtilInit(
       designSize:  Size(deviceSize.width, deviceSize.height),
       splitScreenMode: true,
@@ -32,13 +34,33 @@ class PharmacyApp extends StatelessWidget {
           ],
           supportedLocales: S.delegate.supportedLocales,
           title: 'Pharmacy App',
-          // theme: MyTheme.lightTheme,
-          // darkTheme: MyTheme.darkTheme,
-          // themeMode: provider.appTheme,
-          initialRoute: Routes.main,
+          initialRoute: Routes.signUp,
           onGenerateRoute: AppRouter.onGenerateRoute,
         );
       }
+    );
+  }
+}
+
+class NoInternetScreen extends StatelessWidget {
+  const NoInternetScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.error, size: 50, color: Colors.red),
+            SizedBox(height: 10),
+            Text(
+              'No internet connection',
+              style: TextStyle(fontSize: 18, color: Colors.red),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

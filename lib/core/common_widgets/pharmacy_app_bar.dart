@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
 import '../../features/search/ui/widget/search_widget.dart';
 import '../../gen/assets.gen.dart';
@@ -74,7 +75,7 @@ class PharmacyAppBar extends StatelessWidget implements PreferredSizeWidget {
                     child: child,
                   )),
               IconButton(
-                onPressed: () {},
+                onPressed: () => Navigator.pushNamed(context,Routes.signUp),
                 icon: Assets.images.cartUnselected.svg(
                     colorFilter:
                         const ColorFilter.mode(Colors.white, BlendMode.srcIn)),

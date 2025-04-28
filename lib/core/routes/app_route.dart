@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pharmacy/core/models/category_response.dart';
+import 'package:pharmacy/core/models/category/category_response.dart';
 import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/features/details/ui/DetailsScreen.dart';
 import 'package:pharmacy/features/items_list/ui/item_list_screen.dart';
+import 'package:pharmacy/features/login&signup/ui/screen/signup_screen.dart';
 
+import '../../features/login&signup/ui/screen/login_screen.dart';
 import '../../features/main/presentation/screens/main_screen.dart';
 import '../../features/search/ui/screens/search_screen.dart';
 
@@ -38,6 +40,10 @@ class AppRouter {
             );
           }
         });
+      case Routes.signUp:
+        return MaterialPageRoute(builder: (_) =>  SignupScreen());
+      case Routes.login:
+        return MaterialPageRoute(builder: (_) =>   LoginScreen());
       default:
         return _undefineRoute();
     }

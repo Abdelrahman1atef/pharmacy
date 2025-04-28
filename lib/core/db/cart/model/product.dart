@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../../core/models/product_response.dart';
+import '../../../models/product/product_response.dart';
 
 part 'product.g.dart';
 

@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pharmacy/core/network/api_exception.dart';
 
-import '../../../core/models/product_response.dart';
+import '../../../core/models/product/product_response.dart';
 
 part 'item_list_screen_state.freezed.dart';
 

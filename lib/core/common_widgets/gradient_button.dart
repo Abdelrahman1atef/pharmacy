@@ -3,16 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../gen/colors.gen.dart';
-import '../../gen/fonts.gen.dart';
 
 class GradientElevatedButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String text;
-
+  static const List<Color> defaultGradientColors=[
+    ColorName.secondaryColor,
+    ColorName.primaryColor
+  ];
+  final VoidCallback? onPressed;
+  final Widget child;
+  final List<Color>? gradientColors;
+  final bool haveBorder;
   const GradientElevatedButton({
     super.key,
     required this.onPressed,
-    required this.text,
+    required this.child,
+    this.gradientColors =defaultGradientColors,
+    this.haveBorder=false
   });
 
   @override
@@ -27,32 +33,22 @@ class GradientElevatedButton extends StatelessWidget {
           padding: WidgetStateProperty.all(EdgeInsets.zero),
           shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30), // Adjust border radius
+              borderRadius: BorderRadius.circular(30),
+              side:haveBorder? const BorderSide(color: Colors.blue,width: 1):BorderSide.none,// Adjust border radius
             ),
           ),
         ),
         child: Ink(
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [
-                ColorName.secondaryColor,
-                ColorName.primaryColor
-              ], // Define your gradient colors
+            gradient: LinearGradient(
+              colors: gradientColors!, // Define your gradient colors
             ),
             borderRadius: BorderRadius.circular(30), // Match the border radius
           ),
           child: Container(
             alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            child: Text(
-              text,
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: FontFamily.cairo,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            child: child
           ),
         ),
       ),

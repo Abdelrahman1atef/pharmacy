@@ -23,17 +23,29 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "addToCart": MessageLookupByLibrary.simpleMessage("اضف الى العربة"),
+    "agree_terms": MessageLookupByLibrary.simpleMessage("أوافق على "),
+    "already_have_account": MessageLookupByLibrary.simpleMessage(
+      "لديك حساب بالفعل ؟",
+    ),
     "appLang": MessageLookupByLibrary.simpleMessage("لغة التطبيق"),
     "appMode": MessageLookupByLibrary.simpleMessage("وضع التطبيق"),
     "app_name": MessageLookupByLibrary.simpleMessage("صيدلية د.رمزي"),
     "arabic": MessageLookupByLibrary.simpleMessage("العربية"),
     "available": MessageLookupByLibrary.simpleMessage("متوفر"),
     "best_seller": MessageLookupByLibrary.simpleMessage("الأكثر مبيعا"),
+    "birthdate": MessageLookupByLibrary.simpleMessage("تاريخ الميلاد"),
     "brandName": MessageLookupByLibrary.simpleMessage("العلامة التجارية"),
     "browsItem": MessageLookupByLibrary.simpleMessage("تصفح الامنتجات"),
     "cart_item": MessageLookupByLibrary.simpleMessage("العرية"),
     "checkout": MessageLookupByLibrary.simpleMessage("الدفع"),
+    "confirm_password": MessageLookupByLibrary.simpleMessage(
+      "تأكيد كلمة المرور",
+    ),
     "continueShopping": MessageLookupByLibrary.simpleMessage("متابعة التسوق"),
+    "continue_": MessageLookupByLibrary.simpleMessage("الإستمرار"),
+    "create_password": MessageLookupByLibrary.simpleMessage(
+      "إنشاء كلمة المرور",
+    ),
     "dark": MessageLookupByLibrary.simpleMessage("ليل"),
     "deleteCartItem": MessageLookupByLibrary.simpleMessage("ازالة المنتج"),
     "deleteCartItemAlertP1": MessageLookupByLibrary.simpleMessage(
@@ -43,15 +55,56 @@ class MessageLookup extends MessageLookupByLibrary {
       "من سلة التسوق الخاصة بك؟",
     ),
     "details": MessageLookupByLibrary.simpleMessage("التفاصيل"),
+    "email": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
     "english": MessageLookupByLibrary.simpleMessage("English"),
+    "enter_email": MessageLookupByLibrary.simpleMessage(
+      "الرجاء إدخال البريد الإلكتروني",
+    ),
+    "enter_name": MessageLookupByLibrary.simpleMessage("الرجاء إدخال الاسم"),
+    "enter_phone": MessageLookupByLibrary.simpleMessage(
+      "الرجاء إدخال رقم الهاتف",
+    ),
     "evening_welcome_message": MessageLookupByLibrary.simpleMessage(
       "مساء الخير",
     ),
+    "female": MessageLookupByLibrary.simpleMessage("أنثى"),
+    "first_name": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
+    "gender": MessageLookupByLibrary.simpleMessage("النوع"),
     "home_item": MessageLookupByLibrary.simpleMessage("الرئيسية"),
+    "invalid_email": MessageLookupByLibrary.simpleMessage(
+      "البريد الإلكتروني غير صالح",
+    ),
+    "invalid_phone": MessageLookupByLibrary.simpleMessage(
+      "رقم الهاتف غير صحيح",
+    ),
     "keepCartItem": MessageLookupByLibrary.simpleMessage("احتفظ بالمنتج"),
     "language": MessageLookupByLibrary.simpleMessage("اللغة"),
+    "last_name": MessageLookupByLibrary.simpleMessage("اللقب"),
     "light": MessageLookupByLibrary.simpleMessage("نهار"),
+    "login_button": MessageLookupByLibrary.simpleMessage("الدخول"),
+    "login_email": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
+    "login_email_hint": MessageLookupByLibrary.simpleMessage(
+      "البريد الإلكتروني",
+    ),
+    "login_facebook": MessageLookupByLibrary.simpleMessage(
+      "تسجيل الدخول باستخدام حساب فيسبوك",
+    ),
+    "login_forgot_password": MessageLookupByLibrary.simpleMessage(
+      "نسيت كلمة المرور؟",
+    ),
+    "login_google": MessageLookupByLibrary.simpleMessage(
+      "تسجيل الدخول باستخدام حساب جوجل",
+    ),
+    "login_new_user": MessageLookupByLibrary.simpleMessage("مستخدم جديد"),
+    "login_no_account": MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟"),
+    "login_password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
+    "login_phone": MessageLookupByLibrary.simpleMessage("الهاتف"),
+    "login_phone_hint": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
+    "login_social_text": MessageLookupByLibrary.simpleMessage(
+      "قم بتسجيل الدخول أو الاشتراك باستخدام حساباتك على مواقع التواصل الاجتماعي",
+    ),
     "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
+    "male": MessageLookupByLibrary.simpleMessage("ذكر"),
     "morning_welcome_message": MessageLookupByLibrary.simpleMessage(
       "صباح الخير",
     ),
@@ -59,15 +112,31 @@ class MessageLookup extends MessageLookupByLibrary {
       "ليس هناك منتجات فى العربه حتى الان",
     ),
     "ofProducts": MessageLookupByLibrary.simpleMessage("من المنتجات"),
+    "password_mismatch": MessageLookupByLibrary.simpleMessage(
+      "كلمة المرور غير متطابقة",
+    ),
+    "password_short": MessageLookupByLibrary.simpleMessage(
+      "كلمة المرور يجب أن تكون 6 أحرف على الأقل",
+    ),
+    "phone": MessageLookupByLibrary.simpleMessage("الهاتف"),
     "pound": MessageLookupByLibrary.simpleMessage("جنيه"),
     "product": MessageLookupByLibrary.simpleMessage("منتج"),
     "productDescription": MessageLookupByLibrary.simpleMessage("وصف المنتج:"),
     "search_for_medicine": MessageLookupByLibrary.simpleMessage(
       "البحث عن الدواء(عربى او انجليزى)",
     ),
+    "select_birthdate": MessageLookupByLibrary.simpleMessage(
+      "يرجى تحديد تاريخ الميلاد",
+    ),
+    "select_gender": MessageLookupByLibrary.simpleMessage("يرجى تحديد النوع"),
+    "send_sms_verification": MessageLookupByLibrary.simpleMessage(
+      "سنرسل رسالة نصية قصيرة إلى هذا الرقم للتحقق منه",
+    ),
     "settings_item": MessageLookupByLibrary.simpleMessage("الاعدادات"),
     "show_all": MessageLookupByLibrary.simpleMessage("عرض الكل"),
+    "signup": MessageLookupByLibrary.simpleMessage("التسجيل"),
     "subtotal": MessageLookupByLibrary.simpleMessage("قيمة الطلب"),
+    "terms": MessageLookupByLibrary.simpleMessage("الشروط و الاحكام"),
     "titles_category": MessageLookupByLibrary.simpleMessage("الأقسام"),
     "unavailable": MessageLookupByLibrary.simpleMessage("غير متوفر"),
     "unit": MessageLookupByLibrary.simpleMessage("الوحدة"),

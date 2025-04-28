@@ -1,6 +1,6 @@
 import 'package:pharmacy/core/network/api_service.dart';
 
-import '../../../../core/models/category_response.dart';
+import '../../../../core/models/category/category_response.dart';
 import '../../../../core/network/api_result.dart';
 
 class CategoryRepository {

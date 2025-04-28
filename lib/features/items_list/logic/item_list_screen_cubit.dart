@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import '../../../core/models/product_response.dart';
+import '../../../core/models/product/product_response.dart';
 import '../repository/item_list/item_list_repository.dart';
 import 'item_list_screen_state.dart';
 

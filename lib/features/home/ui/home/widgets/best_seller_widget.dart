@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy/core/common_widgets/card_widget.dart';
-import 'package:pharmacy/core/models/product_response.dart';
+import 'package:pharmacy/core/models/product/product_response.dart';
 import 'package:pharmacy/features/home/logic/best_seller/best_seller_cubit.dart';
 import 'package:pharmacy/features/home/logic/best_seller/best_seller_state.dart';
 import 'package:shimmer/shimmer.dart';

@@ -1,6 +1,6 @@
 import 'package:pharmacy/core/network/api_service.dart';
 
-import '../../../../core/models/product_response.dart';
+import '../../../../core/models/product/product_response.dart';
 import '../../../../core/network/api_result.dart';
 
 class ItemListRepository {

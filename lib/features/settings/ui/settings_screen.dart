@@ -63,7 +63,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ? "${S.of(context).language} ($_selectedLang)"
                           : "${S.of(context).language} (${languages[0].label})",
                       onSelected: (value) {
-                        provider.changeLang(value);
+                        setState(() {
+                          provider.changeLang(value);
+                        });
                       },
                     ),
                   ],

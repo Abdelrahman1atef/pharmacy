@@ -35,6 +35,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   dio:
   pretty_dio_logger:
+  connectivity_plus: ^6.1.3
+  get:
   flutter_bloc:
   provider:
   get_it:
@@ -52,6 +54,9 @@ dependencies:
   persistent_bottom_nav_bar:
   sqflite:
   path:
+  intl:
+
+  google_sign_in:
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -107,18 +107,12 @@ class TextStyles {
     color: ColorName.primaryColor,
     fontWeight: FontWeight.bold,
   );
-  static TextStyle get cartConfirmationDialogDelete => TextStyle(
+  static TextStyle get cartConfirmationDialog => TextStyle(
     fontSize: 15.sp,
     fontFamily: FontFamily.cairo,
-    color: ColorName.errorTextColor,
     fontWeight: FontWeight.bold,
   );
-  static TextStyle get cartConfirmationDialogKeep => TextStyle(
-    fontSize: 15.sp,
-    fontFamily: FontFamily.cairo,
-    color: ColorName.secondaryColor,
-    fontWeight: FontWeight.bold,
-  );
+
   static TextStyle get cartCheckout => TextStyle(
     fontSize: 15.sp,
     fontFamily: FontFamily.cairo,
@@ -129,6 +123,17 @@ class TextStyles {
     fontSize: 20.sp,
     fontFamily: FontFamily.cairo,
     color: ColorName.blackColor,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle get loginSignupText => TextStyle(
+    fontSize: 15.sp,
+    fontFamily: FontFamily.cairo,
+    fontWeight: FontWeight.normal,
+  );
+  static TextStyle get gradientElevatedButtonText => TextStyle(
+    color: ColorName.whiteColor,
+    fontFamily: FontFamily.cairo,
+    fontSize: 12.sp,
     fontWeight: FontWeight.bold,
   );
 }

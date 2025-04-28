@@ -8,7 +8,7 @@ import 'package:pharmacy/features/items_list/logic/item_list_screen_cubit.dart';
 import 'package:pharmacy/features/items_list/logic/item_list_screen_state.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../core/models/product_response.dart';
+import '../../../core/models/product/product_response.dart';
 
 class ItemListScreen extends StatefulWidget {
   final String widgetTitle;

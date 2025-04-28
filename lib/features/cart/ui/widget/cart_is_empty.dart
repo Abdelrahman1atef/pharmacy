@@ -26,7 +26,7 @@ class CartIsEmpty extends StatelessWidget {
                 onPressed: () {
                   mainPageKey.currentState?.changePage(0);
                 },
-                text: S.of(context).browsItem)
+                child: Text(S.of(context).browsItem,style: TextStyles.gradientElevatedButtonText,))
           ],
         ),
       ),

@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:pharmacy/core/models/product_response.dart';
+import 'package:pharmacy/core/models/product/product_response.dart';
 import 'package:pharmacy/features/details/repository/details_repository.dart';
 
 import 'details_state.dart';

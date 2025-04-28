@@ -8,7 +8,7 @@ import 'package:pharmacy/gen/assets.gen.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/common_widgets/header_widget.dart';
-import '../../../../../core/models/category_response.dart';
+import '../../../../../core/models/category/category_response.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../../utils/network_image_utils.dart';
 

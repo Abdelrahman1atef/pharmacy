@@ -1,7 +1,7 @@
 import 'package:pharmacy/core/network/api_result.dart';
 import 'package:pharmacy/core/network/api_service.dart';
 
-import '../../../core/models/search_response.dart';
+import '../../../core/models/search/search_response.dart';
 
 class SearchRepository {
   final ApiService _apiService;

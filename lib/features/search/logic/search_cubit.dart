@@ -2,7 +2,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy/features/search/logic/search_state.dart';
 
-import '../../../core/models/search_response.dart';
+import '../../../core/models/search/search_response.dart';
 import '../repository/search_repository.dart';
 
 class SearchCubit extends Cubit<SearchState> {

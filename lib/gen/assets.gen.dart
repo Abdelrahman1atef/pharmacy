@@ -49,6 +49,12 @@ class $AssetsImagesGen {
   /// File path: assets/images/drug.png
   AssetGenImage get drug => const AssetGenImage('assets/images/drug.png');
 
+  /// File path: assets/images/facebook.svg
+  SvgGenImage get facebook => const SvgGenImage('assets/images/facebook.svg');
+
+  /// File path: assets/images/google.svg
+  SvgGenImage get google => const SvgGenImage('assets/images/google.svg');
+
   /// File path: assets/images/heart.svg
   SvgGenImage get heart => const SvgGenImage('assets/images/heart.svg');
 
@@ -85,6 +91,8 @@ class $AssetsImagesGen {
         cartUnselected,
         categoryDefaultIcon,
         drug,
+        facebook,
+        google,
         heart,
         homeSelected,
         homeUnselected,

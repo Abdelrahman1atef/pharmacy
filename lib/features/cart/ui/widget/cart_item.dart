@@ -166,7 +166,9 @@ void _showConfirmationDialog(BuildContext context, Product product) {
                   },
                   child: Text(
                     S.of(context).deleteCartItem,
-                    style: TextStyles.cartConfirmationDialogDelete,
+                    style: TextStyles.cartConfirmationDialog.copyWith(
+                      color: ColorName.errorTextColor
+                    ),
                   ),
                 ),
                 TextButton(
@@ -175,7 +177,9 @@ void _showConfirmationDialog(BuildContext context, Product product) {
                   },
                   child: Text(
                     S.of(context).keepCartItem,
-                    style: TextStyles.cartConfirmationDialogKeep,
+                    style: TextStyles.cartConfirmationDialog.copyWith(
+                        color: ColorName.secondaryColor
+                    ),
                   ),
                 ),
               ],

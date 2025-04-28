@@ -13,7 +13,7 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../generated/l10n.dart';
 import '../../utils/network_image_utils.dart';
-import '../models/product_response.dart';
+import '../models/product/product_response.dart';
 import '../themes/text/text_styles.dart';
 import 'gradient_button.dart';
 
@@ -143,7 +143,7 @@ class _CardWidgetState extends State<CardWidget> {
           onPressed: () {
             context.read<CartCubit>().addItemToCart(widget.product.toProduct());
           },
-          text: S.of(context).addToCart,
+          child: Text(S.of(context).addToCart,style: TextStyles.gradientElevatedButtonText,),
         );
       }
     } else {

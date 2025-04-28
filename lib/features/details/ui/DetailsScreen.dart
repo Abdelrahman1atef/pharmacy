@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy/core/common_widgets/pharmacy_app_bar.dart';
-import 'package:pharmacy/core/models/product_response.dart';
+import 'package:pharmacy/core/models/product/product_response.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
 import 'package:pharmacy/features/details/logic/details/details_cubit.dart';
 import 'package:pharmacy/features/details/logic/product/product_cubit.dart';
@@ -283,7 +283,6 @@ class MyToggleButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProductCubit, ProductState>(
       builder: (BuildContext context, state) {
-        print('Rebuilding with state: $state ${state.selectedUnit}');
         return AnimatedToggleSwitch<bool>.size(
             current: state.selectedUnit == 'productUnit2',
             values: const [false, true],
@@ -302,7 +301,6 @@ class MyToggleButtons extends StatelessWidget {
               final selectedUnit = value ? 'productUnit2' : 'productUnit1';
               final price =
                   value ? product.unit2SellPrice! : product.sellPrice!;
-              print('Selected Unit: $selectedUnit, Price: $price');
               context.read<ProductCubit>().selectUnit(selectedUnit, price);
             });
       },
