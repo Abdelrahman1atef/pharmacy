@@ -24,7 +24,7 @@ class CartScreen extends StatelessWidget {
       builder: (context, state) {
         // Handle loading, error, and empty states
         if (state is Loading) {
-          return const _ShimmerWidget();
+          return  _ShimmerWidget();
         } else if (state is Error) {
           return Scaffold(
             body: Center(
