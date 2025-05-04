@@ -1,16 +1,45 @@
-# pharmacy
+# Pharmacy Mobile Application 🏥💊
 
-A new Flutter project.
+![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
 
-## Getting Started
+A modern cross-platform pharmacy management application built with Flutter that provides seamless medicine ordering, prescription management, and healthcare services.
 
-This project is a starting point for a Flutter application.
+## Features ✨
 
-A few resources to get you started if this is your first Flutter project:
+- **User Authentication** 🔒
+    - Secure login with email/phone
+    - Token-based authentication
+    - Profile management
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Medicine Catalog** 💊
+    - Comprehensive product listings
+    - Advanced search functionality
+    - Detailed product information
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Shopping Experience** 🛒
+    - Intuitive cart system
+    - Quantity selectors
+    - Checkout process
+
+- **State Management** 🧠
+    - BLoC pattern implementation
+    - Cubit for auth management
+    - Provider for dependency injection
+
+- **UI Components** 🎨
+    - Custom gradient app bars
+    - Responsive layouts
+    - Themed design system
+
+## Technical Stack 🛠️
+
+- **Frontend**: Flutter 3.x
+- **State Management**: flutter_bloc
+- **Navigation**: go_router
+- **Local Storage**: SharedPreferences
+- **Networking**: Dio
+- **Internationalization**: flutter_localizations
+- **UI**: Custom design system with ScreenUtil for responsiveness
+
+## Project Structure 📂
