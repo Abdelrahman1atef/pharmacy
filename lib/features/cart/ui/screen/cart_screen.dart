@@ -192,7 +192,7 @@ class CartScreen extends StatelessWidget {
             ),
           );
         } else {
-          return const _ShimmerWidget();
+          return  _ShimmerWidget();
         }
       },
     );
@@ -200,7 +200,6 @@ class CartScreen extends StatelessWidget {
 }
 
 class _ShimmerWidget extends StatelessWidget {
-  const _ShimmerWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
