@@ -69,7 +69,7 @@ class CategoryWidget extends StatelessWidget {
                                      height: 30,
                                      width: 20,
                                      child: Image.network(
-                                       "URL",
+                                       "",
                                       fit: BoxFit.cover,
                                        loadingBuilder: loadingBuilder(),
                                        errorBuilder: (context, error, stackTrace) => Assets.images.categoryDefaultIcon.svg(),

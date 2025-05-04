@@ -4,8 +4,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:get_it/get_it.dart';
 import 'package:pharmacy/core/common_widgets/gradient_button.dart';
 import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
@@ -13,7 +11,6 @@ import 'package:pharmacy/features/login&signup/logic/signup/signup_cubit.dart';
 import 'package:pharmacy/features/login&signup/logic/signup/signup_state.dart';
 import 'package:pharmacy/gen/colors.gen.dart';
 
-import '../../../../core/di/module.dart';
 import '../../../../core/models/register_login/register_request.dart';
 import '../../../../generated/l10n.dart';
 import '../widgets/login_signup_app_bar.dart';
@@ -125,11 +122,11 @@ class _SignupScreenState extends State<SignupScreen> {
 
                       state.when(
                         loading: () {
-                          print(state.toString());
+
                         },
                         success: (data ) {
-                          final rr=data as RegisterRequest;
-                          print(rr.email);
+                          final registerRequest=data as RegisterRequest;
+                          print(registerRequest.email);
                           Navigator.pop(context);
                           // Handle success (e.g., show success message or navigate)
                         },
@@ -142,18 +139,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: GradientElevatedButton(
                       onPressed: agree
                           ? () {
-                              if (_formKey.currentState!.validate()) {
-                                print("Form is valid. Submitting...");
-                                print("""
-                            ${_firstNameController.text}
-                            ${_lastNameController.text}
-                            ${_emailController.text}
-                            ${_phoneController.text}
-                            $selectedGender
-                            ${_passwordController.text}
-                            ${_confirmPasswordController.text}
-                            ${dateController.text}
-                            """);
+                              if (_formKey.currentState!.validate()){
                                 final registerRequest = RegisterRequest(
                                   email: _emailController.text,
                                   phone: _phoneController.text,

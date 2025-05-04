@@ -46,6 +46,10 @@ class $AssetsImagesGen {
   SvgGenImage get categoryDefaultIcon =>
       const SvgGenImage('assets/images/category-default_icon.svg');
 
+  /// File path: assets/images/default_profile_image.svg
+  SvgGenImage get defaultProfileImage =>
+      const SvgGenImage('assets/images/default_profile_image.svg');
+
   /// File path: assets/images/drug.png
   AssetGenImage get drug => const AssetGenImage('assets/images/drug.png');
 
@@ -90,6 +94,7 @@ class $AssetsImagesGen {
         cartSelected,
         cartUnselected,
         categoryDefaultIcon,
+        defaultProfileImage,
         drug,
         facebook,
         google,

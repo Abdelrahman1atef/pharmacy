@@ -8,7 +8,6 @@ import 'package:pharmacy/features/home/logic/best_seller/best_seller_state.dart'
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/common_widgets/header_widget.dart';
-import '../../../../../core/routes/routes.dart';
 import '../../../../../generated/l10n.dart';
 
 class BestSellerWidget extends StatelessWidget {
@@ -53,14 +52,7 @@ class BestSellerWidget extends StatelessWidget {
                           return Padding(
                             padding: const EdgeInsetsDirectional.only(
                                 end: 0, start: 5),
-                            child: InkWell(
-                              onTap: () => Navigator.pushNamed(
-                                  context, Routes.productDetail,
-                                  arguments: product.productId),
-                              borderRadius: BorderRadius.circular(12),
-
-                              child: CardWidget(product: product),
-                            ),
+                            child: CardWidget(product: product),
                           );
                         },
                       );

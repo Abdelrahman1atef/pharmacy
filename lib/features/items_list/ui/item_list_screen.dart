@@ -9,6 +9,7 @@ import 'package:pharmacy/features/items_list/logic/item_list_screen_state.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../core/models/product/product_response.dart';
+import '../../../core/routes/routes.dart';
 
 class ItemListScreen extends StatefulWidget {
   final String widgetTitle;
@@ -51,7 +52,9 @@ class _ItemListScreenState extends State<ItemListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PharmacyAppBar(),
+      appBar:  PharmacyAppBar(
+        onSearchTap: () => Navigator.pushNamed(context, Routes.searchScreen),
+      ),
       body: Column(
         children: [
           SizedBox(height: 12.h,),
@@ -73,7 +76,7 @@ class _ItemListScreenState extends State<ItemListScreen> {
                       mainAxisExtent: 300,
                     ),
                     padding: const EdgeInsetsDirectional.symmetric(horizontal: 12),
-                    itemCount: 6, // Number of shimmer placeholders
+                    itemCount: 4, // Number of shimmer placeholders
                     itemBuilder: (context, index) {
                       return const _ShimmerWidget(); // Full grid of shimmer placeholders
                     },
@@ -114,9 +117,9 @@ class _ItemListScreenState extends State<ItemListScreen> {
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 12),
 
       controller: _scrollController,
-      itemCount: isLoadingMore ? data.results.length + 4 : data.results.length,
+      itemCount: data.results.length + (isLoadingMore ? 4 : 0),
       itemBuilder: (context, index) {
-        if (index >= data.results.length) {
+        if (index >= data.results.length && isLoadingMore) {
           return const _ShimmerWidget();
         }
         final product = data.results[index];

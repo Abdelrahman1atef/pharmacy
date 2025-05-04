@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy/features/cart/logic/cart_cubit.dart';
 import 'package:pharmacy/features/cart/logic/cart_state.dart';
+import 'package:pharmacy/features/cart/ui/widget/cart_item_widget.dart';
 import '../../gen/colors.gen.dart';
 import '../db/cart/model/product.dart';
 
@@ -20,20 +21,24 @@ class _QuantitySelectorState extends State<QuantitySelector> {
   void initState() {
     _quantity = widget.product.quantity;
     super.initState();
+    context.read<CartCubit>().emitCartState();
   }
   void _incrementQuantity() {
     setState(() {
       _quantity++;
-      // context.read<CartCubit>().updateCartItem(productId, newQuantity)
     });
     context.read<CartCubit>().updateCartItem(widget.product.productId, _quantity);
   }
-
   void _decrementQuantity() {
-    if (_quantity > 1) {
+
+    if (_quantity > 0) {
       setState(() {
         _quantity--;
       });
+      if(_quantity == 0 ){
+        CartItemWidget.showConfirmationDialog(context, widget.product);
+        return;
+      }
       context.read<CartCubit>().updateCartItem(widget.product.productId, _quantity);
     }
   }
@@ -42,7 +47,6 @@ class _QuantitySelectorState extends State<QuantitySelector> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Calculate dynamic sizes based on available width
         final maxWidth = constraints.maxWidth;
         final buttonSize = maxWidth * 0.15; // 15% of available width
         final fontSize = maxWidth * 0.1; // 6% of available width

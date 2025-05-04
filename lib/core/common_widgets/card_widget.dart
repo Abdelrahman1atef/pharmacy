@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pharmacy/core/common_widgets/quantity_selector.dart';
-import 'package:pharmacy/core/db/cart/model/product.dart';
 
 import '../../features/cart/logic/cart_cubit.dart';
 import '../../features/cart/logic/cart_state.dart';
@@ -12,10 +10,11 @@ import '../../features/details/logic/favorite/favorite_state.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../generated/l10n.dart';
+import '../../utils/cart_action.dart';
 import '../../utils/network_image_utils.dart';
 import '../models/product/product_response.dart';
+import '../routes/routes.dart';
 import '../themes/text/text_styles.dart';
-import 'gradient_button.dart';
 
 class CardWidget extends StatefulWidget {
   final Results product;
@@ -39,31 +38,37 @@ class _CardWidgetState extends State<CardWidget> {
   }
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CartCubit, CartState>(
-      builder: (context, state) {
-        return SizedBox(
-          width: 180.w,
-          height: 300.h,
-          child: Card(
-            color: ColorName.whiteColor,
-            shadowColor: ColorName.blackColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            elevation: 4,
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildProductDetails(context),
-                  _buildCartAction(context, state),
-                ],
+    return InkWell(
+      onTap:() =>  Navigator.pushNamed(
+          context, Routes.productDetail,
+          arguments: widget.product.productId),
+        borderRadius: BorderRadius.circular(12),
+      child: BlocBuilder<CartCubit, CartState>(
+        builder: (context, state) {
+          return SizedBox(
+            width: 180.w,
+            height: 300.h,
+            child: Card(
+              color: ColorName.whiteColor,
+              shadowColor: ColorName.blackColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              elevation: 4,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildProductDetails(context),
+                    buildCartAction(context, state,widget.product),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -133,21 +138,5 @@ class _CardWidgetState extends State<CardWidget> {
     );
   }
 
-  Widget _buildCartAction(BuildContext context, CartState state) {
-    if (state is Success) {
-      final isInCart = state.data.any((p) => p.productId == widget.product.toProduct().productId);
-      if (isInCart) {
-        return  QuantitySelector(product: widget.product.toProduct(),);
-      } else {
-        return GradientElevatedButton(
-          onPressed: () {
-            context.read<CartCubit>().addItemToCart(widget.product.toProduct());
-          },
-          child: Text(S.of(context).addToCart,style: TextStyles.gradientElevatedButtonText,),
-        );
-      }
-    } else {
-      return const CircularProgressIndicator();
-    }
-  }
+
 }

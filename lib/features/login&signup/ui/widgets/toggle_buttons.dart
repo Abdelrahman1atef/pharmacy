@@ -9,9 +9,10 @@ import '../../logic/login/login_state.dart';
 
 class MyToggleButtons extends StatelessWidget {
   final List<String> loginOption;
-
+  final FocusNode emailPhoneFocusNode;
   const MyToggleButtons({
     required this.loginOption,
+    required this.emailPhoneFocusNode,
     super.key,
   });
 
@@ -34,9 +35,11 @@ class MyToggleButtons extends StatelessWidget {
                 borderRadius: BorderRadiusDirectional.circular(15)),
             selectedIconScale: 1,
             onChanged: (value) {
-              final selectedOption = value ? loginOption[0] : loginOption[1];
-              print(selectedOption);
+              emailPhoneFocusNode.unfocus();
               context.read<LoginScreenCubit>().setPhoneSelected(value);
+              Future.delayed(const Duration(milliseconds: 500), () {
+                emailPhoneFocusNode.requestFocus(); // Re-request focus after state update
+              });
             });
       },
     );

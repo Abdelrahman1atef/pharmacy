@@ -4,6 +4,7 @@ import 'package:pharmacy/core/common_widgets/pharmacy_app_bar.dart';
 import 'package:pharmacy/core/di/module.dart';
 import 'package:pharmacy/core/routes/routes.dart';
 
+import '../../../../core/models/search/search_response.dart';
 import '../../../../generated/l10n.dart';
 import '../../logic/search_cubit.dart';
 import '../../logic/search_state.dart';
@@ -89,13 +90,13 @@ class _SearchResults extends StatelessWidget {
                 height: 1,          // Space around the divider
               ),
               itemBuilder: (context, index) {
-                final product = products[index];
+                final product = products[index] as SearchResponse;
                 return InkWell(
                   onTap: () => Navigator.pushNamed(context,Routes.productDetail,arguments: product.productId),
                   child: ListTile(
                     leading: Text(product.productId.toString()),
                     title: Text(product.productNameAr ?? '',maxLines: 1,overflow: TextOverflow.ellipsis,),
-                    subtitle: Text(product.productNameEn,maxLines: 1,overflow: TextOverflow.ellipsis,),
+                    subtitle: Text(product.productNameEn??'',maxLines: 1,overflow: TextOverflow.ellipsis,),
                     trailing: SizedBox(
                       width: 100,
                       child: Text(

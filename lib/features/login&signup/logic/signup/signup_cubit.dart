@@ -1,10 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pharmacy/features/login&signup/logic/signup/signup_state.dart';
 import 'package:pharmacy/features/login&signup/repository/signup_repository.dart';
 
 import '../../../../core/models/register_login/register_request.dart';
-import '../../../../core/network/api_result.dart';
 
 
 class SignupCubit extends Cubit<SignupState> {

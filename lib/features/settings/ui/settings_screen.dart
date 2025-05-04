@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy/app_config_provider/app_config_provider.dart';
+import 'package:pharmacy/app_config_provider/auth/logic/auth_cubit.dart';
+import 'package:pharmacy/app_config_provider/auth/logic/auth_state.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
 import 'package:provider/provider.dart';
+import '../../../core/routes/routes.dart';
 import '../../../generated/l10n.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -14,11 +18,14 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-
-
-// Selected language and theme mode
   String? _selectedLang;
   String? _selectedThemeMode;
+
+  @override
+  void initState() {
+    // context.read<AuthCubit>().checkAuthStatus();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +34,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       DropdownMenuEntry(value: "en", label: S.of(context).english),
     ];
     List<DropdownMenuEntry<Object>> themeMode = [
-       DropdownMenuEntry(value: ThemeMode.light, label:S.of(context).light),
-       DropdownMenuEntry(value: ThemeMode.dark, label: S.of(context).dark)
+      DropdownMenuEntry(value: ThemeMode.light, label: S.of(context).light),
+      DropdownMenuEntry(value: ThemeMode.dark, label: S.of(context).dark)
     ];
     var provider = Provider.of<AppConfigProvider>(context);
     return Scaffold(
@@ -56,7 +63,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     SizedBox(
                       height: 5.h,
                     ),
-
                     _dropdownMenu(
                       dropdownMenuEntries: languages,
                       hintText: _selectedLang != null
@@ -74,18 +80,42 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(S.of(context).appMode, style: TextStyles.settingsTitle,),
+                  Text(
+                    S.of(context).appMode,
+                    style: TextStyles.settingsTitle,
+                  ),
                   _dropdownMenu(
-                      dropdownMenuEntries: themeMode,
-                      hintText: _selectedThemeMode != null
-                          ? "$_selectedThemeMode"
-                          : themeMode[0].label,
-                      onSelected: (value) {
-                        provider.changeTheme(value);
-                      },
+                    dropdownMenuEntries: themeMode,
+                    hintText: _selectedThemeMode != null
+                        ? "$_selectedThemeMode"
+                        : themeMode[0].label,
+                    onSelected: (value) {
+                      provider.changeTheme(value);
+                    },
                   )
                 ],
               ),
+              BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
+                return state.when(
+                    initial: () => const SizedBox.shrink(),
+                    loading: () => const CircularProgressIndicator(),
+                    unauthenticated: (e) => ElevatedButton(
+                          onPressed: () =>
+                              Navigator.pushNamed(context, Routes.login),
+                          child: const Text("Login"),
+                        ),
+                    authenticated: (user) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                              "Logged in as ${"${user.firstName} ${user.lastName}"}"),
+                          _buildLogoutButton(context)
+
+                        ],
+                      );
+                    });
+              })
             ],
           ),
         ),
@@ -121,3 +151,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 }
+Widget _buildLogoutButton(BuildContext context) {
+  return ElevatedButton(
+    onPressed: () async {
+      final shouldLogout = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Confirm Logout"),
+          content: const Text("Are you sure you want to log out?"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text("Logout"),
+            ),
+          ],
+        ),
+      );
+
+      if (shouldLogout == true) {
+        await context.read<AuthCubit>().logout();
+
+      }
+    },
+    child: const Text("Logout"),
+  );
+}
+

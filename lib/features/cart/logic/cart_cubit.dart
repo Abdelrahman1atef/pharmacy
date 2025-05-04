@@ -23,7 +23,7 @@ class CartCubit extends Cubit<CartState> {
     try {
       await _cartRepository.updateCartItem(productId, newQuantity);
 
-       _cartRepository.fetchProductById(productId);
+      // await _cartRepository.fetchProductById(productId);
       emitCartState();
     } catch (error) {
       emit(Error('Failed to update cart item: $error'));

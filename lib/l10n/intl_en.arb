@@ -47,7 +47,7 @@
   "login_no_account": "Don't have an account?",
   "login_new_user": "New User",
 
-"morning_welcome_message": "Good Morning",
+  "morning_welcome_message": "Good Morning",
   "evening_welcome_message": "Good Evening",
   "search_for_medicine": "Search for medicine(English or Arabic)",
   "home_item": "Home",
@@ -60,6 +60,7 @@
   "available": "in Stock",
   "unavailable": "out of Stock",
   "details": "Details",
+  "goToCart": "Go To Cart",
   "brandName": "Brand",
   "unit": "Unit",
   "productDescription": "Product Details:",

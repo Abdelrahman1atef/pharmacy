@@ -55,7 +55,7 @@ dependencies:
   sqflite:
   path:
   intl:
-
+  flutter_phoenix:
   google_sign_in:
 dev_dependencies:
   flutter_test:

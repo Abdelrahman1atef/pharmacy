@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacy/features/main/logic/main_cubit.dart';
 import 'package:pharmacy/features/settings/ui/settings_screen.dart';
 
 import '../../../../core/common_widgets/pharmacy_app_bar.dart';
@@ -10,18 +12,9 @@ import '../../../../generated/l10n.dart';
 import '../../../cart/ui/screen/cart_screen.dart';
 import '../../../home/ui/home/screens/home_screen.dart';
 
+class MainScreen extends StatelessWidget {
 
-final GlobalKey<_MainScreenState> mainPageKey=GlobalKey();
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
-
-  @override
-  _MainScreenState createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  // Track the current index of the selected tab
-  int _currentIndex = 0;
+   MainScreen({super.key});
 
   // List of screens/widgets corresponding to each tab
   final List<Widget> _screens = [
@@ -29,13 +22,11 @@ class _MainScreenState extends State<MainScreen> {
     const CartScreen(),
     const SettingsScreen(),
   ];
-  void changePage(int value){
-    setState(() {
-      _currentIndex = value;
-    });
-  }
+
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<MainCubit, int>(
+  builder: (context, currentIndex) {
     return Scaffold(
         appBar: PharmacyAppBar(
           searchEnabled: false,
@@ -47,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ),
         body: IndexedStack(
-          index: _currentIndex,
+          index: currentIndex,
           children: _screens,
         ),
         bottomNavigationBar: NavigationBarTheme(
@@ -59,9 +50,9 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
           child: NavigationBar(
-            selectedIndex: _currentIndex,
-            onDestinationSelected: (value) {
-              changePage(value);
+            selectedIndex: currentIndex,
+            onDestinationSelected: (index) {
+              BlocProvider.of<MainCubit>(context).selectTab(index);
             },
             destinations: [
               NavigationDestination(
@@ -89,5 +80,7 @@ class _MainScreenState extends State<MainScreen> {
             elevation: 5,
           ),
         ));
+  },
+);
   }
 }

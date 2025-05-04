@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacy/app_config_provider/auth/logic/auth_cubit.dart';
+import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
 import 'package:pharmacy/features/cart/logic/cart_cubit.dart';
 import 'package:pharmacy/features/cart/logic/cart_state.dart';
-import 'package:pharmacy/features/cart/ui/widget/cart_is_empty.dart';
-import 'package:pharmacy/features/cart/ui/widget/cart_item.dart';
+import 'package:pharmacy/features/cart/ui/widget/cart_is_empty_widget.dart';
+import 'package:pharmacy/features/cart/ui/widget/cart_item_widget.dart';
 import 'package:pharmacy/gen/colors.gen.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/db/cart/model/product.dart';
 import '../../../../generated/l10n.dart';
-import '../../../main/presentation/screens/main_screen.dart';
+import '../../../main/logic/main_cubit.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -37,7 +39,7 @@ class CartScreen extends StatelessWidget {
           final cartItemsNum = cartItems.length;
           double totalSellPrice = 0.0;
           for (final product in cartItems) {
-            totalSellPrice += product.sellPrice!;
+            totalSellPrice += product.sellPrice! * product.quantity;
           }
 
           if (cartItems.isEmpty) {
@@ -57,7 +59,7 @@ class CartScreen extends StatelessWidget {
                     scrollDirection: Axis.vertical,
                     itemBuilder: (context, index) {
                       final cartItem = cartItems[index];
-                      return CartItem(
+                      return CartItemWidget(
                         product: cartItem,
                       );
                     },
@@ -120,7 +122,8 @@ class CartScreen extends StatelessWidget {
                                     horizontal: 10),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    mainPageKey.currentState?.changePage(0);
+                                    BlocProvider.of<MainCubit>(context)
+                                        .selectTab(0);
                                   },
                                   style: ButtonStyle(
                                     shape: WidgetStatePropertyAll(
@@ -130,7 +133,10 @@ class CartScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  child: Text(S.of(context).continueShopping,style: TextStyles.cartCheckout,),
+                                  child: Text(
+                                    S.of(context).continueShopping,
+                                    style: TextStyles.cartCheckout,
+                                  ),
                                 ),
                               ),
                             ),
@@ -139,9 +145,28 @@ class CartScreen extends StatelessWidget {
                                 padding: const EdgeInsetsDirectional.symmetric(
                                     horizontal: 10),
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    context.read<AuthCubit>().state.when(
+                                          initial: () {},
+                                          authenticated: (user) {},
+                                          unauthenticated: (e) =>
+                                              Navigator.pushNamed(
+                                                  context, Routes.login),
+                                          loading: () {
+                                            showDialog(
+                                              context: context,
+                                              barrierDismissible: false,
+                                              builder: (_) => const Center(
+                                                  child:
+                                                      CircularProgressIndicator()),
+                                            );
+                                          },
+                                        );
+                                  },
                                   style: ButtonStyle(
-                                    backgroundColor:WidgetStatePropertyAll(ColorName.primaryColor),
+                                    backgroundColor:
+                                        const WidgetStatePropertyAll(
+                                            ColorName.primaryColor),
                                     shape: WidgetStatePropertyAll(
                                       RoundedRectangleBorder(
                                         borderRadius:
@@ -149,9 +174,11 @@ class CartScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  child: Text(S.of(context).checkout,style: TextStyles.cartCheckout.copyWith(
-                                    color: ColorName.whiteColor
-                                  ),),
+                                  child: Text(
+                                    S.of(context).checkout,
+                                    style: TextStyles.cartCheckout
+                                        .copyWith(color: ColorName.whiteColor),
+                                  ),
                                 ),
                               ),
                             ),

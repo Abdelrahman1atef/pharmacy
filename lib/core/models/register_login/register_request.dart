@@ -1,39 +1,24 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:pharmacy/app_config_provider/auth/model/data.dart';
+
 part 'register_request.g.dart';
 
-
 @JsonSerializable()
-class RegisterRequest {
-final String email;
-final String phone;
- @JsonKey(name: "first_name")
-final String firstName;
- @JsonKey(name: "last_name")
-final String lastName;
-final String birthdate;
-final String gender;
-final String? password;
- @JsonKey(name: "profile_picture")
-final String profilePicture;
- @JsonKey(name: "is_active")
-final bool isActive;
- @JsonKey(name: "is_staff")
-final bool isStaff;
+class RegisterRequest extends Data {
+  RegisterRequest(
+      {required super.email,
+      required super.phone,
+      required super.firstName,
+      required super.lastName,
+      required super.birthdate,
+      required super.gender,
+      required super.password,
+      required super.profilePicture,
+      required super.isActive,
+      required super.isStaff});
 
- RegisterRequest(
-      {required this.email,
-      required this.phone,
-      required this.firstName,
-      required this.lastName,
-      required this.birthdate,
-      required this.gender,
-      required this.password,
-      required this.profilePicture,
-      required this.isActive,
-      required this.isStaff});
+  factory RegisterRequest.fromJson(Map<String, dynamic> json) =>
+      _$RegisterRequestFromJson(json);
 
-
-factory RegisterRequest.fromJson(Map<String, dynamic> json) => _$RegisterRequestFromJson(json);
- Map<String, dynamic> toJson() => _$RegisterRequestToJson(this);
-
+  Map<String, dynamic> toJson() => _$RegisterRequestToJson(this);
 }

@@ -12,7 +12,7 @@ class AppConfigProvider extends ChangeNotifier {
   }
 
   Future<void> _loadThemeMode() async {
-    String? savedMode = await CashHelper.getThemeMode();
+    String? savedMode = CashHelper.getThemeMode();
     if (savedMode != null) {
       appTheme = savedMode == 'dark' ? ThemeMode.dark : ThemeMode.light;
       notifyListeners();

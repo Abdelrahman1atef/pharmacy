@@ -1,8 +1,12 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:pharmacy/app_config_provider/auth/logic/auth_cubit.dart';
+import 'package:pharmacy/app_config_provider/auth/logic/auth_state.dart';
 import 'package:pharmacy/core/common_widgets/gradient_button.dart';
+import 'package:pharmacy/core/models/register_login/login_request.dart';
 import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
 import 'package:pharmacy/features/login&signup/logic/login/login_cubit.dart';
@@ -14,13 +18,31 @@ import 'package:pharmacy/generated/l10n.dart'; // <-- import your localization f
 import '../../logic/login/login_state.dart';
 import '../widgets/toggle_buttons.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final TextEditingController _emailPhoneController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+  final FocusNode _emailPhoneFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _emailPhoneController.dispose();
+    _passwordController.dispose();
+    _emailPhoneFocusNode.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +66,12 @@ class LoginScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Column(
-                      children: [MyToggleButtons(loginOption: loginOption)],
+                      children: [
+                        MyToggleButtons(
+                          loginOption: loginOption,
+                          emailPhoneFocusNode: _emailPhoneFocusNode,
+                        )
+                      ],
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -54,7 +81,7 @@ class LoginScreen extends StatelessWidget {
                     builder: (context, state) {
                       return TextFormField(
                         controller: _emailPhoneController,
-                        autofocus: true,
+                        focusNode: _emailPhoneFocusNode,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return state.isPhoneSelected
@@ -63,6 +90,9 @@ class LoginScreen extends StatelessWidget {
                           }
                           return null;
                         },
+                        keyboardType: state.isPhoneSelected
+                            ? TextInputType.phone
+                            : TextInputType.emailAddress,
                         decoration: InputDecoration(
                           hintText: state.isPhoneSelected
                               ? s.login_phone_hint
@@ -130,40 +160,88 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   // Login button
-                  GradientElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        final emailOrPhone = _emailPhoneController.text;
-                        final password = _passwordController.text;
-
-                        // Simulate incorrect credentials
-                        if (emailOrPhone != "test" || password != "123456") {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text("Invalid credentials"),
-                              backgroundColor: Colors.red,
-                            ),
-                          );
-                        } else {
-                          print("""
-                          ${_emailPhoneController.text}
-                          ${_passwordController.text}
-                          """);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text("Login success!"),
-                              backgroundColor: Colors.green,
-                            ),
-                          );
+                BlocConsumer<AuthCubit, AuthState>(
+                  listener: (context, state) {
+                    print(state);
+                    state.when(
+                      initial: () {}, // No side effect needed
+                      loading: () {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (_) => const Center(child: CircularProgressIndicator()),
+                        );
+                      },
+                      authenticated: (user) {
+                        Navigator.pop(context); // Close loading dialog
+                        Navigator.pop(context); // Close login screen
+                      },
+                      unauthenticated: (message) async{
+                        Navigator.pop(context);
+                        final shouldLogout = await showDialog<bool>(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text("Confirm Login"),
+                            content:  Text(message!),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, true),
+                                child: const Text("OK"),
+                              ),
+                            ],
+                          ),
+                        );
+                        if (shouldLogout == true) {
+                           _emailPhoneController.clear();
+                           _passwordController.clear();
                         }
-                      }
-                    },
-                    child: Text(
-                      s.login_button,
-                      style: TextStyles.gradientElevatedButtonText,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
+                      },
+                    );
+                  },
+                  builder: (context, state) {
+                    final isLoading = state.maybeWhen(
+                      loading: () => true,
+                      orElse: () => false,
+                    );
+
+                    return GradientElevatedButton(
+                      onPressed: isLoading
+                          ? null // Disable while loading
+                          : () {
+                        if (_formKey.currentState!.validate()) {
+                          final emailOrPhone = _emailPhoneController.text.trim();
+                          final password = _passwordController.text;
+
+                          final isEmail = emailOrPhone.contains('@');
+
+                          final loginRequest = LoginRequest(
+                            email: isEmail ? emailOrPhone : null,
+                            phone: isEmail ? null : emailOrPhone,
+                            password: password,
+                          );
+
+                          context.read<AuthCubit>().login(loginRequest);
+                          FocusScope.of(context).unfocus();
+                        }
+                      },
+                      child: isLoading
+                          ? const SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          strokeWidth: 2,
+                        ),
+                      )
+                          : Text(
+                        s.login_button,
+                        style: TextStyles.gradientElevatedButtonText,
+                      ),
+                    );
+                  },
+                ),
+
+                const SizedBox(height: 20),
 
                   Center(
                     child: Text(

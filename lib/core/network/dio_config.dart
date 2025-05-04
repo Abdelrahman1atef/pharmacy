@@ -17,12 +17,15 @@ class DioConfig {
       ..options.receiveTimeout = timeout
       ..options.contentType = ContentType.json.toString()
       ..options.responseType = ResponseType.json
+      ..options.validateStatus = (status) {
+        return status! < 500; // Accept all status codes below 500
+      }
       ..interceptors.addAll([
         // Logging Interceptor
         PrettyDioLogger(
           requestBody: true,
           responseBody: false,
-          error: false,
+          error: true,
         ),
         // Retry Interceptor
         InterceptorsWrapper(

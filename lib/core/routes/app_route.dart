@@ -4,6 +4,7 @@ import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/features/details/ui/DetailsScreen.dart';
 import 'package:pharmacy/features/items_list/ui/item_list_screen.dart';
 import 'package:pharmacy/features/login&signup/ui/screen/signup_screen.dart';
+import 'package:pharmacy/features/splash/splash_screen.dart';
 
 import '../../features/login&signup/ui/screen/login_screen.dart';
 import '../../features/main/presentation/screens/main_screen.dart';
@@ -12,8 +13,10 @@ import '../../features/search/ui/screens/search_screen.dart';
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case Routes.splash:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
       case Routes.main:
-        return MaterialPageRoute(builder: (_) => MainScreen(key: mainPageKey,));
+        return MaterialPageRoute(builder: (_) =>  MainScreen());
       case Routes.searchScreen:
         return MaterialPageRoute(
             builder: (context) => const SearchScreen(), settings: settings);
@@ -43,7 +46,7 @@ class AppRouter {
       case Routes.signUp:
         return MaterialPageRoute(builder: (_) =>  SignupScreen());
       case Routes.login:
-        return MaterialPageRoute(builder: (_) =>   LoginScreen());
+        return MaterialPageRoute(builder: (_) =>   const LoginScreen());
       default:
         return _undefineRoute();
     }

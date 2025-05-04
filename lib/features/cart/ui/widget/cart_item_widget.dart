@@ -11,10 +11,10 @@ import '../../../../gen/assets.gen.dart';
 import '../../../../generated/l10n.dart';
 import '../../../../utils/network_image_utils.dart';
 
-class CartItem extends StatelessWidget {
+class CartItemWidget extends StatelessWidget {
   final Product product;
 
-  const CartItem({required this.product, super.key});
+  const CartItemWidget({required this.product, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,9 @@ class CartItem extends StatelessWidget {
                       ),
                       child: Card(
                         child: Image.network(
-                          product.productImages?[0] ?? "",
+                            (product.productImages != null && product.productImages!.isNotEmpty)
+                                ? product.productImages![0]
+                                : "",
                           fit: BoxFit.cover,
                           loadingBuilder: loadingBuilder(),
                           errorBuilder:
@@ -77,7 +79,7 @@ class CartItem extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () =>
-                                    _showConfirmationDialog(context, product),
+                                    showConfirmationDialog(context, product),
                                 child: Assets.images.remove.svg(
                                     colorFilter: const ColorFilter.mode(
                                         ColorName.productDetailTextColor,
@@ -118,75 +120,75 @@ class CartItem extends StatelessWidget {
       ),
     );
   }
-}
-
-// Function to show the modal bottom sheet
-void _showConfirmationDialog(BuildContext context, Product product) {
-  showModalBottomSheet(
-    context: context,
-    elevation: 5,
-    showDragHandle: true,
-    shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadiusDirectional.only(
-            topStart: Radius.circular(70), topEnd: Radius.circular(70))),
-    builder: (BuildContext context) {
-      return Container(
-        padding: const EdgeInsets.all(16.0),
-        height: 250,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text.rich(
-              TextSpan(
-                text:
-                    "${S.of(context).deleteCartItemAlertP1} ", // First part of the text
-                style: TextStyles.productHomeTitles, // Base style
+  static void showConfirmationDialog(BuildContext context, Product product) {
+    showModalBottomSheet(
+      context: context,
+      elevation: 5,
+      showDragHandle: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadiusDirectional.only(
+              topStart: Radius.circular(70), topEnd: Radius.circular(70))),
+      builder: (BuildContext context) {
+        return Container(
+          padding: const EdgeInsets.all(16.0),
+          height: 250,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text.rich(
+                TextSpan(
+                  text:
+                  "${S.of(context).deleteCartItemAlertP1} ", // First part of the text
+                  style: TextStyles.productHomeTitles, // Base style
+                  children: [
+                    TextSpan(
+                        text: product.productNameAr, // The dynamic product name
+                        style: TextStyles.productHomeTitles
+                            .copyWith(fontWeight: FontWeight.bold)),
+                    TextSpan(
+                      text:
+                      " ${S.of(context).deleteCartItemAlertP2}", // Second part of the text
+                      style: TextStyles.productHomeTitles, // Revert to base style
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 30),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  TextSpan(
-                      text: product.productNameAr, // The dynamic product name
-                      style: TextStyles.productHomeTitles
-                          .copyWith(fontWeight: FontWeight.bold)),
-                  TextSpan(
-                    text:
-                        " ${S.of(context).deleteCartItemAlertP2}", // Second part of the text
-                    style: TextStyles.productHomeTitles, // Revert to base style
+                  TextButton(
+                    onPressed: () {
+                      context.read<CartCubit>().deleteCartItem(product.productId);
+                      Navigator.pop(context); // Close the bottom sheet
+                    },
+                    child: Text(
+                      S.of(context).deleteCartItem,
+                      style: TextStyles.cartConfirmationDialog.copyWith(
+                          color: ColorName.errorTextColor
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      S.of(context).keepCartItem,
+                      style: TextStyles.cartConfirmationDialog.copyWith(
+                          color: ColorName.secondaryColor
+                      ),
+                    ),
                   ),
                 ],
               ),
-            ),
-            const SizedBox(height: 30),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    context.read<CartCubit>().deleteCartItem(product.productId);
-                    print("Item deleted");
-                    Navigator.pop(context); // Close the bottom sheet
-                  },
-                  child: Text(
-                    S.of(context).deleteCartItem,
-                    style: TextStyles.cartConfirmationDialog.copyWith(
-                      color: ColorName.errorTextColor
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    S.of(context).keepCartItem,
-                    style: TextStyles.cartConfirmationDialog.copyWith(
-                        color: ColorName.secondaryColor
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      );
-    },
-  );
+            ],
+          ),
+        );
+      },
+    );
+  }
 }
+
+// Function to show the modal bottom sheet
+

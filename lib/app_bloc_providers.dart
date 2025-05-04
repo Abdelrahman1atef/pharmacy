@@ -1,9 +1,11 @@
 // lib/app_bloc_providers.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy/app_config_provider/auth/logic/auth_cubit.dart';
 import 'package:pharmacy/core/di/module.dart';
 import 'package:pharmacy/features/cart/logic/cart_cubit.dart';
 import 'package:pharmacy/features/login&signup/logic/signup/signup_cubit.dart';
+import 'package:pharmacy/features/main/logic/main_cubit.dart';
 
 import 'features/details/logic/details/details_cubit.dart';
 import 'features/details/logic/favorite/favorite_cubit.dart';
@@ -22,6 +24,8 @@ class AppBlocProviders extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (_) => getIt<AuthCubit>()..checkAuthStatus()),
+        BlocProvider(create: (_)=>MainCubit()),
         BlocProvider(create: (_) => getIt<SearchCubit>()),
         BlocProvider(create: (_) => getIt<DetailsCubit>()),
         BlocProvider(create: (_) => getIt<BestSellerCubit>()),

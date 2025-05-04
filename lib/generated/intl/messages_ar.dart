@@ -36,7 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "birthdate": MessageLookupByLibrary.simpleMessage("تاريخ الميلاد"),
     "brandName": MessageLookupByLibrary.simpleMessage("العلامة التجارية"),
     "browsItem": MessageLookupByLibrary.simpleMessage("تصفح الامنتجات"),
-    "cart_item": MessageLookupByLibrary.simpleMessage("العرية"),
+    "cart_item": MessageLookupByLibrary.simpleMessage("العربة"),
     "checkout": MessageLookupByLibrary.simpleMessage("الدفع"),
     "confirm_password": MessageLookupByLibrary.simpleMessage(
       "تأكيد كلمة المرور",
@@ -70,6 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "female": MessageLookupByLibrary.simpleMessage("أنثى"),
     "first_name": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
     "gender": MessageLookupByLibrary.simpleMessage("النوع"),
+    "goToCart": MessageLookupByLibrary.simpleMessage("اذهب الى العربة"),
     "home_item": MessageLookupByLibrary.simpleMessage("الرئيسية"),
     "invalid_email": MessageLookupByLibrary.simpleMessage(
       "البريد الإلكتروني غير صالح",

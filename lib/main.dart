@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:pharmacy/app_bloc_providers.dart';
 import 'package:pharmacy/app_config_provider/app_config_provider.dart';
 import 'package:pharmacy/pharmacy_app.dart';
@@ -11,8 +12,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CashHelper.init();
   setupDependencies();
-  runApp(ChangeNotifierProvider(
-    create: (context) => AppConfigProvider(),
-    child: const AppBlocProviders(child: PharmacyApp()),
+  runApp(Phoenix(
+    child: ChangeNotifierProvider(
+      create: (context) => AppConfigProvider(),
+      child: const AppBlocProviders(child: PharmacyApp()),
+    ),
   ));
 }

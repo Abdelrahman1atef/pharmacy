@@ -72,6 +72,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "female": MessageLookupByLibrary.simpleMessage("Female"),
     "first_name": MessageLookupByLibrary.simpleMessage("First Name"),
     "gender": MessageLookupByLibrary.simpleMessage("Gender"),
+    "goToCart": MessageLookupByLibrary.simpleMessage("Go To Cart"),
     "home_item": MessageLookupByLibrary.simpleMessage("Home"),
     "invalid_email": MessageLookupByLibrary.simpleMessage(
       "Invalid email format",

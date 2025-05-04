@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/common_widgets/gradient_button.dart';
 import '../../../../core/themes/text/text_styles.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../generated/l10n.dart';
-import '../../../main/presentation/screens/main_screen.dart';
+import '../../../main/logic/main_cubit.dart';
 
-class CartIsEmpty extends StatelessWidget {
+class CartIsEmpty extends StatefulWidget {
   const CartIsEmpty({super.key});
 
+  @override
+  State<CartIsEmpty> createState() => _CartIsEmptyState();
+}
+
+class _CartIsEmptyState extends State<CartIsEmpty> {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -24,7 +30,7 @@ class CartIsEmpty extends StatelessWidget {
 
             GradientElevatedButton(
                 onPressed: () {
-                  mainPageKey.currentState?.changePage(0);
+                  BlocProvider.of<MainCubit>(context).selectTab(0);
                 },
                 child: Text(S.of(context).browsItem,style: TextStyles.gradientElevatedButtonText,))
           ],

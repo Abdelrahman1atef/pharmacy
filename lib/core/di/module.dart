@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pharmacy/app_config_provider/auth/logic/auth_cubit.dart';
+import 'package:pharmacy/app_config_provider/auth/repository/auth_repository.dart';
 import 'package:pharmacy/core/controller/network_controller.dart';
 import 'package:pharmacy/features/cart/logic/cart_cubit.dart';
 import 'package:pharmacy/features/cart/repository/cart_repository.dart';
@@ -39,6 +41,7 @@ void setupDependencies() {
   getIt.registerFactory<ItemListRepository>(() => ItemListRepository(getIt()));
   getIt.registerFactory<CartRepository>(() => CartRepository(getIt()));
   getIt.registerFactory<SignupRepository>(() => SignupRepository(getIt()));
+  getIt.registerFactory<AuthRepository>(() => AuthRepository(getIt()));
   getIt.registerFactory<SearchCubit>(() => SearchCubit(getIt()));
   getIt.registerFactory<DetailsCubit>(() => DetailsCubit(getIt()));
   getIt.registerFactory<CategoryCubit>(() => CategoryCubit(getIt()));
@@ -46,4 +49,5 @@ void setupDependencies() {
   getIt.registerFactory<ItemListScreenCubit>(() => ItemListScreenCubit(getIt()));
   getIt.registerFactory<CartCubit>(() => CartCubit(getIt()));
   getIt.registerFactory<SignupCubit>(() => SignupCubit(getIt()));
+  getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt()));
 }

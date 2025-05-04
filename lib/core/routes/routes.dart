@@ -12,5 +12,7 @@ class Routes {
   static const signUp = '/sign_up';
   static const login = '/Log_in';
 
+  static const splash = '/splash';
+
 
 }

@@ -480,6 +480,11 @@ class S {
     return Intl.message('Details', name: 'details', desc: '', args: []);
   }
 
+  /// `Go To Cart`
+  String get goToCart {
+    return Intl.message('Go To Cart', name: 'goToCart', desc: '', args: []);
+  }
+
   /// `Brand`
   String get brandName {
     return Intl.message('Brand', name: 'brandName', desc: '', args: []);

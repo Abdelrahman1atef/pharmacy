@@ -9,6 +9,7 @@ class ItemListScreenCubit extends Cubit<ItemListScreenState> {
   final ItemListRepository _itemListRepository;
   int _currentPage = 1;
   bool _hasReachedMax = false;
+  bool _isLoadingMore = false;
   int? _selectedCategoryId;
   FetchType _fetchType = FetchType.all;
 
@@ -36,18 +37,28 @@ class ItemListScreenCubit extends Cubit<ItemListScreenState> {
   }
 
   Future<void> fetchMoreItems() async {
-    if (_hasReachedMax) return;
-
+    if (_hasReachedMax|| _isLoadingMore) return;
+    _isLoadingMore = true;
     final currentData = state.maybeWhen(
       success: (data) => data,
       loadingMore: (data) => data,
       orElse: () => null,
     );
 
-    if (currentData == null) return;
+    if (currentData == null) {
+      _isLoadingMore = false;
+      return;
+    }
 
     emit(ItemListScreenState.loadingMore(currentData));
-    _itemListRepository.fetchAllProduct(page: _currentPage + 1).then((result) {
+
+    final result = _fetchType == FetchType.all
+        ? await _itemListRepository.fetchAllProduct(page: _currentPage + 1)
+        : await _itemListRepository.fetchProductByCategory(
+      page: _currentPage + 1,
+      categoryId: _selectedCategoryId!,
+    );
+
       result.when(
         success: (newData) {
           _currentPage++;
@@ -64,6 +75,6 @@ class ItemListScreenCubit extends Cubit<ItemListScreenState> {
         },
         failure: (e) => emit(Error(e)),
       );
-    });
+    _isLoadingMore = false;
   }
 }

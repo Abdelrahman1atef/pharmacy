@@ -1,13 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'register_request.dart';
+part of 'data.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-RegisterRequest _$RegisterRequestFromJson(Map<String, dynamic> json) =>
-    RegisterRequest(
+Data _$DataFromJson(Map<String, dynamic> json) => Data(
       email: json['email'] as String,
       phone: json['phone'] as String,
       firstName: json['first_name'] as String,
@@ -20,8 +19,7 @@ RegisterRequest _$RegisterRequestFromJson(Map<String, dynamic> json) =>
       isStaff: json['is_staff'] as bool,
     );
 
-Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
       'email': instance.email,
       'phone': instance.phone,
       'first_name': instance.firstName,

@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacy/app_config_provider/auth/logic/auth_cubit.dart';
+import 'package:pharmacy/app_config_provider/auth/logic/auth_state.dart';
+import 'package:pharmacy/app_config_provider/auth/model/data.dart';
 import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
 import '../../features/search/ui/widget/search_widget.dart';
@@ -18,13 +23,15 @@ class PharmacyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final TextEditingController? searchController;
   final Widget child;
 
-  const PharmacyAppBar(
+  PharmacyAppBar(
       {super.key,
       this.searchEnabled = false,
       this.backEnabled = true, // Default behavior: disabled
       this.onSearchTap,
       this.searchController,
       this.child = defaultChild});
+
+  bool isUnauthenticated = true;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight * 3);
@@ -49,7 +56,7 @@ class PharmacyAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: Column(
         children: [
           SizedBox(
-            height: deviceSize.topPadding+8,
+            height: deviceSize.topPadding + 8,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -74,12 +81,36 @@ class PharmacyAppBar extends StatelessWidget implements PreferredSizeWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: child,
                   )),
-              IconButton(
-                onPressed: () => Navigator.pushNamed(context,Routes.signUp),
-                icon: Assets.images.cartUnselected.svg(
-                    colorFilter:
-                        const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
-                color: Colors.white,
+              BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                   Data? userInfo;
+                  final isUnauthenticated = state.when(
+                    initial: () => false,
+                    loading: () => false,
+                    unauthenticated: (e) => true,
+                    authenticated: (user) {
+                      if(user.profilePicture=="") {
+                        userInfo = user;
+                      }
+                      return false;
+                    },
+
+                  );
+
+                  return SizedBox(
+                    width: 50.w,
+                    height: 50.h,
+                    child: userInfo ==null? IconButton(
+                      onPressed: () => isUnauthenticated
+                          ? Navigator.pushNamed(context, Routes.login)
+                          : print("Is Auth"),
+                      icon: Assets.images.defaultProfileImage.svg(
+                          colorFilter: const ColorFilter.mode(
+                              Colors.white, BlendMode.srcIn)),
+                      color: Colors.white,
+                    ):Image.network(userInfo?.profilePicture??"55"),
+                  );
+                },
               ),
             ],
           ),
