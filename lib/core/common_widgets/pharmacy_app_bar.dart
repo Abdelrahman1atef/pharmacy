@@ -13,7 +13,7 @@ import '../../generated/l10n.dart';
 import '../../utils/device_size.dart';
 
 class PharmacyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  static const Widget defaultChild = Icon(
+  static const  Widget defaultChild = Icon(
     Icons.arrow_back,
     color: Colors.white,
   );
@@ -23,7 +23,7 @@ class PharmacyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final TextEditingController? searchController;
   final Widget child;
 
-  PharmacyAppBar(
+  const PharmacyAppBar(
       {super.key,
       this.searchEnabled = false,
       this.backEnabled = true, // Default behavior: disabled
@@ -31,7 +31,7 @@ class PharmacyAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.searchController,
       this.child = defaultChild});
 
-  bool isUnauthenticated = true;
+  final  bool isUnauthenticated = true;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight * 3);
