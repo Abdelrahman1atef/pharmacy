@@ -24,7 +24,7 @@ class CartScreen extends StatelessWidget {
       builder: (context, state) {
         // Handle loading, error, and empty states
         if (state is Loading) {
-          return  _ShimmerWidget();
+          return _ShimmerWidget();
         } else if (state is Error) {
           return Scaffold(
             body: Center(
@@ -52,16 +52,46 @@ class CartScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: cartItems.length,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemBuilder: (context, index) {
-                      final cartItem = cartItems[index];
-                      return CartItemWidget(
-                        product: cartItem,
-                      );
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final double screenWidth =
+                          MediaQuery.of(context).size.width;
+
+                      // Use GridView if screen width > 500
+                      if (screenWidth > 500) {
+                        return GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                            childAspectRatio: 0.75, // Adjust as needed
+                          ),
+                          itemCount: cartItems.length,
+                          itemBuilder: (context, index) {
+                            final cartItem = cartItems[index];
+                            return CartItemWidget(
+                              product: cartItem,
+                            );
+                          },
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                        );
+                      } else {
+                        // Use ListView for smaller screens
+                        return ListView.builder(
+                          itemCount: cartItems.length,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (context, index) {
+                            final cartItem = cartItems[index];
+                            return CartItemWidget(
+                              product: cartItem,
+                            );
+                          },
+                        );
+                      }
                     },
                   ),
                 ),
@@ -192,7 +222,7 @@ class CartScreen extends StatelessWidget {
             ),
           );
         } else {
-          return  _ShimmerWidget();
+          return _ShimmerWidget();
         }
       },
     );
@@ -200,7 +230,6 @@ class CartScreen extends StatelessWidget {
 }
 
 class _ShimmerWidget extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(

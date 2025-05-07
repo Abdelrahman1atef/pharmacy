@@ -26,7 +26,7 @@ class _SearchWidgetState extends State<SearchWidget> {
   void initState() {
     super.initState();
     _debouncer = Debouncer<String>(
-      const Duration(milliseconds: 300),
+      const Duration(milliseconds: 500),
       initialValue: '',
       checkEquality: false,
       onChanged: (query) {

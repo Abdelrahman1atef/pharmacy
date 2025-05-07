@@ -1,5 +1,6 @@
 class Constant {
  static const String baseUrl = 'https://locust-eminent-urchin.ngrok-free.app/';
+ static const String apiHealth='/api/health/';
  // GET
  static const String allProductsEndPoint = '/api/product/allProducts/';
  static const String productDetailsEndPoint='/api/product/';

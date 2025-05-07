@@ -24,7 +24,7 @@ class DioConfig {
         // Logging Interceptor
         PrettyDioLogger(
           requestBody: true,
-          responseBody: false,
+          responseBody: true,
           error: true,
         ),
         // Retry Interceptor

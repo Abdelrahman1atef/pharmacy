@@ -11,9 +11,10 @@ import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../generated/l10n.dart';
 import '../../utils/device_size.dart';
+import '../../utils/network_image_utils.dart';
 
 class PharmacyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  static const  Widget defaultChild = Icon(
+  static const Widget defaultChild = Icon(
     Icons.arrow_back,
     color: Colors.white,
   );
@@ -31,16 +32,15 @@ class PharmacyAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.searchController,
       this.child = defaultChild});
 
-  final  bool isUnauthenticated = true;
+  final bool isUnauthenticated = true;
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 3);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 2.71);
 
   @override
   Widget build(BuildContext context) {
     DeviceSize deviceSize = DeviceSize(context);
     return Container(
-      height: deviceSize.height * 0.207,
       decoration: const BoxDecoration(
         borderRadius: BorderRadiusDirectional.only(
           bottomStart: Radius.circular(20),
@@ -83,33 +83,41 @@ class PharmacyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   )),
               BlocBuilder<AuthCubit, AuthState>(
                 builder: (context, state) {
-                   Data? userInfo;
+                  Data? userInfo;
                   final isUnauthenticated = state.when(
                     initial: () => false,
                     loading: () => false,
                     unauthenticated: (e) => true,
                     authenticated: (user) {
-                      if(user.profilePicture=="") {
                         userInfo = user;
-                      }
                       return false;
                     },
-
                   );
 
                   return SizedBox(
-                    width: 50.w,
-                    height: 50.h,
-                    child: userInfo ==null? IconButton(
-                      onPressed: () => isUnauthenticated
-                          ? Navigator.pushNamed(context, Routes.login)
-                          : print("Is Auth"),
-                      icon: Assets.images.defaultProfileImage.svg(
-                          colorFilter: const ColorFilter.mode(
-                              Colors.white, BlendMode.srcIn)),
-                      color: Colors.white,
-                    ):Image.network(userInfo?.profilePicture??"55"),
-                  );
+                      width: 50.w,
+                      height: 50.h,
+                      child: userInfo == null
+                          ? IconButton(
+                              onPressed: () => isUnauthenticated
+                                  ? Navigator.pushNamed(context, Routes.login)
+                                  : print("Is Auth"),
+                              icon: Assets.images.defaultProfileImage.svg(
+                                  colorFilter: const ColorFilter.mode(
+                                      Colors.white, BlendMode.srcIn)),
+                              color: Colors.white,
+                            )
+                          : Padding(
+                            padding: const EdgeInsetsDirectional.all(8.0),
+                            child: Image.network(
+                                userInfo?.profilePicture ?? "",
+                                loadingBuilder: loadingBuilder(),
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Assets.images.defaultProfileImage.svg(
+                                        colorFilter: const ColorFilter.mode(
+                                            Colors.white, BlendMode.srcIn)),
+                              ),
+                          ));
                 },
               ),
             ],

@@ -38,19 +38,23 @@ class CartItemWidget extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        border: Border.all(
-                            color: ColorName.productDetailTextColor,
-                            width: 1.5),
+                        // border: Border.all(
+                        //     color: ColorName.productDetailTextColor,
+                        //     width: 1.5),
                       ),
                       child: Card(
-                        child: Image.network(
-                            (product.productImages != null && product.productImages!.isNotEmpty)
-                                ? product.productImages![0]
-                                : "",
-                          fit: BoxFit.cover,
-                          loadingBuilder: loadingBuilder(),
-                          errorBuilder:
-                              errorBuilder(Assets.images.pWatermarkV2.path),
+                        child: SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: Image.network(
+                              (product.productImages != null && product.productImages!.isNotEmpty)
+                                  ? product.productImages![0]
+                                  : "",
+                            fit: BoxFit.cover,
+                            loadingBuilder: loadingBuilder(),
+                            errorBuilder:
+                                errorBuilder(Assets.images.pWatermarkV2.path),
+                          ),
                         ),
                       ),
                     ),

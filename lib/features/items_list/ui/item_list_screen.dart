@@ -6,6 +6,7 @@ import 'package:pharmacy/core/common_widgets/header_widget.dart';
 import 'package:pharmacy/core/common_widgets/pharmacy_app_bar.dart';
 import 'package:pharmacy/features/items_list/logic/item_list_screen_cubit.dart';
 import 'package:pharmacy/features/items_list/logic/item_list_screen_state.dart';
+import 'package:pharmacy/utils/device_size.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../core/models/product/product_response.dart';
@@ -107,9 +108,10 @@ class _ItemListScreenState extends State<ItemListScreen> {
   }
 
   Widget _buildProductList(ProductResponse data, bool isLoadingMore) {
+    DeviceSize deviceSize = DeviceSize(context);
     return GridView.builder(
-      gridDelegate:  const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+      gridDelegate:   SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: deviceSize.width>500?4:2,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         mainAxisExtent: 300,

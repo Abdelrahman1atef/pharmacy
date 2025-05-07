@@ -4,7 +4,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacy/app_config_provider/auth/logic/auth_cubit.dart';
 import 'package:pharmacy/core/common_widgets/gradient_button.dart';
+import 'package:pharmacy/core/models/register_login/login_request.dart';
 import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
 import 'package:pharmacy/features/login&signup/logic/signup/signup_cubit.dart';
@@ -16,7 +18,7 @@ import '../../../../generated/l10n.dart';
 import '../widgets/login_signup_app_bar.dart';
 
 class SignupScreen extends StatefulWidget {
-  SignupScreen({super.key});
+  const SignupScreen({super.key});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -118,28 +120,51 @@ class _SignupScreenState extends State<SignupScreen> {
                   padding: const EdgeInsetsDirectional.only(bottom: 30),
                   child: BlocListener<SignupCubit, SignupState>(
                     listener: (context, state) {
-                      print(state.toString());
-
                       state.when(
                         loading: () {
-
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (_) => const Center(
+                                child: CircularProgressIndicator()),
+                          );
                         },
-                        success: (data ) {
-                          final registerRequest=data as RegisterRequest;
-                          print(registerRequest.email);
+                        success: (data) {
+                          LoginRequest loginBody = LoginRequest(
+                              email: _emailController.text,
+                              password: _passwordController.text);
+                          context.read<AuthCubit>().login(loginBody);
+                          Navigator.pop(context);
                           Navigator.pop(context);
                           // Handle success (e.g., show success message or navigate)
                         },
-                        error: (e) {
-                          // Handle error (e.g., show error message)
+                        error: (e) async{
+                          Navigator.pop(context);
+                          final shouldLogout = await showDialog<bool>(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text("Confirm Login"),
+                              content:  Text(e.message),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, true),
+                                  child: const Text("OK"),
+                                ),
+                              ],
+                            ),
+                          );
+                          if (shouldLogout == true) {
+
+                          }
                         },
                         initial: () {},
                       );
                     },
                     child: GradientElevatedButton(
-                      onPressed: agree
-                          ? () {
-                              if (_formKey.currentState!.validate()){
+                      onPressed: !agree
+                          ? null
+                          : () {
+                              if (_formKey.currentState!.validate()) {
                                 final registerRequest = RegisterRequest(
                                   email: _emailController.text,
                                   phone: _phoneController.text,
@@ -148,16 +173,17 @@ class _SignupScreenState extends State<SignupScreen> {
                                   birthdate: dateController.text,
                                   gender: selectedGender,
                                   password: _passwordController.text,
-                                  profilePicture: "",  // Assuming no profile picture for now
-                                  isActive: true,  // Default value for isActive
-                                  isStaff: false,  // Default value for isStaff
+                                  profilePicture: "",
+                                  // Assuming no profile picture for now
+                                  isActive: true,
+                                  // Default value for isActive
+                                  isStaff: false, // Default value for isStaff
                                 );
-
-                                context.read<SignupCubit>().emitUserRegister(registerRequest);
+                                context
+                                    .read<SignupCubit>()
+                                    .emitUserRegister(registerRequest);
                               }
-
-                            }
-                          : null,
+                            },
                       haveBorder: true,
                       gradientColors: const [
                         ColorName.whiteColor,

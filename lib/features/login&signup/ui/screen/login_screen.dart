@@ -162,7 +162,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   // Login button
                 BlocConsumer<AuthCubit, AuthState>(
                   listener: (context, state) {
-                    print(state);
                     state.when(
                       initial: () {}, // No side effect needed
                       loading: () {
@@ -174,7 +173,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       authenticated: (user) {
                         Navigator.pop(context); // Close loading dialog
-                        Navigator.pop(context); // Close login screen
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          Navigator.pop(context); // Close signup screen
+                        }); // Close login screen
                       },
                       unauthenticated: (message) async{
                         Navigator.pop(context);
@@ -306,7 +307,7 @@ class _LoginScreenState extends State<LoginScreen> {
           if (icon != null)
             Padding(
               padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
-              child: SizedBox(width: 24, height: 24, child: icon),
+              child: SizedBox(width: 20, height: 24, child: icon),
             ),
           Text(
             label,

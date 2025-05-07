@@ -15,29 +15,36 @@ class SplashScreen extends StatelessWidget {
     return BlocListener<AuthCubit, AuthState>(
       listenWhen: (prev, curr) => curr != prev,
       listener: (context, state) {
-        print("${state}");
         state.when(
           initial: () {},
           loading: () {},
           authenticated: (user) {
-            Navigator.pushReplacementNamed(context, Routes.main);
+            Future.delayed(
+              const Duration(seconds: 5),
+              () => Navigator.pushReplacementNamed(context, Routes.main),
+            );
           },
           unauthenticated: (e) {
-            Navigator.pushReplacementNamed(context, Routes.login);
+            Future.delayed(
+              const Duration(seconds: 5),
+              () => Navigator.pushReplacementNamed(context, Routes.login),
+            );
           },
         );
       },
       child: Scaffold(
-        backgroundColor: ColorName.secondaryColor,
         body: Center(
-          child: Container(
+          child: SizedBox(
             width: 250,
             height: 250,
             child: Card(
-              shape:  const CircleBorder(),
+                shape: const CircleBorder(),
                 shadowColor: ColorName.blackColor,
                 elevation: 50,
-                child: Image.asset(Assets.images.rPIcon.path,fit: BoxFit.cover,)),
+                child: Image.asset(
+                  Assets.images.rPIcon.path,
+                  fit: BoxFit.cover,
+                )),
           ),
         ),
       ),

@@ -13,7 +13,7 @@ class SignupCubit extends Cubit<SignupState> {
   Future<void> emitUserRegister(RegisterRequest register) async {
     emit(const Loading());
     _signupRepository.userRegister(register).then((result) {
-      result.when(success: (data) => emit(Success(data)), failure: (e) => Error(e),);
+      result.when(success: (data) => emit(Success(data)), failure: (e) => emit(Error(e)),);
     });
   }
 }

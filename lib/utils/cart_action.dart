@@ -43,7 +43,10 @@ Widget buildCartAction(BuildContext context, CartState state, Results product) {
 
       return BlocBuilder<CartCubit, CartState>(
         builder: (context, state) {
-          return QuantitySelector(product: cartProduct);
+          return Padding(
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: 5),
+            child: QuantitySelector(product: cartProduct),
+          );
         },
       );
     } else {

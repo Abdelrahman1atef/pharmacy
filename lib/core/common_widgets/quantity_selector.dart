@@ -62,23 +62,8 @@ class _QuantitySelectorState extends State<QuantitySelector> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // Decrement Button
-                Ink(
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        ColorName.secondaryColor,
-                        ColorName.primaryColor
-                      ], // Gradient colors
-                    ),
-                    borderRadius: BorderRadius.circular(35), // Circular shape
-                  ),
-                  child: IconButton(
-                    iconSize: buttonSize, // Responsive icon size
-                    icon: const Icon(Icons.remove),
-                    onPressed: _decrementQuantity,
-                    color: ColorName.whiteColor,
-                  ),
-                ),
+                incDecButton(fun: _decrementQuantity,icon: Icons.remove,buttonSize: buttonSize),
+
                 SizedBox(width: spacing), // Responsive spacing
                 // Quantity Text
                 BlocBuilder<CartCubit, CartState>(
@@ -113,28 +98,32 @@ class _QuantitySelectorState extends State<QuantitySelector> {
                 ),
                 SizedBox(width: spacing), // Responsive spacing
                 // Increment Button
-                Ink(
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        ColorName.secondaryColor,
-                        ColorName.primaryColor
-                      ], // Gradient colors
-                    ),
-                    borderRadius: BorderRadius.circular(35), // Circular shape
-                  ),
-                  child: IconButton(
-                    iconSize: buttonSize, // Responsive icon size
-                    icon: const Icon(Icons.add),
-                    onPressed: _incrementQuantity,
-                    color: ColorName.whiteColor,
-                  ),
-                ),
+                incDecButton(fun: _incrementQuantity,icon: Icons.add,buttonSize: buttonSize)
               ],
             ),
           ),
         );
       },
     );
+
+  }
+  Widget incDecButton({fun, required IconData icon, buttonSize}){
+      return Ink(
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [
+              ColorName.secondaryColor,
+              ColorName.primaryColor
+            ], // Gradient colors
+          ),
+          borderRadius: BorderRadius.circular(35), // Circular shape
+        ),
+        child: IconButton(
+          iconSize: buttonSize, // Responsive icon size
+          icon:  Icon(icon),
+          onPressed: fun,
+          color: ColorName.whiteColor,
+        ),
+      );
   }
 }
