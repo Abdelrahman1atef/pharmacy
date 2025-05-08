@@ -6,13 +6,14 @@ import 'package:pharmacy/core/models/product/product_response.dart';
 import 'package:pharmacy/core/models/register_login/login_response.dart';
 import 'package:pharmacy/core/models/search/search_response.dart';
 import 'package:pharmacy/core/network/constant.dart';
-import '../../app_config_provider/auth/model/data.dart';
+import '../../app_config_provider/logic/auth/model/data.dart';
 import '../models/register_login/login_request.dart';
 import '../models/register_login/register_request.dart';
 import 'api_exception.dart';
 import 'api_result.dart';
 
 abstract class ApiService {
+  Future<bool> checkServerStatus();
   Future<ApiResult<ProductResponse>> fetchAllProduct(int page);
 
   Future<ApiResult<Results>> fetchProductDetails(int productId);
@@ -36,6 +37,19 @@ class ApiServiceImpl implements ApiService {
 
   ApiServiceImpl(this._dio);
 
+  @override
+  Future<bool> checkServerStatus() async {
+    try{
+      Response response =await _dio.get(Constant.apiHealth);
+      if(response.statusCode==200){
+        return true;
+      }else{
+       return false;
+      }
+    }on DioException{
+      return false;
+    }
+  }
   @override
   Future<ApiResult<ProductResponse>> fetchAllProduct(int page) async {
     try {
@@ -101,7 +115,7 @@ class ApiServiceImpl implements ApiService {
   Future<ApiResult<Results>> fetchProductDetails(int productId) async {
     try {
       Response response =
-          await _dio.get('${Constant.productDetailsEndPoint}${productId}');
+          await _dio.get('${Constant.productDetailsEndPoint}$productId');
       if (response.statusCode == 200) {
         return ApiResult<Results>.success(Results.fromJson(response.data));
       } else {

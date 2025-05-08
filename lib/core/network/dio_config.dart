@@ -23,6 +23,7 @@ class DioConfig {
       ..interceptors.addAll([
         // Logging Interceptor
         PrettyDioLogger(
+          compact: true,
           requestBody: true,
           responseBody: true,
           error: true,

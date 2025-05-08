@@ -4,8 +4,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pharmacy/app_config_provider/auth/logic/auth_cubit.dart';
 import 'package:pharmacy/core/common_widgets/gradient_button.dart';
+import 'package:pharmacy/core/common_widgets/pharmacy_app_bar.dart';
 import 'package:pharmacy/core/models/register_login/login_request.dart';
 import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
@@ -13,9 +13,9 @@ import 'package:pharmacy/features/login&signup/logic/signup/signup_cubit.dart';
 import 'package:pharmacy/features/login&signup/logic/signup/signup_state.dart';
 import 'package:pharmacy/gen/colors.gen.dart';
 
+import '../../../../app_config_provider/logic/auth/logic/auth_cubit.dart';
 import '../../../../core/models/register_login/register_request.dart';
 import '../../../../generated/l10n.dart';
-import '../widgets/login_signup_app_bar.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -56,7 +56,10 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const LoginSignUpAppBar(),
+      appBar: const PharmacyAppBar(
+        heightFactor: 1.1,
+         isGeneralLayout: false,
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),

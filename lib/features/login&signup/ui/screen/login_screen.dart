@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:pharmacy/app_config_provider/auth/logic/auth_cubit.dart';
-import 'package:pharmacy/app_config_provider/auth/logic/auth_state.dart';
 import 'package:pharmacy/core/common_widgets/gradient_button.dart';
 import 'package:pharmacy/core/models/register_login/login_request.dart';
 import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
 import 'package:pharmacy/features/login&signup/logic/login/login_cubit.dart';
-import 'package:pharmacy/features/login&signup/ui/widgets/login_signup_app_bar.dart';
 import 'package:pharmacy/gen/assets.gen.dart';
 import 'package:pharmacy/gen/colors.gen.dart';
 import 'package:pharmacy/generated/l10n.dart'; // <-- import your localization file
 
+import '../../../../app_config_provider/logic/auth/logic/auth_cubit.dart';
+import '../../../../app_config_provider/logic/auth/logic/auth_state.dart';
+import '../../../../core/common_widgets/pharmacy_app_bar.dart';
 import '../../logic/login/login_state.dart';
 import '../widgets/toggle_buttons.dart';
 
@@ -50,7 +50,10 @@ class _LoginScreenState extends State<LoginScreen> {
     final loginOption = [s.login_phone, s.login_email];
 
     return Scaffold(
-      appBar: const LoginSignUpAppBar(),
+      appBar:  const PharmacyAppBar(
+        isGeneralLayout: false,
+        heightFactor: 1.1,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -172,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         );
                       },
                       authenticated: (user) {
-                        Navigator.pop(context); // Close loading dialog
+                         Navigator.pop(context); // Close loading dialog
                         WidgetsBinding.instance.addPostFrameCallback((_) {
                           Navigator.pop(context); // Close signup screen
                         }); // Close login screen

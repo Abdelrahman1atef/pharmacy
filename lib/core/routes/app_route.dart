@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacy/core/models/category/category_response.dart';
 import 'package:pharmacy/core/routes/routes.dart';
+import 'package:pharmacy/core/routes/transition/transition_type.dart';
+import 'package:pharmacy/features/admin/orders/ui/screens/admin_orders_screen.dart';
 import 'package:pharmacy/features/details/ui/DetailsScreen.dart';
 import 'package:pharmacy/features/items_list/ui/item_list_screen.dart';
 import 'package:pharmacy/features/login&signup/ui/screen/signup_screen.dart';
 import 'package:pharmacy/features/splash/splash_screen.dart';
 
+import '../../features/admin/main/ui/screens/main_admin_screen.dart';
+import '../../features/admin/users/ui/screens/user_manger_screen.dart';
 import '../../features/login&signup/ui/screen/login_screen.dart';
 import '../../features/main/presentation/screens/main_screen.dart';
 import '../../features/search/ui/screens/search_screen.dart';
@@ -16,7 +20,7 @@ class AppRouter {
       case Routes.splash:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case Routes.main:
-        return MaterialPageRoute(builder: (_) =>  MainScreen());
+        return MaterialPageRoute(builder: (_) => MainScreen());
       case Routes.searchScreen:
         return MaterialPageRoute(
             builder: (context) => const SearchScreen(), settings: settings);
@@ -44,9 +48,35 @@ class AppRouter {
           }
         });
       case Routes.signUp:
-        return MaterialPageRoute(builder: (_) =>  SignupScreen());
+        return MaterialPageRoute(builder: (_) => const SignupScreen());
       case Routes.login:
-        return MaterialPageRoute(builder: (_) =>   const LoginScreen());
+        return MaterialPageRoute(builder: (_) => const LoginScreen());
+      case Routes.adminMain:
+        return navigateWithAnimation(
+          screen:  MainAdminScreen(),
+          transition: TransitionType.scale,
+        );
+      case Routes.adminOrders:
+        return navigateWithAnimation(
+          screen: const AdminOrdersScreen(),
+          transition: TransitionType.fade,
+        );
+      case Routes.adminUsers:
+        return navigateWithAnimation(
+          screen: const AdminUserMangerScreen(),
+          transition: TransitionType.fade,
+        );
+        case Routes.adminDashboard:
+        return navigateWithAnimation(
+          screen: const AdminUserMangerScreen(),
+          transition: TransitionType.fade,
+        );
+        case Routes.adminReports:
+        return navigateWithAnimation(
+          screen: const AdminUserMangerScreen(),
+          transition: TransitionType.fade,
+        );
+
       default:
         return _undefineRoute();
     }

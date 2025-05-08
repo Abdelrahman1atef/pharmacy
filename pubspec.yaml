@@ -57,6 +57,9 @@ dependencies:
   intl:
   flutter_phoenix:
   google_sign_in:
+  lottie:
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -70,6 +73,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/
   
   fonts:
     - family: Cairo

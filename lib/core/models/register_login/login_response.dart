@@ -1,5 +1,6 @@
-import '../../../app_config_provider/auth/model/data.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../../app_config_provider/logic/auth/model/data.dart';
 part 'login_response.g.dart';
 @JsonSerializable()
 class LoginResponse {

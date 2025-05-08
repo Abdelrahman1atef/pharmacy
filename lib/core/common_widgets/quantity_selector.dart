@@ -1,46 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy/features/cart/logic/cart_cubit.dart';
-import 'package:pharmacy/features/cart/logic/cart_state.dart';
 import 'package:pharmacy/features/cart/ui/widget/cart_item_widget.dart';
+import '../../features/cart/logic/cart_state.dart';
 import '../../gen/colors.gen.dart';
 import '../db/cart/model/product.dart';
 
-class QuantitySelector extends StatefulWidget {
+class QuantitySelector extends StatelessWidget {
   final Product product;
+
   const QuantitySelector({super.key, required this.product});
 
   @override
-  State<QuantitySelector> createState() => _QuantitySelectorState();
+  Widget build(BuildContext context) {
+    return _QuantitySelectorBody(product: product);
+  }
 }
 
-class _QuantitySelectorState extends State<QuantitySelector> {
-  late int _quantity;
+class _QuantitySelectorBody extends StatelessWidget {
+  final Product product;
 
-  @override
-  void initState() {
-    _quantity = widget.product.quantity;
-    super.initState();
-    context.read<CartCubit>().emitCartState();
-  }
-  void _incrementQuantity() {
-    setState(() {
-      _quantity++;
-    });
-    context.read<CartCubit>().updateCartItem(widget.product.productId, _quantity);
-  }
-  void _decrementQuantity() {
+  const _QuantitySelectorBody({required this.product});
 
-    if (_quantity > 0) {
-      setState(() {
-        _quantity--;
-      });
-      if(_quantity == 0 ){
-        CartItemWidget.showConfirmationDialog(context, widget.product);
-        return;
-      }
-      context.read<CartCubit>().updateCartItem(widget.product.productId, _quantity);
+  void _handleDecrement(BuildContext context, int quantity) {
+    final cartCubit = context.read<CartCubit>();
+
+    if (quantity > 1) {
+      cartCubit.updateCartItem(product.productId, quantity - 1);
+    } else {
+      CartItemWidget.showConfirmationDialog(context, product);
     }
+  }
+
+  void _handleIncrement(BuildContext context, int quantity) {
+    final cartCubit = context.read<CartCubit>();
+    cartCubit.updateCartItem(product.productId, quantity + 1);
   }
 
   @override
@@ -48,82 +42,81 @@ class _QuantitySelectorState extends State<QuantitySelector> {
     return LayoutBuilder(
       builder: (context, constraints) {
         final maxWidth = constraints.maxWidth;
-        final buttonSize = maxWidth * 0.15; // 15% of available width
-        final fontSize = maxWidth * 0.1; // 6% of available width
-        final spacing = maxWidth * 0.04; // 4% of available width
+        final buttonSize = maxWidth * 0.15;
+        final fontSize = maxWidth * 0.1;
+        final spacing = maxWidth * 0.04;
 
         return Card(
           elevation: 5,
           shape: const StadiumBorder(),
           child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-                horizontal: 2, vertical: 2), // Responsive padding
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Decrement Button
-                incDecButton(fun: _decrementQuantity,icon: Icons.remove,buttonSize: buttonSize),
+            padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+            child: BlocBuilder<CartCubit, CartState>(
+              builder: (context, state) {
+                int quantity = product.quantity;
 
-                SizedBox(width: spacing), // Responsive spacing
-                // Quantity Text
-                BlocBuilder<CartCubit, CartState>(
-                  builder: (context, state) {
-                    if (state is Loading) {
-                      return const CircularProgressIndicator();
-                    } else if (state is Error) {
-                      return Center(
-                        child: Text(
-                          'Error: ${state.e}',
-                          style: const TextStyle(color: Colors.red),
-                        ),
-                      );
-                    } else if (state is Success) {
-                      // Find the product in the cart state
-                      final cartItems = state.data as List<Product>;
-                      final product = cartItems.firstWhere(
-                            (item) => item.productId == widget.product.productId,
-                        orElse: () => widget.product,
-                      );
-                      return Text(
-                        "${product.quantity}",
-                        style: TextStyle(
-                          fontSize: fontSize, // Responsive font size
-                          fontWeight: FontWeight.bold,
-                        ),
-                      );
-                    }else{
-                      return const CircularProgressIndicator();
-                    }
-                  },
-                ),
-                SizedBox(width: spacing), // Responsive spacing
-                // Increment Button
-                incDecButton(fun: _incrementQuantity,icon: Icons.add,buttonSize: buttonSize)
-              ],
-            ),
+                if (state is Success) {
+                  final updatedProduct = state.data.firstWhere(
+                        (p) => p.productId == product.productId,
+                    orElse: () => product,
+                  );
+                  quantity = updatedProduct.quantity;
+                }
+
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _incDecButton(
+                      context,
+                      fun: () => _handleDecrement(context, quantity),
+                      icon: Icons.remove,
+                      buttonSize: buttonSize,
+                    ),
+                    SizedBox(width: spacing),
+                    Text(
+                      "$quantity",
+                      style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(width: spacing),
+                    _incDecButton(
+                      context,
+                      fun: () => _handleIncrement(context, quantity),
+                      icon: Icons.add,
+                      buttonSize: buttonSize,
+                    ),
+                  ],
+                );
+              },
+            )
+
           ),
         );
       },
     );
-
   }
-  Widget incDecButton({fun, required IconData icon, buttonSize}){
-      return Ink(
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [
-              ColorName.secondaryColor,
-              ColorName.primaryColor
-            ], // Gradient colors
-          ),
-          borderRadius: BorderRadius.circular(35), // Circular shape
+
+  Widget _incDecButton(
+      BuildContext context, {
+        required VoidCallback fun,
+        required IconData icon,
+        required double buttonSize,
+      }) {
+    return Ink(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [
+            ColorName.secondaryColor,
+            ColorName.primaryColor,
+          ],
         ),
-        child: IconButton(
-          iconSize: buttonSize, // Responsive icon size
-          icon:  Icon(icon),
-          onPressed: fun,
-          color: ColorName.whiteColor,
-        ),
-      );
+        borderRadius: BorderRadius.circular(35),
+      ),
+      child: IconButton(
+        iconSize: buttonSize,
+        icon: Icon(icon),
+        onPressed: fun,
+        color: ColorName.whiteColor,
+      ),
+    );
   }
 }

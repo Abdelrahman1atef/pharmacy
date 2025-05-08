@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:pharmacy/app_config_provider/auth/model/data.dart';
+
+import '../../../app_config_provider/logic/auth/model/data.dart';
 
 part 'register_request.g.dart';
 

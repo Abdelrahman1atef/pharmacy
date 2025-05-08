@@ -46,6 +46,10 @@ class $AssetsImagesGen {
   SvgGenImage get categoryDefaultIcon =>
       const SvgGenImage('assets/images/category-default_icon.svg');
 
+  /// File path: assets/images/dashboard-item.svg
+  SvgGenImage get dashboardItem =>
+      const SvgGenImage('assets/images/dashboard-item.svg');
+
   /// File path: assets/images/default_profile_image.svg
   SvgGenImage get defaultProfileImage =>
       const SvgGenImage('assets/images/default_profile_image.svg');
@@ -70,8 +74,16 @@ class $AssetsImagesGen {
   SvgGenImage get homeUnselected =>
       const SvgGenImage('assets/images/home-unselected.svg');
 
+  /// File path: assets/images/orders-item.svg
+  SvgGenImage get ordersItem =>
+      const SvgGenImage('assets/images/orders-item.svg');
+
   /// File path: assets/images/remove.svg
   SvgGenImage get remove => const SvgGenImage('assets/images/remove.svg');
+
+  /// File path: assets/images/report-item.svg
+  SvgGenImage get reportItem =>
+      const SvgGenImage('assets/images/report-item.svg');
 
   /// File path: assets/images/settings-selected.svg
   SvgGenImage get settingsSelected =>
@@ -84,6 +96,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/share.svg
   SvgGenImage get share => const SvgGenImage('assets/images/share.svg');
 
+  /// File path: assets/images/users-item.svg
+  SvgGenImage get usersItem =>
+      const SvgGenImage('assets/images/users-item.svg');
+
   /// List of all assets
   List<dynamic> get values => [
         pWatermarkV2,
@@ -94,6 +110,7 @@ class $AssetsImagesGen {
         cartSelected,
         cartUnselected,
         categoryDefaultIcon,
+        dashboardItem,
         defaultProfileImage,
         drug,
         facebook,
@@ -101,10 +118,13 @@ class $AssetsImagesGen {
         heart,
         homeSelected,
         homeUnselected,
+        ordersItem,
         remove,
+        reportItem,
         settingsSelected,
         settingsUnselected,
-        share
+        share,
+        usersItem
       ];
 }
 
@@ -112,6 +132,11 @@ class Assets {
   const Assets._();
 
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const String pharmacyLoadingAnimation =
+      'assets/pharmacy_loading_animation.json';
+
+  /// List of all assets
+  static List<String> get values => [pharmacyLoadingAnimation];
 }
 
 class AssetGenImage {

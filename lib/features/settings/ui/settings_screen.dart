@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy/app_config_provider/app_config_provider.dart';
-import 'package:pharmacy/app_config_provider/auth/logic/auth_cubit.dart';
-import 'package:pharmacy/app_config_provider/auth/logic/auth_state.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
 import 'package:provider/provider.dart';
+import '../../../app_config_provider/logic/auth/logic/auth_cubit.dart';
+import '../../../app_config_provider/logic/auth/logic/auth_state.dart';
 import '../../../core/routes/routes.dart';
 import '../../../generated/l10n.dart';
 
@@ -110,8 +109,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         children: [
                           Text(
                               "Logged in as ${"${user.firstName} ${user.lastName}"}"),
-                          _buildLogoutButton(context)
-
+                          _buildLogoutButton(context),
+                          Visibility(
+                            visible: user.isStaff,
+                            child: ElevatedButton(
+                                onPressed: () =>
+                                    Navigator.pushNamed(context, Routes.adminMain),
+                                child: const Text("Admin Screen")),
+                          )
                         ],
                       );
                     });
@@ -131,8 +136,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       width: double.infinity,
       dropdownMenuEntries: dropdownMenuEntries,
       hintText: hintText,
-      trailingIcon: Icon(Icons.arrow_left),
-      selectedTrailingIcon: Icon(Icons.arrow_drop_down),
+      trailingIcon: const Icon(Icons.arrow_left),
+      selectedTrailingIcon: const Icon(Icons.arrow_drop_down),
       onSelected: onSelected,
       leadingIcon: const Icon(Icons.language_rounded),
       textStyle:
@@ -151,6 +156,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 }
+
 Widget _buildLogoutButton(BuildContext context) {
   return ElevatedButton(
     onPressed: () async {
@@ -174,10 +180,8 @@ Widget _buildLogoutButton(BuildContext context) {
 
       if (shouldLogout == true) {
         await context.read<AuthCubit>().logout();
-
       }
     },
     child: const Text("Logout"),
   );
 }
-

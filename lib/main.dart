@@ -4,10 +4,8 @@ import 'package:pharmacy/app_bloc_providers.dart';
 import 'package:pharmacy/app_config_provider/app_config_provider.dart';
 import 'package:pharmacy/pharmacy_app.dart';
 import 'package:provider/provider.dart';
-
 import 'app_config_provider/cashe_helper.dart';
 import 'core/di/module.dart';
-import 'features/offline/ui/initial_check_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,10 +14,9 @@ void main() async {
   runApp(Phoenix(
     child: ChangeNotifierProvider(
       create: (context) => AppConfigProvider(),
-      child: const AppBlocProviders(child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: InitialCheckScreen(), // Start with server check
-      ),),
+      child: const AppBlocProviders(
+          child: PharmacyApp(), // Start with server check
+      ),
     ),
   ));
 }

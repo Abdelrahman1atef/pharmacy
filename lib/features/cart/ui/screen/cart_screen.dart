@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pharmacy/app_config_provider/auth/logic/auth_cubit.dart';
 import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
 import 'package:pharmacy/features/cart/logic/cart_cubit.dart';
@@ -10,7 +9,7 @@ import 'package:pharmacy/features/cart/ui/widget/cart_is_empty_widget.dart';
 import 'package:pharmacy/features/cart/ui/widget/cart_item_widget.dart';
 import 'package:pharmacy/gen/colors.gen.dart';
 import 'package:shimmer/shimmer.dart';
-
+import '../../../../app_config_provider/logic/auth/logic/auth_cubit.dart';
 import '../../../../core/db/cart/model/product.dart';
 import '../../../../generated/l10n.dart';
 import '../../../main/logic/main_cubit.dart';

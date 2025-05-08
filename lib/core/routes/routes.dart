@@ -1,5 +1,5 @@
 class Routes {
-  static const noInternetScreen = '/';
+  static const splash = '/splash';
   // static const home = '/';
   static const main = '/';
   static const home = '/home';
@@ -11,8 +11,11 @@ class Routes {
   //authentication
   static const signUp = '/sign_up';
   static const login = '/Log_in';
-
-  static const splash = '/splash';
-
+  //admin
+  static const adminMain='/admin_main';
+  static const adminDashboard='/admin_dashboard';
+  static const adminOrders='/admin_orders';
+  static const adminUsers='/admin_users';
+  static const adminReports='/admin_reports';
 
 }

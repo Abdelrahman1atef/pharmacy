@@ -24,6 +24,15 @@ class CartRepository {
       rethrow; // Rethrow the error to propagate it to the caller
     }
   }
+  Future<int> updateCartItem(int productId, int newQuantity) async {
+    try {
+      print("productId: $productId newQuantity:$newQuantity");
+      return await cartCrud.update(productId,newQuantity);
+    } catch (e) {
+      print('Error updating cart items: $e');
+      rethrow; // Rethrow the error to propagate it to the caller
+    }
+  }
   Future <void> addCartItem(Product product )async{
     try {
       return await cartCrud.create(product);
@@ -40,13 +49,5 @@ class CartRepository {
       rethrow; // Rethrow the error to propagate it to the caller
     }
   }
-  Future<int> updateCartItem(int productId, int newQuantity) async {
-    try {
-      print("productId: $productId newQuantity:$newQuantity");
-      return await cartCrud.update(productId,newQuantity);
-    } catch (e) {
-      print('Error updating cart items: $e');
-      rethrow; // Rethrow the error to propagate it to the caller
-    }
-  }
+
 }

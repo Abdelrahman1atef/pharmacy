@@ -38,9 +38,6 @@ class CartItemWidget extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        // border: Border.all(
-                        //     color: ColorName.productDetailTextColor,
-                        //     width: 1.5),
                       ),
                       child: Card(
                         child: SizedBox(

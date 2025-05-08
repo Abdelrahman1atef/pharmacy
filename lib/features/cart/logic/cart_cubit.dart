@@ -19,18 +19,28 @@ class CartCubit extends Cubit<CartState> {
     });
   }
   Future<void> updateCartItem(int productId, int newQuantity) async {
-    emit(const Loading());
     try {
       await _cartRepository.updateCartItem(productId, newQuantity);
 
-      // await _cartRepository.fetchProductById(productId);
-      emitCartState();
+      final updatedProduct = await _cartRepository.fetchProductById(productId);
+      if (updatedProduct == null) throw Exception("Product not found");
+
+      // Only update the single product in current state
+      final currentState = state;
+      if (currentState is Success) {
+        final updatedList = List<Product>.from(currentState.data);
+        final index = updatedList.indexWhere((p) => p.productId == productId);
+
+        if (index != -1) {
+          updatedList[index] = updatedProduct;
+          emit(Success(updatedList));
+        }
+      }
     } catch (error) {
       emit(Error('Failed to update cart item: $error'));
     }
   }
   void addItemToCart(Product product) {
-    emit(const Loading());
     // Emit loading state while adding the item
     _cartRepository.addCartItem(product).then((_) {
       // After adding, fetch the updated cart items
@@ -41,7 +51,6 @@ class CartCubit extends Cubit<CartState> {
     });
   }
   void deleteCartItem(int productId){
-    emit(const Loading());
     _cartRepository.deleteCartItem(productId).then((_) {
       // After adding, fetch the updated cart items
       emitCartState();

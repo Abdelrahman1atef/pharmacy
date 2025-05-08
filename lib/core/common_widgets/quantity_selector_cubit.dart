@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class QuantitySelectorCubit extends Cubit<int> {
-  QuantitySelectorCubit(super.initialQuantity);
+class QuantityCubit extends Cubit<int> {
+  QuantityCubit(super.initialQuantity);
 
   void increment() => emit(state + 1);
 

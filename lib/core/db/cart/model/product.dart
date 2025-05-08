@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../models/product/product_response.dart';
@@ -32,7 +34,11 @@ class Product {
 
   @JsonKey(name: 'product_image_url')
   String? productImageUrl;
-  @JsonKey(name: 'product_images')
+  @JsonKey(
+    name: 'product_images',
+    fromJson: Product._imagesFromJson,
+    toJson: Product._imagesToJson,
+  )
   List<String>? productImages;
   int quantity;
 
@@ -54,6 +60,30 @@ class Product {
       _$ProductFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProductToJson(this);
+
+
+  static List<String>? _imagesFromJson(dynamic raw) {
+    if (raw == null) return null;
+
+    if (raw is List) {
+      return raw.cast<String>();
+    }
+
+    if (raw is String) {
+      try {
+        final decoded = jsonDecode(raw);
+        return decoded is List ? decoded.cast<String>() : null;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    return null;
+  }
+
+  static dynamic _imagesToJson(List<String>? images) {
+    return images;
+  }
 }
 
 extension ResultsToProduct on Results {
