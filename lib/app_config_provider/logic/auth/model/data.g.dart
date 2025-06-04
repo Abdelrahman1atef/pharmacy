@@ -7,6 +7,7 @@ part of 'data.dart';
 // **************************************************************************
 
 Data _$DataFromJson(Map<String, dynamic> json) => Data(
+      id: (json['id'] as num).toInt(),
       email: json['email'] as String,
       phone: json['phone'] as String,
       firstName: json['first_name'] as String,
@@ -20,6 +21,7 @@ Data _$DataFromJson(Map<String, dynamic> json) => Data(
     );
 
 Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
+      'id': instance.id,
       'email': instance.email,
       'phone': instance.phone,
       'first_name': instance.firstName,

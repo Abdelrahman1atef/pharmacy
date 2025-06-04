@@ -22,6 +22,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "CreatedAt": MessageLookupByLibrary.simpleMessage("Created At"),
+    "CustomerEmail": MessageLookupByLibrary.simpleMessage("Customer Email"),
+    "CustomerId": MessageLookupByLibrary.simpleMessage("Customer Id"),
+    "CustomerName": MessageLookupByLibrary.simpleMessage("Customer Name"),
+    "CustomerPhone": MessageLookupByLibrary.simpleMessage("Customer Phone"),
+    "OrderNum": MessageLookupByLibrary.simpleMessage("Order #"),
     "addToCart": MessageLookupByLibrary.simpleMessage("Add To Cart"),
     "agree_terms": MessageLookupByLibrary.simpleMessage("I agree to the "),
     "already_have_account": MessageLookupByLibrary.simpleMessage(
@@ -80,6 +86,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "invalid_phone": MessageLookupByLibrary.simpleMessage(
       "Invalid phone number",
     ),
+    "itemTotal": MessageLookupByLibrary.simpleMessage("itemTotal"),
     "keepCartItem": MessageLookupByLibrary.simpleMessage("Keep Item"),
     "language": MessageLookupByLibrary.simpleMessage("Language"),
     "last_name": MessageLookupByLibrary.simpleMessage("Last Name"),
@@ -109,6 +116,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "morning_welcome_message": MessageLookupByLibrary.simpleMessage(
       "Good Morning",
     ),
+    "nameAr": MessageLookupByLibrary.simpleMessage("name Ar"),
+    "nameEn": MessageLookupByLibrary.simpleMessage("name En"),
     "noItemInCart": MessageLookupByLibrary.simpleMessage(
       "NO Item Add In Cart Until Now",
     ),
@@ -121,10 +130,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "phone": MessageLookupByLibrary.simpleMessage("Phone"),
     "pound": MessageLookupByLibrary.simpleMessage("EGP"),
+    "processingOrder": MessageLookupByLibrary.simpleMessage("processing Order"),
     "product": MessageLookupByLibrary.simpleMessage("Product"),
     "productDescription": MessageLookupByLibrary.simpleMessage(
       "Product Details:",
     ),
+    "productId": MessageLookupByLibrary.simpleMessage("product Id"),
+    "quantity": MessageLookupByLibrary.simpleMessage("quantity"),
     "search_for_medicine": MessageLookupByLibrary.simpleMessage(
       "Search for medicine(English or Arabic)",
     ),
@@ -145,5 +157,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "titles_category": MessageLookupByLibrary.simpleMessage("Categories"),
     "unavailable": MessageLookupByLibrary.simpleMessage("out of Stock"),
     "unit": MessageLookupByLibrary.simpleMessage("Unit"),
+    "unitType": MessageLookupByLibrary.simpleMessage("unit Type"),
   };
 }

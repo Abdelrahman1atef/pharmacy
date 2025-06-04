@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../features/cart/logic/cart_cubit.dart';
-import '../../features/cart/logic/cart_state.dart';
+import '../../features/cart/logic/cart/cart_cubit.dart';
+import '../../features/cart/logic/cart/cart_state.dart';
 import '../../features/details/logic/favorite/favorite_cubit.dart';
 import '../../features/details/logic/favorite/favorite_state.dart';
 import '../../gen/assets.gen.dart';

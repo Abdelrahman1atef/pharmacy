@@ -169,6 +169,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           : () {
                               if (_formKey.currentState!.validate()) {
                                 final registerRequest = RegisterRequest(
+
                                   email: _emailController.text,
                                   phone: _phoneController.text,
                                   firstName: _firstNameController.text,

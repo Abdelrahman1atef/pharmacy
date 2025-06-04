@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy/core/di/module.dart';
-import 'package:pharmacy/features/cart/logic/cart_cubit.dart';
+import 'package:pharmacy/features/admin/orders/logic/admin_orders_cubit.dart';
+import 'package:pharmacy/features/cart/logic/cart/cart_cubit.dart';
+import 'package:pharmacy/features/cart/logic/order/order_cubit.dart';
 import 'package:pharmacy/features/login&signup/logic/signup/signup_cubit.dart';
 import 'package:pharmacy/features/main/logic/main_cubit.dart';
 
@@ -35,8 +37,10 @@ class AppBlocProviders extends StatelessWidget {
         BlocProvider(create: (_) => FavoriteCubit()),
         BlocProvider(create: (_) => getIt<ItemListScreenCubit>()),
         BlocProvider(create: (_)=> getIt<CartCubit>()),
+        BlocProvider(create: (_)=> getIt<OrderCubit>()),
         BlocProvider(create: (_)=> LoginScreenCubit()),
         BlocProvider(create: (_)=> getIt<SignupCubit>()),
+        BlocProvider(create: (_)=> getIt<AdminOrdersCubit>()),
       ],
       child: child,
     );

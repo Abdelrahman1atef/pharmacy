@@ -14,10 +14,10 @@ RegisterRequest _$RegisterRequestFromJson(Map<String, dynamic> json) =>
       lastName: json['last_name'] as String,
       birthdate: json['birthdate'] as String?,
       gender: json['gender'] as String,
-      password: json['password'] as String?,
+      password: json['password'] as String,
       profilePicture: json['profile_picture'] as String?,
-      isActive: json['is_active'] as bool,
-      isStaff: json['is_staff'] as bool,
+      isActive: json['isActive'] as bool,
+      isStaff: json['isStaff'] as bool,
     );
 
 Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
@@ -30,6 +30,6 @@ Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
       'gender': instance.gender,
       'password': instance.password,
       'profile_picture': instance.profilePicture,
-      'is_active': instance.isActive,
-      'is_staff': instance.isStaff,
+      'isActive': instance.isActive,
+      'isStaff': instance.isStaff,
     };

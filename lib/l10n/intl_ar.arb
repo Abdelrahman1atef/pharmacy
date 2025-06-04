@@ -77,5 +77,22 @@
   "ofProducts": "من المنتجات",
   "checkout": "الدفع",
   "continueShopping": "متابعة التسوق",
-  "logout": "تسجيل الخروج"
+  "logout": "تسجيل الخروج",
+
+  "processingOrder": "جاري معالجة الطلب",
+
+  "OrderNum": "رقم الطلب",
+  "CreatedAt": "تاريخ الإنشاء",
+  "CustomerId": "رقم العميل",
+  "CustomerName": "اسم العميل",
+  "CustomerEmail": "البريد الإلكتروني للعميل",
+  "CustomerPhone": "هاتف العميل",
+
+  "productId": "معرف المنتج",
+  "nameAr": "الاسم بالعربية",
+  "nameEn": "الاسم بالإنجليزية",
+  "unitType": "نوع الوحدة",
+  "quantity": "الكمية",
+  "itemTotal": "إجمالي العنصر"
+
 }

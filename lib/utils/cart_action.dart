@@ -6,8 +6,8 @@ import '../core/common_widgets/gradient_button.dart';
 import '../core/common_widgets/quantity_selector.dart';
 import '../core/models/product/product_response.dart';
 import '../core/themes/text/text_styles.dart';
-import '../features/cart/logic/cart_cubit.dart';
-import '../features/cart/logic/cart_state.dart';
+import '../features/cart/logic/cart/cart_cubit.dart';
+import '../features/cart/logic/cart/cart_state.dart';
 import '../gen/colors.gen.dart';
 import '../generated/l10n.dart';
 

@@ -1,230 +1,253 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacy/core/models/order/create/order_request.dart';
 import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
-import 'package:pharmacy/features/cart/logic/cart_cubit.dart';
-import 'package:pharmacy/features/cart/logic/cart_state.dart';
 import 'package:pharmacy/features/cart/ui/widget/cart_is_empty_widget.dart';
 import 'package:pharmacy/features/cart/ui/widget/cart_item_widget.dart';
 import 'package:pharmacy/gen/colors.gen.dart';
 import 'package:shimmer/shimmer.dart';
+import '../../../../app_config_provider/cashe_helper.dart';
 import '../../../../app_config_provider/logic/auth/logic/auth_cubit.dart';
+import '../../../../app_config_provider/logic/auth/logic/auth_state.dart';
 import '../../../../core/db/cart/model/product.dart';
 import '../../../../generated/l10n.dart';
 import '../../../main/logic/main_cubit.dart';
+import '../../logic/cart/cart_cubit.dart';
+import '../../logic/cart/cart_state.dart';
+import '../../logic/order/order_cubit.dart';
+import '../../logic/order/order_state.dart' as order_state;
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CartCubit, CartState>(
-      builder: (context, state) {
-        // Handle loading, error, and empty states
-        if (state is Loading) {
-          return _ShimmerWidget();
-        } else if (state is Error) {
-          return Scaffold(
-            body: Center(
-              child: Text(
-                'Error: ${state.e}',
-                style: const TextStyle(color: Colors.red),
+    return BlocListener<OrderCubit, order_state.OrderState>(
+      listener: (context, state) {
+        final scaffold = ScaffoldMessenger.of(context);
+
+        state.maybeWhen(
+          loading: () {
+            scaffold.hideCurrentSnackBar();
+            scaffold.showSnackBar(
+              SnackBar(
+                content: Row(
+                  children: [
+                    const CircularProgressIndicator(),
+                    const SizedBox(width: 16),
+                    Text(S.of(context).processingOrder),
+                  ],
+                ),
+                duration: const Duration(minutes: 1),
+                dismissDirection: DismissDirection.none,
               ),
-            ),
-          );
-        } else if (state is Success) {
-          final cartItems = state.data as List<Product>;
-          final cartItemsNum = cartItems.length;
-          double totalSellPrice = 0.0;
-          for (final product in cartItems) {
-            totalSellPrice += product.sellPrice! * product.quantity;
-          }
-
-          if (cartItems.isEmpty) {
-            return const CartIsEmpty();
-          }
-
-          // Build the main scaffold for the cart screen
-          return Scaffold(
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      final double screenWidth =
-                          MediaQuery.of(context).size.width;
-
-                      // Use GridView if screen width > 500
-                      if (screenWidth > 500) {
-                        return GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            childAspectRatio: 0.75, // Adjust as needed
-                          ),
-                          itemCount: cartItems.length,
-                          itemBuilder: (context, index) {
-                            final cartItem = cartItems[index];
-                            return CartItemWidget(
-                              product: cartItem,
-                            );
-                          },
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                        );
-                      } else {
-                        // Use ListView for smaller screens
-                        return ListView.builder(
-                          itemCount: cartItems.length,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (context, index) {
-                            final cartItem = cartItems[index];
-                            return CartItemWidget(
-                              product: cartItem,
-                            );
-                          },
-                        );
-                      }
-                    },
-                  ),
-                ),
-                Container(
-                  height: 130,
-                  decoration: BoxDecoration(
-                    color: Colors.blue[100],
-                    borderRadius: const BorderRadiusDirectional.vertical(
-                      top: Radius.circular(20),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.symmetric(
-                              horizontal: 10,
-                              vertical: 0,
-                            ),
-                            child: Text(
-                              "${S.of(context).subtotal}:",
-                              style: TextStyles.cartCheckout,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.symmetric(
-                              horizontal: 10,
-                              vertical: 0,
-                            ),
-                            child: Text(
-                              "${S.of(context).pound} $totalSellPrice",
-                              style: TextStyles.cartCheckout,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.symmetric(
-                          horizontal: 10,
-                          vertical: 10,
-                        ),
-                        child: Text(
-                          "$cartItemsNum ${cartItemsNum == 1 ? S.of(context).product : S.of(context).ofProducts}",
-                          style: TextStyles.cartCheckout,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.only(bottom: 5),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.symmetric(
-                                    horizontal: 10),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    BlocProvider.of<MainCubit>(context)
-                                        .selectTab(0);
-                                  },
-                                  style: ButtonStyle(
-                                    shape: WidgetStatePropertyAll(
-                                      RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadiusDirectional.circular(5),
-                                      ),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    S.of(context).continueShopping,
-                                    style: TextStyles.cartCheckout,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.symmetric(
-                                    horizontal: 10),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    context.read<AuthCubit>().state.when(
-                                          initial: () {},
-                                          authenticated: (user) {},
-                                          unauthenticated: (e) =>
-                                              Navigator.pushNamed(
-                                                  context, Routes.login),
-                                          loading: () {
-                                            showDialog(
-                                              context: context,
-                                              barrierDismissible: false,
-                                              builder: (_) => const Center(
-                                                  child:
-                                                      CircularProgressIndicator()),
-                                            );
-                                          },
-                                        );
-                                  },
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        const WidgetStatePropertyAll(
-                                            ColorName.primaryColor),
-                                    shape: WidgetStatePropertyAll(
-                                      RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadiusDirectional.circular(5),
-                                      ),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    S.of(context).checkout,
-                                    style: TextStyles.cartCheckout
-                                        .copyWith(color: ColorName.whiteColor),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        } else {
-          return _ShimmerWidget();
-        }
+            );
+          },
+          error: (e) {
+            scaffold.hideCurrentSnackBar();
+            scaffold.showSnackBar(
+              SnackBar(
+                content: Text(e.message),
+                backgroundColor: Colors.red,
+                duration: const Duration(seconds: 3),
+              ),
+            );
+          },
+          success: (data) {
+            scaffold.hideCurrentSnackBar();
+            context.read<CartCubit>().dropCartItem();
+            scaffold.showSnackBar(
+              SnackBar(
+                content: Text("Order successful! ID: ${data.orderId}"),
+                backgroundColor: Colors.green,
+                duration: const Duration(seconds: 4),
+              ),
+            );
+          },
+          orElse: () {},
+        );
       },
+      child: BlocBuilder<CartCubit, CartState>(
+        builder: (context, state) {
+          if (state is Loading) {
+            return _ShimmerWidget();
+          } else if (state is Error) {
+            return Center(child: Text('Error: ${state.e}'));
+          } else if (state is Success) {
+            final cartItems = state.data as List<Product>;
+            final cartItemsNum = cartItems.length;
+
+            if (cartItems.isEmpty) {
+              return const CartIsEmpty();
+            }
+
+            double totalSellPrice = cartItems.fold(
+                0, (sum, item) => sum + (item.sellPrice! * item.quantity));
+
+            return Scaffold(
+              body: Column(
+                children: [
+                  Expanded(
+                    child: _buildProductList(context, cartItems),
+                  ),
+                  _buildCheckoutSection(
+                      context, cartItemsNum, totalSellPrice, cartItems),
+                ],
+              ),
+            );
+          }
+          return const SizedBox.shrink();
+        },
+      ),
     );
+  }
+
+  // Snackbar helper methods
+  void _showLoadingSnackbar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const CircularProgressIndicator(),
+            const SizedBox(width: 16),
+            Text(/*S.of(context).processingOrder*/"########"),
+          ],
+        ),
+        duration: const Duration(minutes: 1), // Long duration for loading
+      ),
+    );
+  }
+
+  void _showErrorSnackbar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
+
+  void _showSuccessSnackbar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.green,
+        duration: const Duration(seconds: 4),
+        action: SnackBarAction(
+          label: 'OK',
+          textColor: Colors.white,
+          onPressed: () {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProductList(BuildContext context, List<Product> cartItems) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    if (screenWidth > 500) {
+      return GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 0.75,
+        ),
+        itemCount: cartItems.length,
+        itemBuilder: (context, index) => CartItemWidget(product: cartItems[index]),
+      );
+    } else {
+      return ListView.builder(
+        itemCount: cartItems.length,
+        itemBuilder: (context, index) => CartItemWidget(product: cartItems[index]),
+      );
+    }
+  }
+
+  Widget _buildCheckoutSection(
+      BuildContext context, int cartItemsNum, double totalSellPrice, List<Product> cartItems) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.blue[100],
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("${S.of(context).subtotal}:", style: TextStyles.cartCheckout),
+              Text("${S.of(context).pound} $totalSellPrice", style: TextStyles.cartCheckout),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            "$cartItemsNum ${cartItemsNum == 1 ? S.of(context).product : S.of(context).ofProducts}",
+            style: TextStyles.cartCheckout,
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              _buildActionButton(
+                text: S.of(context).continueShopping,
+                onPressed: () => context.read<MainCubit>().selectTab(0),
+              ),
+              const SizedBox(width: 8),
+              _buildActionButton(
+                text: S.of(context).checkout,
+                backgroundColor: ColorName.primaryColor,
+                textColor: ColorName.whiteColor,
+                onPressed: () => _handleCheckout(context, cartItems),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActionButton({
+    required String text,
+    required VoidCallback onPressed,
+    Color? backgroundColor,
+    Color? textColor,
+  }) {
+    return Expanded(
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: backgroundColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+        ),
+        child: Text(
+          text,
+          style: TextStyles.cartCheckout.copyWith(color: textColor),
+        ),
+      ),
+    );
+  }
+
+  void _handleCheckout(BuildContext context, List<Product> cartItems) {
+    final authState = context.read<AuthCubit>().state;
+
+    if (authState is! AuthAuthenticated) {
+      Navigator.pushNamed(context, Routes.login);
+      return;
+    }
+
+    final user = authState.user;
+    final orderRequest = OrderRequest(userId: user.id, products: cartItems);
+    context.read<OrderCubit>().createOrder(orderRequest);
   }
 }
 

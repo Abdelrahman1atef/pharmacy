@@ -76,5 +76,21 @@
   "ofProducts": "of Products",
   "checkout": "Checkout",
   "continueShopping": "Continue Shopping",
-  "logout": "Logout"
+  "logout": "Logout",
+
+  "processingOrder": "processing Order",
+
+  "OrderNum": "Order #",
+  "CreatedAt": "Created At",
+  "CustomerId": "Customer Id",
+  "CustomerName": "Customer Name",
+  "CustomerEmail": "Customer Email",
+  "CustomerPhone": "Customer Phone",
+
+  "productId": "product Id",
+  "nameAr":"name Ar",
+  "nameEn": "name En",
+  "unitType": "unit Type",
+  "quantity": "quantity",
+  "itemTotal":"itemTotal"
 }

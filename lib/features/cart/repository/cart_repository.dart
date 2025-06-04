@@ -49,5 +49,13 @@ class CartRepository {
       rethrow; // Rethrow the error to propagate it to the caller
     }
   }
+  Future<void> dropCartItem() async {
+    try {
+      return await cartCrud.clearCart();
+    } catch (e) {
+      print('Error deleting cart items: $e');
+      rethrow; // Rethrow the error to propagate it to the caller
+    }
+  }
 
 }

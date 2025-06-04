@@ -4,6 +4,7 @@ part 'data.g.dart';
 
 @JsonSerializable()
 class Data  {
+  final int id;
   final String email;
   final String phone;
   @JsonKey(name: "first_name")
@@ -21,7 +22,9 @@ class Data  {
   final bool isStaff;
 
   Data(
-      {required this.email,
+      {
+        required this.id,
+        required this.email,
         required this.phone,
         required this.firstName,
         required this.lastName,
@@ -33,4 +36,5 @@ class Data  {
         required this.isStaff});
 
   factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
+  Map<String,dynamic> toJson()=>_$DataToJson(this);
 }

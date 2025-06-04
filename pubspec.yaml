@@ -58,7 +58,9 @@ dependencies:
   flutter_phoenix:
   google_sign_in:
   lottie:
-
+  web_socket_channel:
+  firebase_core:
+  firebase_messaging:
 
 dev_dependencies:
   flutter_test:

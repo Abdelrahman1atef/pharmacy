@@ -23,7 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // Delay fetch until after the first frame is rendered
     WidgetsBinding.instance.addPostFrameCallback((_) {

@@ -2,11 +2,14 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:pharmacy/core/models/category/category_response.dart';
+import 'package:pharmacy/core/models/order/create/order_request.dart';
 import 'package:pharmacy/core/models/product/product_response.dart';
 import 'package:pharmacy/core/models/register_login/login_response.dart';
 import 'package:pharmacy/core/models/search/search_response.dart';
 import 'package:pharmacy/core/network/constant.dart';
 import '../../app_config_provider/logic/auth/model/data.dart';
+import '../models/order/admin/admin_order_model.dart';
+import '../models/order/create/order_response.dart';
 import '../models/register_login/login_request.dart';
 import '../models/register_login/register_request.dart';
 import 'api_exception.dart';
@@ -14,6 +17,7 @@ import 'api_result.dart';
 
 abstract class ApiService {
   Future<bool> checkServerStatus();
+
   Future<ApiResult<ProductResponse>> fetchAllProduct(int page);
 
   Future<ApiResult<Results>> fetchProductDetails(int productId);
@@ -30,6 +34,10 @@ abstract class ApiService {
   Future<ApiResult<LoginResponse>> userLogin(LoginRequest loginBody);
 
   Future<ApiResult<Data>> getProfile(token);
+
+  Future<ApiResult<OrderResponse>> createOrder(OrderRequest orderBody, token);
+
+  Future<ApiResult<List<AdminOrderModel>>> getAdminOrders(token);
 }
 
 class ApiServiceImpl implements ApiService {
@@ -39,17 +47,18 @@ class ApiServiceImpl implements ApiService {
 
   @override
   Future<bool> checkServerStatus() async {
-    try{
-      Response response =await _dio.get(Constant.apiHealth);
-      if(response.statusCode==200){
+    try {
+      Response response = await _dio.get(Constant.apiHealth);
+      if (response.statusCode == 200) {
         return true;
-      }else{
-       return false;
+      } else {
+        return false;
       }
-    }on DioException{
+    } on DioException {
       return false;
     }
   }
+
   @override
   Future<ApiResult<ProductResponse>> fetchAllProduct(int page) async {
     try {
@@ -92,7 +101,8 @@ class ApiServiceImpl implements ApiService {
   }
 
   @override
-  Future<ApiResult<ProductResponse>> fetchProductByCategory({required int categoryId, required int page}) async {
+  Future<ApiResult<ProductResponse>> fetchProductByCategory(
+      {required int categoryId, required int page}) async {
     try {
       Response response = await _dio.get(
           '${Constant.allProductsOfCategoriesEndPoint}$categoryId',
@@ -152,7 +162,8 @@ class ApiServiceImpl implements ApiService {
   }
 
   @override
-  Future<ApiResult<RegisterRequest>> userRegister(RegisterRequest registerBody) async {
+  Future<ApiResult<RegisterRequest>> userRegister(
+      RegisterRequest registerBody) async {
     try {
       final registerRequestBody = registerBody.toJson();
 
@@ -179,17 +190,19 @@ class ApiServiceImpl implements ApiService {
   @override
   Future<ApiResult<LoginResponse>> userLogin(LoginRequest loginBody) async {
     try {
-      final registerRequestBody = loginBody.toJson();
+      final loginRequestBody = loginBody.toJson();
 
-      final jsonBody = json.encode(registerRequestBody);
+      final jsonBody = json.encode(loginRequestBody);
       Response response = await _dio.post(
         Constant.login,
         data: jsonBody,
       );
       if (response.statusCode == 200) {
-        return ApiResult<LoginResponse>.success(LoginResponse.fromJson(response.data));
+        return ApiResult<LoginResponse>.success(
+            LoginResponse.fromJson(response.data));
       } else {
-        return ApiResult<LoginResponse>.failure(ApiException.fromJson(response.data));
+        return ApiResult<LoginResponse>.failure(
+            ApiException.fromJson(response.data));
       }
     } on DioException catch (e) {
       return ApiResult<LoginResponse>.failure(ApiException(
@@ -211,11 +224,55 @@ class ApiServiceImpl implements ApiService {
       if (response.statusCode == 200) {
         return ApiResult<Data>.success(Data.fromJson(response.data));
       } else {
-        return ApiResult<RegisterRequest>.failure(
+        return ApiResult<Data>.failure(ApiException.fromJson(response.data));
+      }
+    } on DioException catch (e) {
+      return ApiResult<Data>.failure(ApiException(
+          message: e.message ?? "Unable to Get User Info",
+          code: e.response?.statusCode ?? 0));
+    }
+  }
+
+  @override
+  Future<ApiResult<OrderResponse>> createOrder(
+      OrderRequest orderBody, token) async {
+    final jsonBody = json.encode(orderBody.toJson());
+
+    Response response = await _dio.post(Constant.createOrder,
+        data: jsonBody,
+        options: Options(
+          headers: {
+            "Authorization": "Token $token",
+            "Accept": "application/json"
+          },
+        ));
+    if (response.statusCode == 201) {
+      return ApiResult.success(OrderResponse.fromJson(response.data));
+    } else {
+      return ApiResult.failure(ApiException.fromJson(response.data));
+    }
+  }
+
+  @override
+  Future<ApiResult<List<AdminOrderModel>>> getAdminOrders(token) async {
+    try {
+      Response response = await _dio.get(Constant.adminOrdersEndPoint,
+          options: Options(
+            headers: {
+              "Authorization": "Token $token",
+              "Accept": "application/json"
+            },
+          ));
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        final orders = data.map((e) => AdminOrderModel.fromJson(e)).toList();
+        return ApiResult<List<AdminOrderModel>>.success(orders);
+      } else {
+        return ApiResult<List<AdminOrderModel>>.failure(
             ApiException.fromJson(response.data));
       }
     } on DioException catch (e) {
-      return ApiResult<RegisterRequest>.failure(ApiException(
+      return ApiResult<List<AdminOrderModel>>.failure(ApiException(
           message: e.message ?? "Unable to Get User Info",
           code: e.response?.statusCode ?? 0));
     }

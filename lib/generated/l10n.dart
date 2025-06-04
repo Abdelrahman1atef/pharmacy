@@ -594,6 +594,91 @@ class S {
   String get logout {
     return Intl.message('Logout', name: 'logout', desc: '', args: []);
   }
+
+  /// `processing Order`
+  String get processingOrder {
+    return Intl.message(
+      'processing Order',
+      name: 'processingOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order #`
+  String get OrderNum {
+    return Intl.message('Order #', name: 'OrderNum', desc: '', args: []);
+  }
+
+  /// `Created At`
+  String get CreatedAt {
+    return Intl.message('Created At', name: 'CreatedAt', desc: '', args: []);
+  }
+
+  /// `Customer Id`
+  String get CustomerId {
+    return Intl.message('Customer Id', name: 'CustomerId', desc: '', args: []);
+  }
+
+  /// `Customer Name`
+  String get CustomerName {
+    return Intl.message(
+      'Customer Name',
+      name: 'CustomerName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Email`
+  String get CustomerEmail {
+    return Intl.message(
+      'Customer Email',
+      name: 'CustomerEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Phone`
+  String get CustomerPhone {
+    return Intl.message(
+      'Customer Phone',
+      name: 'CustomerPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `product Id`
+  String get productId {
+    return Intl.message('product Id', name: 'productId', desc: '', args: []);
+  }
+
+  /// `name Ar`
+  String get nameAr {
+    return Intl.message('name Ar', name: 'nameAr', desc: '', args: []);
+  }
+
+  /// `name En`
+  String get nameEn {
+    return Intl.message('name En', name: 'nameEn', desc: '', args: []);
+  }
+
+  /// `unit Type`
+  String get unitType {
+    return Intl.message('unit Type', name: 'unitType', desc: '', args: []);
+  }
+
+  /// `quantity`
+  String get quantity {
+    return Intl.message('quantity', name: 'quantity', desc: '', args: []);
+  }
+
+  /// `itemTotal`
+  String get itemTotal {
+    return Intl.message('itemTotal', name: 'itemTotal', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

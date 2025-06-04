@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy/core/common_widgets/quantity_selector.dart';
 import 'package:pharmacy/core/db/cart/model/product.dart';
-import 'package:pharmacy/features/cart/logic/cart_cubit.dart';
+import 'package:pharmacy/features/cart/logic/cart/cart_cubit.dart';
 import 'package:pharmacy/gen/colors.gen.dart';
 
 import '../../../../core/themes/text/text_styles.dart';

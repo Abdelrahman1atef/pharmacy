@@ -2,8 +2,12 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pharmacy/app_config_provider/logic/internet_server_connection/repository/internet_server_connection_repository.dart';
-import 'package:pharmacy/features/cart/logic/cart_cubit.dart';
+import 'package:pharmacy/features/admin/orders/logic/admin_orders_cubit.dart';
+import 'package:pharmacy/features/admin/orders/repository/orders_repository.dart';
+import 'package:pharmacy/features/cart/logic/cart/cart_cubit.dart';
+import 'package:pharmacy/features/cart/logic/order/order_cubit.dart';
 import 'package:pharmacy/features/cart/repository/cart_repository.dart';
+import 'package:pharmacy/features/cart/repository/order_repository.dart';
 import 'package:pharmacy/features/details/logic/details/details_cubit.dart';
 import 'package:pharmacy/features/details/repository/details_repository.dart';
 import 'package:pharmacy/features/home/logic/best_seller/best_seller_cubit.dart';
@@ -42,13 +46,18 @@ void setupDependencies() {
   getIt.registerFactory<SignupRepository>(() => SignupRepository(getIt()));
   getIt.registerFactory<AuthRepository>(() => AuthRepository(getIt()));
   getIt.registerFactory<InternetServerConnectionRepository>(() => InternetServerConnectionRepository(getIt()));
+  getIt.registerFactory<OrderRepository>(() => OrderRepository(getIt()));
+  getIt.registerFactory<AdminOrdersRepository>(() => AdminOrdersRepository(getIt()));
   getIt.registerFactory<SearchCubit>(() => SearchCubit(getIt()));
   getIt.registerFactory<DetailsCubit>(() => DetailsCubit(getIt()));
   getIt.registerFactory<CategoryCubit>(() => CategoryCubit(getIt()));
   getIt.registerFactory<BestSellerCubit>(() => BestSellerCubit(getIt()));
   getIt.registerFactory<ItemListScreenCubit>(() => ItemListScreenCubit(getIt()));
   getIt.registerFactory<CartCubit>(() => CartCubit(getIt()));
+  getIt.registerFactory<OrderCubit>(() => OrderCubit(getIt()));
   getIt.registerFactory<SignupCubit>(() => SignupCubit(getIt()));
   getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt()));
   getIt.registerFactory<InternetServerConnectionCubit>(() => InternetServerConnectionCubit(Connectivity(),getIt()));
+  getIt.registerFactory<AdminOrdersCubit>(() => AdminOrdersCubit(getIt()));
+
 }

@@ -22,6 +22,14 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "CreatedAt": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
+    "CustomerEmail": MessageLookupByLibrary.simpleMessage(
+      "البريد الإلكتروني للعميل",
+    ),
+    "CustomerId": MessageLookupByLibrary.simpleMessage("رقم العميل"),
+    "CustomerName": MessageLookupByLibrary.simpleMessage("اسم العميل"),
+    "CustomerPhone": MessageLookupByLibrary.simpleMessage("هاتف العميل"),
+    "OrderNum": MessageLookupByLibrary.simpleMessage("رقم الطلب"),
     "addToCart": MessageLookupByLibrary.simpleMessage("اضف الى العربة"),
     "agree_terms": MessageLookupByLibrary.simpleMessage("أوافق على "),
     "already_have_account": MessageLookupByLibrary.simpleMessage(
@@ -78,6 +86,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "invalid_phone": MessageLookupByLibrary.simpleMessage(
       "رقم الهاتف غير صحيح",
     ),
+    "itemTotal": MessageLookupByLibrary.simpleMessage("إجمالي العنصر"),
     "keepCartItem": MessageLookupByLibrary.simpleMessage("احتفظ بالمنتج"),
     "language": MessageLookupByLibrary.simpleMessage("اللغة"),
     "last_name": MessageLookupByLibrary.simpleMessage("اللقب"),
@@ -109,6 +118,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "morning_welcome_message": MessageLookupByLibrary.simpleMessage(
       "صباح الخير",
     ),
+    "nameAr": MessageLookupByLibrary.simpleMessage("الاسم بالعربية"),
+    "nameEn": MessageLookupByLibrary.simpleMessage("الاسم بالإنجليزية"),
     "noItemInCart": MessageLookupByLibrary.simpleMessage(
       "ليس هناك منتجات فى العربه حتى الان",
     ),
@@ -121,8 +132,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "phone": MessageLookupByLibrary.simpleMessage("الهاتف"),
     "pound": MessageLookupByLibrary.simpleMessage("جنيه"),
+    "processingOrder": MessageLookupByLibrary.simpleMessage(
+      "جاري معالجة الطلب",
+    ),
     "product": MessageLookupByLibrary.simpleMessage("منتج"),
     "productDescription": MessageLookupByLibrary.simpleMessage("وصف المنتج:"),
+    "productId": MessageLookupByLibrary.simpleMessage("معرف المنتج"),
+    "quantity": MessageLookupByLibrary.simpleMessage("الكمية"),
     "search_for_medicine": MessageLookupByLibrary.simpleMessage(
       "البحث عن الدواء(عربى او انجليزى)",
     ),
@@ -141,5 +157,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "titles_category": MessageLookupByLibrary.simpleMessage("الأقسام"),
     "unavailable": MessageLookupByLibrary.simpleMessage("غير متوفر"),
     "unit": MessageLookupByLibrary.simpleMessage("الوحدة"),
+    "unitType": MessageLookupByLibrary.simpleMessage("نوع الوحدة"),
   };
 }

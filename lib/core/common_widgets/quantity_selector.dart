@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pharmacy/features/cart/logic/cart_cubit.dart';
+import 'package:pharmacy/features/cart/logic/cart/cart_cubit.dart';
 import 'package:pharmacy/features/cart/ui/widget/cart_item_widget.dart';
-import '../../features/cart/logic/cart_state.dart';
+import '../../features/cart/logic/cart/cart_state.dart';
 import '../../gen/colors.gen.dart';
 import '../db/cart/model/product.dart';
 
