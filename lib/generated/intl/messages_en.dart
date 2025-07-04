@@ -51,8 +51,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "cashOnDelivery": MessageLookupByLibrary.simpleMessage("Cash On Delivery"),
     "change": MessageLookupByLibrary.simpleMessage("Change"),
     "changePassword": MessageLookupByLibrary.simpleMessage("Change Password"),
+    "changeTimeDeliver": MessageLookupByLibrary.simpleMessage(
+      "Change Delivery Time",
+    ),
+    "changeTimePickup": MessageLookupByLibrary.simpleMessage(
+      "Change Pickup Time",
+    ),
     "checkout": MessageLookupByLibrary.simpleMessage("Checkout"),
     "closeNow": MessageLookupByLibrary.simpleMessage("Close Now"),
+    "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
     "confirmLogoutContent": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to log out?",
     ),
@@ -68,6 +75,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "continue_": MessageLookupByLibrary.simpleMessage("Continue"),
     "create_password": MessageLookupByLibrary.simpleMessage("Create Password"),
     "dark": MessageLookupByLibrary.simpleMessage("Dark"),
+    "debitCreditCard": MessageLookupByLibrary.simpleMessage(
+      "Debit/Credit Card",
+    ),
+    "debitCreditCardUponReceipt": MessageLookupByLibrary.simpleMessage(
+      "Debit/Credit Card upon receipt",
+    ),
     "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
     "deleteCartItem": MessageLookupByLibrary.simpleMessage("Remove Item"),
     "deleteCartItemAlertP1": MessageLookupByLibrary.simpleMessage(
@@ -197,11 +210,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "search_for_medicine": MessageLookupByLibrary.simpleMessage(
       "Search for medicine(English or Arabic)",
     ),
+    "selectDate": MessageLookupByLibrary.simpleMessage("Select Date"),
+    "selectDeliveryTime": MessageLookupByLibrary.simpleMessage(
+      "Select Delivery Time",
+    ),
+    "selectPickupTime": MessageLookupByLibrary.simpleMessage(
+      "Select Pickup Time",
+    ),
+    "selectTime": MessageLookupByLibrary.simpleMessage("Select Time"),
     "select_birthdate": MessageLookupByLibrary.simpleMessage(
       "Please select birthdate",
     ),
     "select_gender": MessageLookupByLibrary.simpleMessage(
       "Please select gender",
+    ),
+    "selectedDateTime": MessageLookupByLibrary.simpleMessage(
+      "Selected Date & Time",
     ),
     "send_sms_verification": MessageLookupByLibrary.simpleMessage(
       "We\'ll send a text message to verify this number",

@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:pharmacy/core/models/order/admin/admin_order_model.dart';
 
 part 'admin_orders_state.freezed.dart';
 @freezed

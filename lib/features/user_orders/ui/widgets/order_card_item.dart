@@ -6,16 +6,11 @@ import 'package:pharmacy/features/user_orders/ui/widgets/order_item_widget.dart'
 
 import '../../../../app_config_provider/logic/auth/logic/auth_cubit.dart';
 import '../../../../app_config_provider/logic/auth/logic/auth_state.dart';
-import '../../../../core/models/order/create/order_request.dart';
-import '../../../../core/models/order/customer/customer_order_item_model.dart';
 import '../../../../core/models/order/customer/customer_order_model.dart';
 import '../../../../core/routes/routes.dart';
 import '../../../../core/themes/text/text_styles.dart';
-import '../../../../gen/assets.gen.dart';
 import '../../../../gen/colors.gen.dart';
 import '../../../../generated/l10n.dart';
-import '../../../../utils/network_image_utils.dart';
-import '../../../cart/logic/order/order_cubit.dart';
 import 'order_details_dialog.dart';
 import 'order_status_widget.dart';
 
@@ -127,9 +122,9 @@ class OrderCardItem extends StatelessWidget {
                           }
 
                           final user = authState.user;
-                          final orderRequest = OrderRequest(
-                              userId: user.id, products: orderItemInfo!);
-                          context.read<OrderCubit>().createOrder(orderRequest);
+                          // final orderRequest = OrderRequest(
+                          //     userId: user.id, products: orderItemInfo!);
+                          // context.read<OrderCubit>().createOrder(orderRequest);
                         },
                         child: Text(
                           S.of(context).reorder,

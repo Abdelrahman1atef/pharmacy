@@ -25,8 +25,21 @@ class CheckoutCubit extends Cubit<CheckoutState> {
     ));
   }
 
+  void setPreSelectedDateTime(DateTime? dateTime) {
+    emit(state.copyWith(
+      selectedDateTime: dateTime,
+    ));
+  }
+  void setSelectedDateTime(DateTime? dateTime) {
+    emit(state.copyWith(
+      selectedDateTime: dateTime,
+    ));
+  }
+
   // Helper methods
   bool get isHomeDelivery => state.isHomeDeliverySelected;
   bool get isPharmacyPickup => !state.isHomeDeliverySelected;
+  bool get isCallRequestEnabled => !state.isCallRequestEnabled;
   String get deliveryMethod => state.deliveryMethod;
+  DateTime? get selectedDateTime => state.selectedDateTime;
 }

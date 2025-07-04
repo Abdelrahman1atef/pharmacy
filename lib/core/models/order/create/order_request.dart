@@ -1,5 +1,4 @@
 // Updated order_request.dart
-import 'package:pharmacy/core/db/cart/model/product.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'order_request.g.dart';
@@ -13,7 +12,7 @@ class OrderRequest {
   final double latitude;
   final double longitude;
   @JsonKey(name: "payment_method")
-  final String paymentMethod;
+  final String? paymentMethod;
 
   // New delivery method fields
   @JsonKey(name: "delivery_method")

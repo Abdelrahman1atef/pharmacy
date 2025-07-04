@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pharmacy/core/models/order/create/order_request.dart';
 import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
 import 'package:pharmacy/features/cart/ui/widget/cart_is_empty_widget.dart';
@@ -204,7 +203,18 @@ class CartScreen extends StatelessWidget {
                 text: S.of(context).proceedToCheckout,
                 backgroundColor: ColorName.primaryColor,
                 textColor: ColorName.whiteColor,
-                onPressed: () => Navigator.pushNamed(context,Routes.checkOutScreen,arguments: cartItems),
+                onPressed: () {
+                  final authState = context.read<AuthCubit>().state;
+
+                  if (authState is! AuthAuthenticated) {
+                    Navigator.pushNamed(context, Routes.login);
+                    return;
+                  }else{
+                    Navigator.pushNamed(
+                        context, Routes.checkOutScreen, arguments: cartItems);
+                  }
+
+                },
               ),
             ],
           ),

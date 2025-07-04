@@ -11,6 +11,7 @@ import 'package:pharmacy/features/login&signup/ui/screen/signup_screen.dart';
 import 'package:pharmacy/features/splash/splash_screen.dart';
 import 'package:pharmacy/features/user/ui/screens/user_screen.dart';
 
+import '../../app_config_provider/logic/auth/logic/auth_state.dart';
 import '../../features/admin/main/ui/screens/main_admin_screen.dart';
 import '../../features/admin/users/ui/screens/user_manger_screen.dart';
 import '../../features/login&signup/ui/screen/login_screen.dart';
@@ -31,9 +32,11 @@ class AppRouter {
       case Routes.productDetail:
         return MaterialPageRoute(
             builder: (context) => DetailScreen(settings.arguments as int));
-        case Routes.checkOutScreen:
+      case Routes.checkOutScreen:
         return MaterialPageRoute(
-            builder: (context) => CheckoutScreen(cartItems:settings.arguments as List<Product>,));
+            builder: (context) => CheckoutScreen(
+                  cartItems: settings.arguments as List<Product>,
+                ));
       case Routes.itemListScreen:
         return MaterialPageRoute(builder: (context) {
           final arguments = settings.arguments;
@@ -60,18 +63,17 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case Routes.userScreen:
         return navigateWithAnimation(
-          screen:   const UserScreen(),
+          screen: const UserScreen(),
           transition: TransitionType.fade,
         );
-        case Routes.userOrdersScreen:
-
+      case Routes.userOrdersScreen:
         return navigateWithAnimation(
-          screen:   const UserOrdersScreen(),
+          screen: const UserOrdersScreen(),
           transition: TransitionType.fade,
         );
-        case Routes.adminMain:
+      case Routes.adminMain:
         return navigateWithAnimation(
-          screen:  const MainAdminScreen(),
+          screen: const MainAdminScreen(),
           transition: TransitionType.scale,
         );
       case Routes.adminOrders:
@@ -84,12 +86,12 @@ class AppRouter {
           screen: const AdminUserMangerScreen(),
           transition: TransitionType.fade,
         );
-        case Routes.adminDashboard:
+      case Routes.adminDashboard:
         return navigateWithAnimation(
           screen: const AdminUserMangerScreen(),
           transition: TransitionType.fade,
         );
-        case Routes.adminReports:
+      case Routes.adminReports:
         return navigateWithAnimation(
           screen: const AdminUserMangerScreen(),
           transition: TransitionType.fade,

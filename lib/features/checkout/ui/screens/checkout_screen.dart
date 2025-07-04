@@ -1,4 +1,5 @@
-// Updated checkout_screen.dart
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy/core/common_widgets/gradient_button.dart';
 import 'package:pharmacy/core/common_widgets/pharmacy_app_bar.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
+import 'package:pharmacy/features/checkout/logic/payment/payment_cubit.dart';
+import 'package:pharmacy/features/checkout/ui/widgets/discount_section_widget.dart';
 import 'package:pharmacy/gen/colors.gen.dart';
 
 import '../../../../app_config_provider/logic/auth/logic/auth_cubit.dart';
@@ -14,10 +17,17 @@ import '../../../../core/db/cart/model/product.dart';
 import '../../../../core/models/order/create/order_request.dart';
 import '../../../../core/routes/routes.dart';
 import '../../../../generated/l10n.dart';
+import '../../../admin/orders/logic/admin_orders_state.dart';
 import '../../../cart/logic/order/order_cubit.dart';
 import '../../logic/toggle_buttons_logic/checkout_cubit.dart';
 import '../../logic/toggle_buttons_logic/checkout_state.dart';
-import '../widgets/toggle_buttons.dart';
+import '../widgets/deliver_section_widget.dart';
+import '../widgets/location_section_widget.dart';
+import '../widgets/order_summary_section_widget.dart';
+import '../widgets/payment_section_widget.dart';
+import '../../logic/location/location_cubit.dart';
+import '../../logic/location/saved_location.dart';
+import '../../logic/payment/payment_options.dart';
 
 class CheckoutScreen extends StatelessWidget {
   final List<Product> cartItems;
@@ -48,10 +58,16 @@ class CheckoutScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 20.h),
-                    LocationSelectionWidget(),
+                    const LocationSelectionWidget(),
                     SizedBox(height: 20.h),
-                    // Add more checkout widgets here
-                    _buildOrderSummary(context),
+                    const DeliverSectionWidget(),
+                    SizedBox(height: 20.h),
+                     const PaymentSectionWidget(),
+                    SizedBox(height: 20.h),
+                    const DiscountSectionWidget(),
+                    SizedBox(height: 20.h),
+                    OrderSummarySectionWidget(cartItems: cartItems,),
+                    // _buildOrderSummary(context),
                   ],
                 ),
               ),
@@ -112,7 +128,8 @@ class CheckoutScreen extends StatelessWidget {
   Widget _buildCheckoutButton(BuildContext context) {
     return Container(
       color: Colors.blue[100],
-      padding: EdgeInsetsDirectional.symmetric(horizontal: 20.w, vertical: 20.h),
+      padding:
+          EdgeInsetsDirectional.symmetric(horizontal: 20.w, vertical: 20.h),
       child: BlocBuilder<CheckoutCubit, CheckoutState>(
         builder: (context, checkoutState) {
           return GradientElevatedButton(
@@ -132,7 +149,8 @@ class CheckoutScreen extends StatelessWidget {
   }
 }
 
-void _handleCheckout(BuildContext context, List<Product> cartItems, CheckoutState checkoutState) {
+void _handleCheckout(BuildContext context, List<Product> cartItems,
+    CheckoutState checkoutState) {
   final authState = context.read<AuthCubit>().state;
 
   if (authState is! AuthAuthenticated) {
@@ -141,16 +159,22 @@ void _handleCheckout(BuildContext context, List<Product> cartItems, CheckoutStat
   }
 
   final user = authState.user;
+  final paymentMethod = context.read<PaymentCubit>().state;
+  final selectedLocation = context.read<LocationCubit>().state;
 
-  // Create order request with delivery method information
   final orderRequest = OrderRequest(
     userId: user.id,
     products: cartItems,
-    // You'll need to get these values from your app state or form inputs
-    address: "User address here", // Get from user profile or address form
-    latitude: 0.0, // Get from location service
-    longitude: 0.0, // Get from location service
-    paymentMethod: "cash_on_delivery", // Get from payment method selection
+    address: selectedLocation?.street ?? "No address selected",
+    latitude: selectedLocation?.latitude ?? 0.0,
+    longitude: selectedLocation?.longitude ?? 0.0,
+    paymentMethod: paymentMethod.selectedPaymentIndex == 0
+        ? "cash_on_delivery"
+        : paymentMethod.selectedPaymentIndex == 1
+        ? "debit_credit_card"
+        : paymentMethod.selectedPaymentIndex == 2
+        ?"debit_credit_card_on_delivery"
+        : null,
     deliveryMethod: checkoutState.deliveryMethod,
     isHomeDelivery: checkoutState.isHomeDeliverySelected,
     callRequestEnabled: checkoutState.isCallRequestEnabled,
@@ -158,29 +182,7 @@ void _handleCheckout(BuildContext context, List<Product> cartItems, CheckoutStat
   );
 
   context.read<OrderCubit>().createOrder(orderRequest);
-}
-
-class LocationSelectionWidget extends StatelessWidget {
-  const LocationSelectionWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            S.of(context).delivery,
-            style: TextStyles.orderInfoText.copyWith(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 10.h),
-          const DeliveryToggleButtons(),
-        ],
-      ),
-    );
+  if(context.read<OrderCubit>().state is Success) {
+    Navigator.pop(context);
   }
 }

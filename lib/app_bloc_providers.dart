@@ -11,6 +11,8 @@ import 'package:pharmacy/features/user_orders/logic/user_orders_cubit.dart';
 
 import 'app_config_provider/logic/auth/logic/auth_cubit.dart';
 import 'app_config_provider/logic/internet_server_connection/logic/internet_server_connection_cubit.dart';
+import 'features/checkout/logic/location/location_cubit.dart';
+import 'features/checkout/logic/payment/payment_cubit.dart';
 import 'features/details/logic/details/details_cubit.dart';
 import 'features/details/logic/favorite/favorite_cubit.dart';
 import 'features/home/logic/best_seller/best_seller_cubit.dart';
@@ -43,6 +45,8 @@ class AppBlocProviders extends StatelessWidget {
         BlocProvider(create: (_)=> getIt<SignupCubit>()),
         BlocProvider(create: (_)=> getIt<AdminOrdersCubit>()),
         BlocProvider(create: (_)=> getIt<UserOrdersCubit>()),
+        BlocProvider(create: (_)=> PaymentCubit()),
+        BlocProvider(create: (_)=> LocationCubit()),
       ],
       child: child,
     );

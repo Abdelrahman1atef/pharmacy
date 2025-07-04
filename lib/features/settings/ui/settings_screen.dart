@@ -14,7 +14,6 @@ import '../../../core/routes/routes.dart';
 import '../../../core/themes/text/text_styles.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../generated/l10n.dart';
-import '../../user_orders/logic/user_orders_cubit.dart';
 import '../model/user_panel_item.dart';
 
 class SettingsScreen extends StatefulWidget {

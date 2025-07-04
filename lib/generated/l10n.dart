@@ -595,6 +595,26 @@ class S {
     return Intl.message('Change', name: 'change', desc: '', args: []);
   }
 
+  /// `Change Delivery Time`
+  String get changeTimeDeliver {
+    return Intl.message(
+      'Change Delivery Time',
+      name: 'changeTimeDeliver',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Pickup Time`
+  String get changeTimePickup {
+    return Intl.message(
+      'Change Pickup Time',
+      name: 'changeTimePickup',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Pharmacy`
   String get pharmacy {
     return Intl.message('Pharmacy', name: 'pharmacy', desc: '', args: []);
@@ -645,7 +665,25 @@ class S {
     );
   }
 
-  // skipped getter for the 'debit/creditCard' key
+  /// `Debit/Credit Card`
+  String get debitCreditCard {
+    return Intl.message(
+      'Debit/Credit Card',
+      name: 'debitCreditCard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Debit/Credit Card upon receipt`
+  String get debitCreditCardUponReceipt {
+    return Intl.message(
+      'Debit/Credit Card upon receipt',
+      name: 'debitCreditCardUponReceipt',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Your Discount`
   String get yourDiscount {
@@ -675,6 +713,51 @@ class S {
       desc: '',
       args: [],
     );
+  }
+
+  /// `Select Delivery Time`
+  String get selectDeliveryTime {
+    return Intl.message(
+      'Select Delivery Time',
+      name: 'selectDeliveryTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Pickup Time`
+  String get selectPickupTime {
+    return Intl.message(
+      'Select Pickup Time',
+      name: 'selectPickupTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Date`
+  String get selectDate {
+    return Intl.message('Select Date', name: 'selectDate', desc: '', args: []);
+  }
+
+  /// `Select Time`
+  String get selectTime {
+    return Intl.message('Select Time', name: 'selectTime', desc: '', args: []);
+  }
+
+  /// `Selected Date & Time`
+  String get selectedDateTime {
+    return Intl.message(
+      'Selected Date & Time',
+      name: 'selectedDateTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm`
+  String get confirm {
+    return Intl.message('Confirm', name: 'confirm', desc: '', args: []);
   }
 
   /// `processing Order`

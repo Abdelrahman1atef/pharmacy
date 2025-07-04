@@ -55,10 +55,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "cashOnDelivery": MessageLookupByLibrary.simpleMessage(
       "الدفع عند الاستلام",
     ),
-    "change": MessageLookupByLibrary.simpleMessage("تغير"),
+    "change": MessageLookupByLibrary.simpleMessage("تغيير"),
     "changePassword": MessageLookupByLibrary.simpleMessage("تغيير كلمة المرور"),
+    "changeTimeDeliver": MessageLookupByLibrary.simpleMessage(
+      "تغيير وقت التوصيل",
+    ),
+    "changeTimePickup": MessageLookupByLibrary.simpleMessage(
+      "تغيير وقت الاستلام",
+    ),
     "checkout": MessageLookupByLibrary.simpleMessage("تأكيد الطلب"),
     "closeNow": MessageLookupByLibrary.simpleMessage("مغلق الان"),
+    "confirm": MessageLookupByLibrary.simpleMessage("تأكيد"),
     "confirmLogoutContent": MessageLookupByLibrary.simpleMessage(
       "هل أنت متأكد أنك تريد تسجيل الخروج؟",
     ),
@@ -74,6 +81,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "إنشاء كلمة المرور",
     ),
     "dark": MessageLookupByLibrary.simpleMessage("ليل"),
+    "debitCreditCard": MessageLookupByLibrary.simpleMessage(
+      "بطاقة الخصم/الائتمان",
+    ),
+    "debitCreditCardUponReceipt": MessageLookupByLibrary.simpleMessage(
+      "بطاقة الخصم/الائتمان عند الاستلام",
+    ),
     "deleteAccount": MessageLookupByLibrary.simpleMessage("حذف الحساب"),
     "deleteCartItem": MessageLookupByLibrary.simpleMessage("ازالة المنتج"),
     "deleteCartItemAlertP1": MessageLookupByLibrary.simpleMessage(
@@ -203,10 +216,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "search_for_medicine": MessageLookupByLibrary.simpleMessage(
       "البحث عن الدواء(عربى او انجليزى)",
     ),
+    "selectDate": MessageLookupByLibrary.simpleMessage("اختر التاريخ"),
+    "selectDeliveryTime": MessageLookupByLibrary.simpleMessage(
+      "اختر وقت التوصيل",
+    ),
+    "selectPickupTime": MessageLookupByLibrary.simpleMessage(
+      "اختر وقت الاستلام",
+    ),
+    "selectTime": MessageLookupByLibrary.simpleMessage("اختر الوقت"),
     "select_birthdate": MessageLookupByLibrary.simpleMessage(
       "يرجى تحديد تاريخ الميلاد",
     ),
     "select_gender": MessageLookupByLibrary.simpleMessage("يرجى تحديد النوع"),
+    "selectedDateTime": MessageLookupByLibrary.simpleMessage(
+      "التاريخ والوقت المحدد",
+    ),
     "send_sms_verification": MessageLookupByLibrary.simpleMessage(
       "سنرسل رسالة نصية قصيرة إلى هذا الرقم للتحقق منه",
     ),
