@@ -22,6 +22,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/RPIcon.png
   AssetGenImage get rPIcon => const AssetGenImage('assets/images/RPIcon.png');
 
+  /// File path: assets/images/admin.svg
+  SvgGenImage get admin => const SvgGenImage('assets/images/admin.svg');
+
   /// File path: assets/images/arrow-left-svgrepo-com.svg
   SvgGenImage get arrowLeftSvgrepoCom =>
       const SvgGenImage('assets/images/arrow-left-svgrepo-com.svg');
@@ -54,6 +57,10 @@ class $AssetsImagesGen {
   SvgGenImage get defaultProfileImage =>
       const SvgGenImage('assets/images/default_profile_image.svg');
 
+  /// File path: assets/images/delete-account.svg
+  SvgGenImage get deleteAccount =>
+      const SvgGenImage('assets/images/delete-account.svg');
+
   /// File path: assets/images/drug.png
   AssetGenImage get drug => const AssetGenImage('assets/images/drug.png');
 
@@ -74,9 +81,19 @@ class $AssetsImagesGen {
   SvgGenImage get homeUnselected =>
       const SvgGenImage('assets/images/home-unselected.svg');
 
+  /// File path: assets/images/logout.svg
+  SvgGenImage get logout => const SvgGenImage('assets/images/logout.svg');
+
+  /// File path: assets/images/more-selected.svg
+  SvgGenImage get moreSelected =>
+      const SvgGenImage('assets/images/more-selected.svg');
+
   /// File path: assets/images/orders-item.svg
   SvgGenImage get ordersItem =>
       const SvgGenImage('assets/images/orders-item.svg');
+
+  /// File path: assets/images/orders.svg
+  SvgGenImage get orders => const SvgGenImage('assets/images/orders.svg');
 
   /// File path: assets/images/remove.svg
   SvgGenImage get remove => const SvgGenImage('assets/images/remove.svg');
@@ -96,6 +113,14 @@ class $AssetsImagesGen {
   /// File path: assets/images/share.svg
   SvgGenImage get share => const SvgGenImage('assets/images/share.svg');
 
+  /// File path: assets/images/user-selected.svg
+  SvgGenImage get userSelected =>
+      const SvgGenImage('assets/images/user-selected.svg');
+
+  /// File path: assets/images/user-unselected.svg
+  SvgGenImage get userUnselected =>
+      const SvgGenImage('assets/images/user-unselected.svg');
+
   /// File path: assets/images/users-item.svg
   SvgGenImage get usersItem =>
       const SvgGenImage('assets/images/users-item.svg');
@@ -104,6 +129,7 @@ class $AssetsImagesGen {
   List<dynamic> get values => [
         pWatermarkV2,
         rPIcon,
+        admin,
         arrowLeftSvgrepoCom,
         arrowRightSvgrepoCom,
         cartNoItem,
@@ -112,18 +138,24 @@ class $AssetsImagesGen {
         categoryDefaultIcon,
         dashboardItem,
         defaultProfileImage,
+        deleteAccount,
         drug,
         facebook,
         google,
         heart,
         homeSelected,
         homeUnselected,
+        logout,
+        moreSelected,
         ordersItem,
+        orders,
         remove,
         reportItem,
         settingsSelected,
         settingsUnselected,
         share,
+        userSelected,
+        userUnselected,
         usersItem
       ];
 }

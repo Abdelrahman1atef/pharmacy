@@ -8,7 +8,6 @@ import 'package:pharmacy/features/cart/ui/widget/cart_is_empty_widget.dart';
 import 'package:pharmacy/features/cart/ui/widget/cart_item_widget.dart';
 import 'package:pharmacy/gen/colors.gen.dart';
 import 'package:shimmer/shimmer.dart';
-import '../../../../app_config_provider/cashe_helper.dart';
 import '../../../../app_config_provider/logic/auth/logic/auth_cubit.dart';
 import '../../../../app_config_provider/logic/auth/logic/auth_state.dart';
 import '../../../../core/db/cart/model/product.dart';
@@ -202,10 +201,10 @@ class CartScreen extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               _buildActionButton(
-                text: S.of(context).checkout,
+                text: S.of(context).proceedToCheckout,
                 backgroundColor: ColorName.primaryColor,
                 textColor: ColorName.whiteColor,
-                onPressed: () => _handleCheckout(context, cartItems),
+                onPressed: () => Navigator.pushNamed(context,Routes.checkOutScreen,arguments: cartItems),
               ),
             ],
           ),
@@ -237,18 +236,7 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  void _handleCheckout(BuildContext context, List<Product> cartItems) {
-    final authState = context.read<AuthCubit>().state;
 
-    if (authState is! AuthAuthenticated) {
-      Navigator.pushNamed(context, Routes.login);
-      return;
-    }
-
-    final user = authState.user;
-    final orderRequest = OrderRequest(userId: user.id, products: cartItems);
-    context.read<OrderCubit>().createOrder(orderRequest);
-  }
 }
 
 class _ShimmerWidget extends StatelessWidget {

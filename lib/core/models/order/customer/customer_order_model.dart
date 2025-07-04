@@ -1,37 +1,55 @@
-// import 'package:pharmacy/core/db/cart/model/product.dart';
-//
-// import '../order_entity.dart';
-//
-// class CustomerOrderModel {
-//   final String id;
-//   final double total;
-//   final List<Product> items;
-//   final String status;
-//
-//   CustomerOrderModel({
-//     required this.id,
-//     required this.total,
-//     required this.items,
-//     required this.status,
-//   });
-//
-//   OrderEntity toEntity() {
-//     return OrderEntity(
-//       id: id,
-//       total: total,
-//       items: items.map((e) => e.toEntity()).toList(),
-//       status: parseStatus(status), // Map string to enum
-//     );
-//   }
-//
-//   factory CustomerOrderModel.fromJson(Map<String, dynamic> json) {
-//     return CustomerOrderModel(
-//       id: json['id'],
-//       total: json['total'],
-//       items: (json['items'] as List)
-//           .map((e) => CustomerOrderItemModel.fromJson(e))
-//           .toList(),
-//       status: json['status'],
-//     );
-//   }
-// }
+import 'package:json_annotation/json_annotation.dart';
+
+import '../../../enum/order_status.dart';
+import 'customer_order_item_model.dart';
+
+part 'customer_order_model.g.dart';
+
+@JsonSerializable()
+class CustomerOrderModel {
+  final int id;
+
+  @JsonKey(name: "user_id")
+  final int userId;
+
+  @JsonKey(name: "first_name")
+  final String firstName;
+
+  @JsonKey(name: "last_name")
+  final String lastName;
+
+  @JsonKey(name: "user_email")
+  final String userEmail;
+
+  @JsonKey(name: "user_phone")
+  final String userPhone;
+
+  @JsonKey(name: "created_at")
+  final String createdAt;
+
+  @JsonKey(name: "total_price")
+  final double totalPrice;
+  @JsonKey(name: "status")
+  final OrderStatus status;
+
+  final List<CustomerOrderItemModel>? items;
+
+  CustomerOrderModel({
+    required this.id,
+    required this.userId,
+    required this.firstName,
+    required this.lastName,
+    required this.userEmail,
+    required this.userPhone,
+    required this.createdAt,
+    required this.totalPrice,
+    required this.status,
+    required this.items,
+  });
+
+  factory CustomerOrderModel.fromJson(Map<String, dynamic> json) =>
+      _$CustomerOrderModelFromJson(json);
+
+
+
+}

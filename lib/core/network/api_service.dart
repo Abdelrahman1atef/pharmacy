@@ -8,8 +8,10 @@ import 'package:pharmacy/core/models/register_login/login_response.dart';
 import 'package:pharmacy/core/models/search/search_response.dart';
 import 'package:pharmacy/core/network/constant.dart';
 import '../../app_config_provider/logic/auth/model/data.dart';
+import '../enum/order_status.dart';
 import '../models/order/admin/admin_order_model.dart';
 import '../models/order/create/order_response.dart';
+import '../models/order/customer/customer_order_model.dart';
 import '../models/register_login/login_request.dart';
 import '../models/register_login/register_request.dart';
 import 'api_exception.dart';
@@ -38,6 +40,11 @@ abstract class ApiService {
   Future<ApiResult<OrderResponse>> createOrder(OrderRequest orderBody, token);
 
   Future<ApiResult<List<AdminOrderModel>>> getAdminOrders(token);
+
+  Future<void> updateOrderStatus(
+      int orderId, OrderStatus newStatus, token);
+
+  Future<ApiResult<List<CustomerOrderModel>>> getCustomerOrders(token);
 }
 
 class ApiServiceImpl implements ApiService {
@@ -237,7 +244,6 @@ class ApiServiceImpl implements ApiService {
   Future<ApiResult<OrderResponse>> createOrder(
       OrderRequest orderBody, token) async {
     final jsonBody = json.encode(orderBody.toJson());
-
     Response response = await _dio.post(Constant.createOrder,
         data: jsonBody,
         options: Options(
@@ -276,5 +282,47 @@ class ApiServiceImpl implements ApiService {
           message: e.message ?? "Unable to Get User Info",
           code: e.response?.statusCode ?? 0));
     }
+  }
+
+  @override
+  Future<ApiResult<List<CustomerOrderModel>>> getCustomerOrders(token) async {
+    try {
+      Response response = await _dio.get(Constant.customerOrdersEndPoint,
+          options: Options(
+            headers: {
+              "Authorization": "Token $token",
+              "Accept": "application/json"
+            },
+          ));
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        final orders = data.map((e) => CustomerOrderModel.fromJson(e)).toList();
+        return ApiResult<List<CustomerOrderModel>>.success(orders);
+      } else {
+        return ApiResult<List<CustomerOrderModel>>.failure(
+            ApiException.fromJson(response.data));
+      }
+    } on DioException catch (e) {
+      return ApiResult<List<CustomerOrderModel>>.failure(ApiException(
+          message: e.message ?? "Unable to Get User Info",
+          code: e.response?.statusCode ?? 0));
+    }
+  }
+
+  @override
+  Future<void> updateOrderStatus(
+      int orderId, OrderStatus newStatus, token) async {
+     await _dio.patch(
+      "${Constant.adminChangeOrderStatusEndPoint}$orderId/",
+      options: Options(
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Token $token',
+        },
+      ),
+      data: jsonEncode({
+        'status': newStatus.name,
+      }),
+    );
   }
 }

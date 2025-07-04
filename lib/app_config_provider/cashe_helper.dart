@@ -34,7 +34,8 @@ class CashHelper {
   }
 
   static String? getToken() {
-    return getData(key: 'token') as String?;
+    final token = getData(key: 'token') as String?;
+    return token;
   }
 
   static Future<void> clearToken() async {

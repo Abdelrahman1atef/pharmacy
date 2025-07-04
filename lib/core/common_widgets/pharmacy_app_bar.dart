@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
-import '../../app_config_provider/logic/auth/logic/auth_cubit.dart';
-import '../../app_config_provider/logic/auth/logic/auth_state.dart';
-import '../../app_config_provider/logic/auth/model/data.dart';
 import '../../features/search/ui/widget/search_widget.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../generated/l10n.dart';
 import '../../utils/device_size.dart';
-import '../../utils/network_image_utils.dart';
 
 class PharmacyAppBar extends StatelessWidget implements PreferredSizeWidget {
   static const Widget defaultChild = Icon(
@@ -92,44 +86,6 @@ class PharmacyAppBar extends StatelessWidget implements PreferredSizeWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: child,
                   )),
-              BlocBuilder<AuthCubit, AuthState>(
-                builder: (context, state) {
-                  Data? userInfo;
-                  final isUnauthenticated = state.maybeWhen(
-                    unauthenticated: (e) => true,
-                    authenticated: (user) {
-                      userInfo = user;
-                      return false;
-                    },
-                    orElse: () => false,
-                  );
-
-                  return SizedBox(
-                      width: 50.w,
-                      height: 50.h,
-                      child: userInfo == null
-                          ? IconButton(
-                              onPressed: () => isUnauthenticated
-                                  ? Navigator.pushNamed(context, Routes.login)
-                                  : print("Is Auth"),
-                              icon: Assets.images.defaultProfileImage.svg(
-                                  colorFilter: const ColorFilter.mode(
-                                      Colors.white, BlendMode.srcIn)),
-                              color: Colors.white,
-                            )
-                          : Padding(
-                              padding: const EdgeInsetsDirectional.all(8.0),
-                              child: Image.network(
-                                userInfo?.profilePicture ?? "",
-                                loadingBuilder: loadingBuilder(),
-                                errorBuilder: (context, error, stackTrace) =>
-                                    Assets.images.defaultProfileImage.svg(
-                                        colorFilter: const ColorFilter.mode(
-                                            Colors.white, BlendMode.srcIn)),
-                              ),
-                            ));
-                },
-              ),
             ],
           ),
           Padding(

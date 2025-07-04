@@ -18,6 +18,8 @@ import 'package:pharmacy/features/items_list/logic/item_list_screen_cubit.dart';
 import 'package:pharmacy/features/items_list/repository/item_list/item_list_repository.dart';
 import 'package:pharmacy/features/login&signup/logic/signup/signup_cubit.dart';
 import 'package:pharmacy/features/login&signup/repository/signup_repository.dart';
+import 'package:pharmacy/features/user_orders/logic/user_orders_cubit.dart';
+import 'package:pharmacy/features/user_orders/repository/user_orders_repository.dart';
 
 import '../../app_config_provider/logic/auth/logic/auth_cubit.dart';
 import '../../app_config_provider/logic/auth/repository/auth_repository.dart';
@@ -48,6 +50,8 @@ void setupDependencies() {
   getIt.registerFactory<InternetServerConnectionRepository>(() => InternetServerConnectionRepository(getIt()));
   getIt.registerFactory<OrderRepository>(() => OrderRepository(getIt()));
   getIt.registerFactory<AdminOrdersRepository>(() => AdminOrdersRepository(getIt()));
+  getIt.registerFactory<UserOrdersRepository>(() => UserOrdersRepository(getIt()));
+
   getIt.registerFactory<SearchCubit>(() => SearchCubit(getIt()));
   getIt.registerFactory<DetailsCubit>(() => DetailsCubit(getIt()));
   getIt.registerFactory<CategoryCubit>(() => CategoryCubit(getIt()));
@@ -59,5 +63,6 @@ void setupDependencies() {
   getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt()));
   getIt.registerFactory<InternetServerConnectionCubit>(() => InternetServerConnectionCubit(Connectivity(),getIt()));
   getIt.registerFactory<AdminOrdersCubit>(() => AdminOrdersCubit(getIt()));
+  getIt.registerFactory<UserOrdersCubit>(() => UserOrdersCubit(getIt()));
 
 }

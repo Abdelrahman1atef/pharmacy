@@ -1,13 +1,21 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pharmacy/app_config_provider/app_config_provider.dart';
-import 'package:pharmacy/core/themes/text/text_styles.dart';
 import 'package:provider/provider.dart';
+
+import '../../../app_config_provider/app_config_provider.dart';
 import '../../../app_config_provider/logic/auth/logic/auth_cubit.dart';
 import '../../../app_config_provider/logic/auth/logic/auth_state.dart';
+import '../../../app_config_provider/logic/auth/model/data.dart';
+import '../../../core/common_widgets/gradient_button.dart';
 import '../../../core/routes/routes.dart';
+import '../../../core/themes/text/text_styles.dart';
+import '../../../gen/assets.gen.dart';
 import '../../../generated/l10n.dart';
+import '../../user_orders/logic/user_orders_cubit.dart';
+import '../model/user_panel_item.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -22,7 +30,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   void initState() {
-    // context.read<AuthCubit>().checkAuthStatus();
+
     super.initState();
   }
 
@@ -37,6 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       DropdownMenuEntry(value: ThemeMode.dark, label: S.of(context).dark)
     ];
     var provider = Provider.of<AppConfigProvider>(context);
+    _selectedLang=provider.appLang;
     return Scaffold(
       body: Padding(
         padding:
@@ -44,144 +53,286 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: SizedBox(
           height: double.infinity,
           width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.symmetric(horizontal: 5.w),
-                      child: Text(
-                        S.of(context).appLang,
-                        style: TextStyles.settingsTitle,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    _dropdownMenu(
-                      dropdownMenuEntries: languages,
-                      hintText: _selectedLang != null
-                          ? "${S.of(context).language} ($_selectedLang)"
-                          : "${S.of(context).language} (${languages[0].label})",
-                      onSelected: (value) {
-                        setState(() {
-                          provider.changeLang(value);
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    S.of(context).appMode,
-                    style: TextStyles.settingsTitle,
-                  ),
-                  _dropdownMenu(
-                    dropdownMenuEntries: themeMode,
-                    hintText: _selectedThemeMode != null
-                        ? "$_selectedThemeMode"
-                        : themeMode[0].label,
-                    onSelected: (value) {
-                      provider.changeTheme(value);
-                    },
-                  )
-                ],
-              ),
-              BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
-                return state.when(
-                    initial: () => const SizedBox.shrink(),
-                    loading: () => const CircularProgressIndicator(),
-                    unauthenticated: (e) => ElevatedButton(
-                          onPressed: () =>
-                              Navigator.pushNamed(context, Routes.login),
-                          child: const Text("Login"),
-                        ),
-                    authenticated: (user) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                              "Logged in as ${"${user.firstName} ${user.lastName}"}"),
-                          _buildLogoutButton(context),
-                          Visibility(
-                            visible: user.isStaff,
-                            child: ElevatedButton(
-                                onPressed: () =>
-                                    Navigator.pushNamed(context, Routes.adminMain),
-                                child: const Text("Admin Screen")),
-                          )
-                        ],
-                      );
+          child: Padding(
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _userSection(context),
+                const Divider(),
+                _appLang(
+                  context: context,
+                  languages: languages,
+                  selectedLang: _selectedLang,
+                  action: (value) {
+                    setState(() {
+                      provider.changeLang(value);
                     });
-              })
-            ],
+                  },
+                ),
+                Visibility(
+                  visible: false,
+                  child: _appTheme(
+                    context: context,
+                    themeMode: themeMode,
+                    selectedThemeMode: _selectedThemeMode,
+                    action: (value) {
+                      setState(() {
+                        provider.changeTheme(value);
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
-
-  _dropdownMenu(
-      {required List<DropdownMenuEntry<Object>> dropdownMenuEntries,
-      required String hintText,
-      required Function(dynamic) onSelected}) {
-    return DropdownMenu(
-      width: double.infinity,
-      dropdownMenuEntries: dropdownMenuEntries,
-      hintText: hintText,
-      trailingIcon: const Icon(Icons.arrow_left),
-      selectedTrailingIcon: const Icon(Icons.arrow_drop_down),
-      onSelected: onSelected,
-      leadingIcon: const Icon(Icons.language_rounded),
-      textStyle:
-          TextStyles.productHomeTitles.copyWith(fontWeight: FontWeight.bold),
-      inputDecorationTheme: InputDecorationTheme(
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(35),
-        ),
-        filled: true,
-      ),
-      menuStyle: const MenuStyle(
-        elevation: WidgetStatePropertyAll(5),
-        visualDensity: VisualDensity(horizontal: 1),
-      ),
-    );
-  }
 }
 
-Widget _buildLogoutButton(BuildContext context) {
-  return ElevatedButton(
-    onPressed: () async {
-      final shouldLogout = await showDialog<bool>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text("Confirm Logout"),
-          content: const Text("Are you sure you want to log out?"),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text("Cancel"),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, true),
-              child: const Text("Logout"),
-            ),
-          ],
+Widget _appLang(
+    {context,
+    languages,
+    selectedLang,
+    required dynamic Function(dynamic) action}) {
+  return SizedBox(
+    width: double.infinity,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          S.of(context).appLang,
+          style: TextStyles.settingsTitle,
         ),
-      );
+        SizedBox(
+          height: 5.h,
+        ),
+        _dropdownMenu(
+            dropdownMenuEntries: languages,
+            hintText: selectedLang != null
+                ? "${S.of(context).language} ($selectedLang)"
+                : "${S.of(context).language} (${languages[0].label})",
+            onSelected: action),
+      ],
+    ),
+  );
+}
 
-      if (shouldLogout == true) {
-        await context.read<AuthCubit>().logout();
-      }
+Widget _appTheme(
+    {context,
+    themeMode,
+    selectedThemeMode,
+    required dynamic Function(dynamic) action}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        S.of(context).appMode,
+        style: TextStyles.settingsTitle,
+      ),
+      _dropdownMenu(
+          dropdownMenuEntries: themeMode,
+          hintText: selectedThemeMode != null
+              ? "$selectedThemeMode"
+              : themeMode[0].label,
+          onSelected: action)
+    ],
+  );
+}
+
+Widget _userSection(context) {
+  return BlocBuilder<AuthCubit, AuthState>(
+    builder: (context, state) {
+      return state.maybeWhen(
+          orElse: () => const SizedBox.shrink(),
+          loading: () => const CircularProgressIndicator(),
+          unauthenticated: (message) => _userUnAuthenticatedSection(context),
+          authenticated: (user) {
+            // Column(
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     Visibility(
+            //       visible: user.isStaff,
+            //       child: ElevatedButton(
+            //           style: ButtonStyle(
+            //               backgroundColor:
+            //               const WidgetStatePropertyAll(
+            //                   ColorName.secondaryColor),
+            //               shape: WidgetStatePropertyAll(
+            //                   RoundedRectangleBorder(
+            //                       borderRadius:
+            //                       BorderRadiusDirectional
+            //                           .circular(25))),
+            //               fixedSize: const WidgetStatePropertyAll(
+            //                   Size(200, 50))),
+            //           onPressed: () => Navigator.pushNamed(
+            //               context, Routes.adminMain),
+            //           child: Text(
+            //             "Admin Screen",
+            //             style: TextStyle(
+            //                 color: ColorName.whiteColor,
+            //                 fontSize: 22.sp),
+            //           )),
+            //     )
+            //   ],
+            // )
+            return _userAuthenticatedSection(context, user);
+          });
     },
-    child: const Text("Logout"),
+  );
+}
+
+double cardSize = 55.0;
+
+Widget _userUnAuthenticatedSection(context) {
+  return SizedBox(
+    width: double.infinity,
+    height: 150,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          S.of(context).yourAccount,
+          style: TextStyles.settingsTitle,
+        ),
+        Center(
+            child: Text(
+          S.of(context).notLoggedIn,
+          style: TextStyles.loginSignupText,
+        )),
+        GradientElevatedButton(
+          child: Text(S.of(context).LoginOrSignUp,
+              style:
+                  TextStyles.gradientElevatedButtonText.copyWith(fontSize: 15)),
+          onPressed: () => Navigator.pushNamed(
+            context,
+            Routes.login,
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+Widget _userAuthenticatedSection(context, Data user) {
+  final List<UserPanelItem> userSectionItems = [
+    UserPanelItem(
+        icon: Assets.images.userSelected.svg(),
+        title: S.of(context).profile,
+        function: () => Navigator.pushNamed(
+              context,
+              Routes.userScreen,
+            )),
+    UserPanelItem(
+      icon: Assets.images.orders.svg(),
+      title: S.of(context).myOrders,
+      function: () {
+        Navigator.pushNamed(
+          context,
+          Routes.userOrdersScreen,
+        );
+
+      }
+    ),
+    UserPanelItem(
+      icon: Assets.images.admin.svg(),
+      toStaff: true,
+      title: S.of(context).adminScreen,
+      function: () => Navigator.pushNamed(
+        context,
+        Routes.adminMain,
+      ),
+    ),
+  ];
+  final visibleItems = userSectionItems.where((item) {
+    return !item.toStaff! || (item.toStaff! && user.isStaff);
+  }).toList();
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Padding(
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
+        child: Text(
+          S.of(context).yourAccount,
+          style: TextStyles.settingsTitle,
+        ),
+      ),
+      SizedBox(
+        height: visibleItems.length * cardSize,
+        child: ListView.builder(
+          itemCount: visibleItems.length,
+          itemBuilder: (context, index) =>
+              _userPanelItem(visibleItems[index], user),
+        ),
+      )
+    ],
+  );
+}
+
+Widget _userPanelItem(UserPanelItem userSectionItem, Data user) {
+  return InkWell(
+    onTap: userSectionItem.function,
+    child: SizedBox(
+      height: cardSize,
+      child: Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadiusDirectional.circular(10)),
+        elevation: 3,
+        child: Padding(
+          padding: const EdgeInsetsDirectional.symmetric(horizontal: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  SizedBox(
+                      width: 30.w, height: 30.h, child: userSectionItem.icon),
+                  SizedBox(
+                    width: 8.w,
+                  ),
+                  Text(
+                    userSectionItem.title,
+                    style:
+                        TextStyles.productDetailTitles.copyWith(fontSize: 17),
+                  ),
+                ],
+              ),
+              const Icon(Icons.arrow_right)
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+_dropdownMenu(
+    {required List<DropdownMenuEntry<Object>> dropdownMenuEntries,
+    required String hintText,
+    required Function(dynamic) onSelected}) {
+  return DropdownMenu(
+    width: double.infinity,
+    dropdownMenuEntries: dropdownMenuEntries,
+    hintText: hintText,
+    trailingIcon: const Icon(Icons.arrow_left),
+    selectedTrailingIcon: const Icon(Icons.arrow_drop_down),
+    onSelected: onSelected,
+    leadingIcon: const Icon(Icons.language_rounded),
+    textStyle:
+        TextStyles.productHomeTitles.copyWith(fontWeight: FontWeight.bold),
+    inputDecorationTheme: InputDecorationTheme(
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(35),
+      ),
+      filled: true,
+    ),
+    menuStyle: const MenuStyle(
+      elevation: WidgetStatePropertyAll(5),
+      visualDensity: VisualDensity(horizontal: 1),
+    ),
   );
 }

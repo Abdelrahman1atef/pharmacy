@@ -5,27 +5,27 @@ part 'admin_order_item_model.g.dart';
 @JsonSerializable()
 class AdminOrderItemModel {
   @JsonKey(name: "product_id")
-  final String productId;
+  final int productId;
 
   @JsonKey(name: "product_name_en")
-  final String nameEn;
+  final String? nameEn;
 
   @JsonKey(name: "product_name_ar")
-  final String nameAr;
+  final String? nameAr;
 
   @JsonKey(name: "sell_price")
   final String? sellPrice;
 
   @JsonKey(name: "unit_price")
-  final String unitPrice;
+  final String? unitPrice;
 
   @JsonKey(name: "unit_type")
-  final String unitType;
+  final String? unitType;
 
-  final int quantity;
+  final int? quantity;
 
   @JsonKey(name: "item_total")
-  final String itemTotal;
+  final String? itemTotal;
 
   @JsonKey(name: "product_images")
   final List<String>? productImages;

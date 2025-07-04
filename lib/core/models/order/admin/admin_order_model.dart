@@ -7,30 +7,30 @@ part 'admin_order_model.g.dart';
 
 @JsonSerializable()
 class AdminOrderModel {
-  final int id;
+  final int? id;
 
   @JsonKey(name: "user_id")
-  final int userId;
+  final int? userId;
 
   @JsonKey(name: "first_name")
-  final String firstName;
+  final String? firstName;
 
   @JsonKey(name: "last_name")
-  final String lastName;
+  final String? lastName;
 
   @JsonKey(name: "user_email")
-  final String userEmail;
+  final String? userEmail;
 
   @JsonKey(name: "user_phone")
-  final String userPhone;
+  final String? userPhone;
 
   @JsonKey(name: "created_at")
-  final String createdAt;
+  final String? createdAt;
 
   @JsonKey(name: "total_price")
-  final String totalPrice;
-
-  final OrderStatus status;
+  final String? totalPrice;
+  @JsonKey(name: "status")
+  final OrderStatus? status;
 
   final List<AdminOrderItemModel>? items;
 

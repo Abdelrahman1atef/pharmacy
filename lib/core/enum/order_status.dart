@@ -1,6 +1,6 @@
 enum OrderStatus {
   pending,
-  processing,
+  preparing,
   shipped,
   delivered,
   cancelled,

@@ -27,8 +27,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "CustomerId": MessageLookupByLibrary.simpleMessage("Customer Id"),
     "CustomerName": MessageLookupByLibrary.simpleMessage("Customer Name"),
     "CustomerPhone": MessageLookupByLibrary.simpleMessage("Customer Phone"),
+    "LoginOrSignUp": MessageLookupByLibrary.simpleMessage("Login or Sign up"),
     "OrderNum": MessageLookupByLibrary.simpleMessage("Order #"),
+    "accountDetails": MessageLookupByLibrary.simpleMessage("Account Details"),
+    "addPromoCode": MessageLookupByLibrary.simpleMessage("Add Promo Code"),
     "addToCart": MessageLookupByLibrary.simpleMessage("Add To Cart"),
+    "adminScreen": MessageLookupByLibrary.simpleMessage("Admin Screen"),
     "agree_terms": MessageLookupByLibrary.simpleMessage("I agree to the "),
     "already_have_account": MessageLookupByLibrary.simpleMessage(
       "Already Have Account ?",
@@ -42,8 +46,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "birthdate": MessageLookupByLibrary.simpleMessage("Birthdate"),
     "brandName": MessageLookupByLibrary.simpleMessage("Brand"),
     "browsItem": MessageLookupByLibrary.simpleMessage("Brows Items"),
+    "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "cart_item": MessageLookupByLibrary.simpleMessage("Cart"),
+    "cashOnDelivery": MessageLookupByLibrary.simpleMessage("Cash On Delivery"),
+    "change": MessageLookupByLibrary.simpleMessage("Change"),
+    "changePassword": MessageLookupByLibrary.simpleMessage("Change Password"),
     "checkout": MessageLookupByLibrary.simpleMessage("Checkout"),
+    "closeNow": MessageLookupByLibrary.simpleMessage("Close Now"),
+    "confirmLogoutContent": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to log out?",
+    ),
+    "confirmLogoutTitle": MessageLookupByLibrary.simpleMessage(
+      "Confirm Logout",
+    ),
     "confirm_password": MessageLookupByLibrary.simpleMessage(
       "Confirm Password",
     ),
@@ -53,6 +68,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "continue_": MessageLookupByLibrary.simpleMessage("Continue"),
     "create_password": MessageLookupByLibrary.simpleMessage("Create Password"),
     "dark": MessageLookupByLibrary.simpleMessage("Dark"),
+    "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
     "deleteCartItem": MessageLookupByLibrary.simpleMessage("Remove Item"),
     "deleteCartItemAlertP1": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to remove",
@@ -60,7 +76,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteCartItemAlertP2": MessageLookupByLibrary.simpleMessage(
       "from your shopping cart?",
     ),
+    "delivery": MessageLookupByLibrary.simpleMessage("Delivery"),
+    "deliveryFees": MessageLookupByLibrary.simpleMessage("Delivery Fees"),
     "details": MessageLookupByLibrary.simpleMessage("Details"),
+    "edit": MessageLookupByLibrary.simpleMessage("Edit"),
     "email": MessageLookupByLibrary.simpleMessage("Email"),
     "english": MessageLookupByLibrary.simpleMessage("English"),
     "enter_email": MessageLookupByLibrary.simpleMessage(
@@ -79,6 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "first_name": MessageLookupByLibrary.simpleMessage("First Name"),
     "gender": MessageLookupByLibrary.simpleMessage("Gender"),
     "goToCart": MessageLookupByLibrary.simpleMessage("Go To Cart"),
+    "homeDelivery": MessageLookupByLibrary.simpleMessage("Home Delivery"),
     "home_item": MessageLookupByLibrary.simpleMessage("Home"),
     "invalid_email": MessageLookupByLibrary.simpleMessage(
       "Invalid email format",
@@ -91,6 +111,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "language": MessageLookupByLibrary.simpleMessage("Language"),
     "last_name": MessageLookupByLibrary.simpleMessage("Last Name"),
     "light": MessageLookupByLibrary.simpleMessage("Light"),
+    "location": MessageLookupByLibrary.simpleMessage("Location"),
     "login_button": MessageLookupByLibrary.simpleMessage("Login"),
     "login_email": MessageLookupByLibrary.simpleMessage("Email"),
     "login_email_hint": MessageLookupByLibrary.simpleMessage("Email Address"),
@@ -112,31 +133,67 @@ class MessageLookup extends MessageLookupByLibrary {
       "Login or Sign up using your social accounts",
     ),
     "logout": MessageLookupByLibrary.simpleMessage("Logout"),
+    "longDistanceFees": MessageLookupByLibrary.simpleMessage(
+      "Additional fees may apply for long distances",
+    ),
     "male": MessageLookupByLibrary.simpleMessage("Male"),
+    "more_item": MessageLookupByLibrary.simpleMessage("More"),
     "morning_welcome_message": MessageLookupByLibrary.simpleMessage(
       "Good Morning",
     ),
+    "myOrders": MessageLookupByLibrary.simpleMessage("My Orders"),
+    "myProfile": MessageLookupByLibrary.simpleMessage("Profile"),
     "nameAr": MessageLookupByLibrary.simpleMessage("name Ar"),
     "nameEn": MessageLookupByLibrary.simpleMessage("name En"),
     "noItemInCart": MessageLookupByLibrary.simpleMessage(
       "NO Item Add In Cart Until Now",
     ),
+    "notLoggedIn": MessageLookupByLibrary.simpleMessage(
+      "You are not logged in",
+    ),
     "ofProducts": MessageLookupByLibrary.simpleMessage("of Products"),
+    "openNow": MessageLookupByLibrary.simpleMessage("Open Now"),
+    "optional": MessageLookupByLibrary.simpleMessage("Optional"),
+    "orderDetails": MessageLookupByLibrary.simpleMessage("Order Details"),
+    "orderDetailsAddress": MessageLookupByLibrary.simpleMessage(
+      "Delivery Address",
+    ),
+    "orderDetailsPayment": MessageLookupByLibrary.simpleMessage("Payment"),
+    "orderNum": MessageLookupByLibrary.simpleMessage("Order #"),
+    "orderStatus": MessageLookupByLibrary.simpleMessage("Order Status"),
+    "orderStatusCancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
+    "orderStatusDelivered": MessageLookupByLibrary.simpleMessage("Delivered"),
+    "orderStatusPending": MessageLookupByLibrary.simpleMessage("Pending"),
+    "orderStatusPreparing": MessageLookupByLibrary.simpleMessage("Preparing"),
+    "orderStatusShipped": MessageLookupByLibrary.simpleMessage("Shipped"),
+    "orderStatusUndefined": MessageLookupByLibrary.simpleMessage("Undefined"),
+    "orderSummary": MessageLookupByLibrary.simpleMessage("Order Summary"),
     "password_mismatch": MessageLookupByLibrary.simpleMessage(
       "Passwords do not match",
     ),
     "password_short": MessageLookupByLibrary.simpleMessage(
       "Password must be at least 6 characters",
     ),
+    "pharmacy": MessageLookupByLibrary.simpleMessage("Pharmacy"),
+    "pharmacyPickup": MessageLookupByLibrary.simpleMessage("Pharmacy Pickup"),
     "phone": MessageLookupByLibrary.simpleMessage("Phone"),
+    "pickup": MessageLookupByLibrary.simpleMessage("Pickup"),
     "pound": MessageLookupByLibrary.simpleMessage("EGP"),
+    "proceedToCheckout": MessageLookupByLibrary.simpleMessage(
+      "Proceed To Checkout",
+    ),
     "processingOrder": MessageLookupByLibrary.simpleMessage("processing Order"),
     "product": MessageLookupByLibrary.simpleMessage("Product"),
     "productDescription": MessageLookupByLibrary.simpleMessage(
       "Product Details:",
     ),
     "productId": MessageLookupByLibrary.simpleMessage("product Id"),
+    "profile": MessageLookupByLibrary.simpleMessage("Profile"),
     "quantity": MessageLookupByLibrary.simpleMessage("quantity"),
+    "reorder": MessageLookupByLibrary.simpleMessage("Reorder"),
+    "requestACallToConfirmTheOrder": MessageLookupByLibrary.simpleMessage(
+      "Request a Call To Confirm The Order",
+    ),
     "search_for_medicine": MessageLookupByLibrary.simpleMessage(
       "Search for medicine(English or Arabic)",
     ),
@@ -155,8 +212,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "subtotal": MessageLookupByLibrary.simpleMessage("Subtotal"),
     "terms": MessageLookupByLibrary.simpleMessage("Terms & Conditions"),
     "titles_category": MessageLookupByLibrary.simpleMessage("Categories"),
+    "total": MessageLookupByLibrary.simpleMessage("Total"),
     "unavailable": MessageLookupByLibrary.simpleMessage("out of Stock"),
     "unit": MessageLookupByLibrary.simpleMessage("Unit"),
     "unitType": MessageLookupByLibrary.simpleMessage("unit Type"),
+    "user_item": MessageLookupByLibrary.simpleMessage("Profile"),
+    "yourAccount": MessageLookupByLibrary.simpleMessage("Your Account"),
+    "yourDiscount": MessageLookupByLibrary.simpleMessage("Your Discount"),
   };
 }

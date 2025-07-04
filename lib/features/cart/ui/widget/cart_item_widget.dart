@@ -191,5 +191,4 @@ class CartItemWidget extends StatelessWidget {
   }
 }
 
-// Function to show the modal bottom sheet
 

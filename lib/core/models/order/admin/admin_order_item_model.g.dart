@@ -8,14 +8,14 @@ part of 'admin_order_item_model.dart';
 
 AdminOrderItemModel _$AdminOrderItemModelFromJson(Map<String, dynamic> json) =>
     AdminOrderItemModel(
-      productId: json['product_id'] as String,
-      nameEn: json['product_name_en'] as String,
-      nameAr: json['product_name_ar'] as String,
+      productId: (json['product_id'] as num).toInt(),
+      nameEn: json['product_name_en'] as String?,
+      nameAr: json['product_name_ar'] as String?,
       sellPrice: json['sell_price'] as String?,
-      unitPrice: json['unit_price'] as String,
-      unitType: json['unit_type'] as String,
-      quantity: (json['quantity'] as num).toInt(),
-      itemTotal: json['item_total'] as String,
+      unitPrice: json['unit_price'] as String?,
+      unitType: json['unit_type'] as String?,
+      quantity: (json['quantity'] as num?)?.toInt(),
+      itemTotal: json['item_total'] as String?,
       productImages: (json['product_images'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),

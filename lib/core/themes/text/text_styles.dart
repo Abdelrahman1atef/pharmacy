@@ -136,4 +136,9 @@ class TextStyles {
     fontSize: 12.sp,
     fontWeight: FontWeight.bold,
   );
+  static TextStyle get orderInfoText => TextStyle(
+    color: ColorName.productDetailTextColor,
+    fontFamily: FontFamily.cairo,
+    fontSize: 18.sp,
+  );
 }

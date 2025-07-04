@@ -1,12 +1,128 @@
 {
   "app_name": "Ramzy Pharmacy",
+  "language": "Language",
+
   "appLang": "App Language",
   "arabic": "العربية",
   "english": "English",
-  "language": "Language",
+
   "appMode": "App Mode",
   "light": "Light",
   "dark": "Dark",
+
+  "home_item": "Home",
+  "settings_item": "Settings",
+  "cart_item": "Cart",
+  "more_item": "More",
+  "user_item": "Profile",
+
+  "morning_welcome_message": "Good Morning",
+  "evening_welcome_message": "Good Evening",
+  "search_for_medicine": "Search for medicine(English or Arabic)",
+
+  "yourAccount": "Your Account",
+  "myProfile": "Profile",
+  "myOrders": "My Orders",
+  "adminScreen": "Admin Screen",
+  "notLoggedIn": "You are not logged in",
+  "LoginOrSignUp": "Login or Sign up",
+
+  "profile": "Profile",
+  "accountDetails": "Account Details",
+  "edit": "Edit",
+  "changePassword": "Change Password",
+  "logout": "Logout",
+  "deleteAccount": "Delete Account",
+
+  "confirmLogoutTitle": "Confirm Logout",
+  "confirmLogoutContent": "Are you sure you want to log out?",
+  "cancel": "Cancel",
+
+
+
+  "orderStatus": "Order Status",
+  "reorder": "Reorder",
+  "total": "Total",
+  "orderStatusPending": "Pending",
+  "orderStatusPreparing": "Preparing",
+  "orderStatusShipped": "Shipped",
+  "orderStatusDelivered": "Delivered",
+  "orderStatusCancelled": "Cancelled",
+  "orderStatusUndefined": "Undefined",
+  "orderNum": "Order #",
+  "orderDetails": "Order Details",
+  "orderDetailsAddress": "Delivery Address",
+  "orderDetailsPayment": "Payment",
+  "deliveryFees": "Delivery Fees",
+  "longDistanceFees": "Additional fees may apply for long distances",
+
+
+
+
+
+
+
+  "titles_category": "Categories",
+  "show_all": "Show All",
+  "pound": "EGP",
+  "available": "in Stock",
+  "unavailable": "out of Stock",
+  "details": "Details",
+  "goToCart": "Go To Cart",
+  "brandName": "Brand",
+  "unit": "Unit",
+  "productDescription": "Product Details:",
+  "addToCart": "Add To Cart",
+  "noItemInCart": "NO Item Add In Cart Until Now",
+  "browsItem": "Brows Items",
+  "deleteCartItemAlertP1": "Are you sure you want to remove",
+  "deleteCartItemAlertP2": "from your shopping cart?",
+  "deleteCartItem": "Remove Item",
+  "keepCartItem": "Keep Item",
+  "subtotal": "Subtotal",
+  "product": "Product",
+  "ofProducts": "of Products",
+  "checkout": "Checkout",
+  "proceedToCheckout": "Proceed To Checkout",
+  "continueShopping": "Continue Shopping",
+
+  "homeDelivery": "Home Delivery",
+  "pharmacyPickup": "Pharmacy Pickup",
+  "location": "Location",
+  "change": "Change",
+  "pharmacy": "Pharmacy",
+  "openNow": "Open Now",
+  "closeNow": "Close Now",
+  "delivery": "Delivery",
+  "pickup": "Pickup",
+  "requestACallToConfirmTheOrder": "Request a Call To Confirm The Order",
+  "optional": "Optional",
+  "cashOnDelivery": "Cash On Delivery",
+  "debit/creditCard": "Debit/Credit Card",
+  "yourDiscount": "Your Discount",
+  "addPromoCode": "Add Promo Code",
+  "orderSummary": "Order Summary",
+
+
+  "processingOrder": "processing Order",
+
+  "OrderNum": "Order #",
+  "CreatedAt": "Created At",
+  "CustomerId": "Customer Id",
+  "CustomerName": "Customer Name",
+  "CustomerEmail": "Customer Email",
+  "CustomerPhone": "Customer Phone",
+
+  "productId": "product Id",
+  "nameAr":"name Ar",
+  "nameEn": "name En",
+  "unitType": "unit Type",
+  "quantity": "quantity",
+  "itemTotal":"itemTotal",
+
+  "best_seller": "Best seller",
+
+
 
   "signup": "Sign Up",
   "first_name": "First Name",
@@ -45,52 +161,5 @@
   "login_google": "Sign in with Google",
   "login_facebook": "Sign in with Facebook",
   "login_no_account": "Don't have an account?",
-  "login_new_user": "New User",
-
-  "morning_welcome_message": "Good Morning",
-  "evening_welcome_message": "Good Evening",
-  "search_for_medicine": "Search for medicine(English or Arabic)",
-  "home_item": "Home",
-  "settings_item": "Settings",
-  "cart_item": "Cart",
-  "titles_category": "Categories",
-  "show_all": "Show All",
-  "best_seller": "Best seller",
-  "pound": "EGP",
-  "available": "in Stock",
-  "unavailable": "out of Stock",
-  "details": "Details",
-  "goToCart": "Go To Cart",
-  "brandName": "Brand",
-  "unit": "Unit",
-  "productDescription": "Product Details:",
-  "addToCart": "Add To Cart",
-  "noItemInCart": "NO Item Add In Cart Until Now",
-  "browsItem": "Brows Items",
-  "deleteCartItemAlertP1": "Are you sure you want to remove",
-  "deleteCartItemAlertP2": "from your shopping cart?",
-  "deleteCartItem": "Remove Item",
-  "keepCartItem": "Keep Item",
-  "subtotal": "Subtotal",
-  "product": "Product",
-  "ofProducts": "of Products",
-  "checkout": "Checkout",
-  "continueShopping": "Continue Shopping",
-  "logout": "Logout",
-
-  "processingOrder": "processing Order",
-
-  "OrderNum": "Order #",
-  "CreatedAt": "Created At",
-  "CustomerId": "Customer Id",
-  "CustomerName": "Customer Name",
-  "CustomerEmail": "Customer Email",
-  "CustomerPhone": "Customer Phone",
-
-  "productId": "product Id",
-  "nameAr":"name Ar",
-  "nameEn": "name En",
-  "unitType": "unit Type",
-  "quantity": "quantity",
-  "itemTotal":"itemTotal"
+  "login_new_user": "New User"
 }

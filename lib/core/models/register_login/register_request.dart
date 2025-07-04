@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../app_config_provider/logic/auth/model/data.dart';
 
 part 'register_request.g.dart';
 
@@ -36,6 +35,5 @@ class RegisterRequest {
   factory RegisterRequest.fromJson(Map<String, dynamic> json) =>
       _$RegisterRequestFromJson(json);
 
-  @override
   Map<String, dynamic> toJson() => _$RegisterRequestToJson(this);
 }
