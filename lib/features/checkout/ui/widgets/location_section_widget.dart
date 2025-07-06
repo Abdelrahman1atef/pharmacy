@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy/features/checkout/ui/screens/add_location_screen.dart';
 import 'package:pharmacy/features/checkout/ui/widgets/toggle_buttons.dart';
-import 'package:pharmacy/features/checkout/ui/widgets/map_picker_dialog.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/themes/text/text_styles.dart';
 import '../../../../gen/colors.gen.dart';
@@ -26,7 +24,6 @@ class LocationSelectionWidget extends StatefulWidget {
 }
 
 class _LocationSelectionWidgetState extends State<LocationSelectionWidget> {
-  LatLng? _selectedPosition;
 
   @override
   Widget build(BuildContext context) {
@@ -57,21 +54,23 @@ class _LocationSelectionWidgetState extends State<LocationSelectionWidget> {
                           Row(
                             children: [
                               const Icon(Icons.location_on_outlined),
-                              Text(
-                                selectedLocation?.name ?? "اختر موقع التوصيل",
-                                style: TextStyles.orderInfoText.copyWith(
-                                  fontSize: 15.sp,
+                              Expanded(
+                                child: Text(
+                                  selectedLocation?.name ?? "اختر موقع التوصيل",
+                                  style: TextStyles.orderInfoText.copyWith(
+                                    fontSize: 15.sp,
+                                  ),
                                 ),
                               ),
-
                             ],
                           ),
-                          Text(
-                            selectedLocation?.street ?? "اختر موقع التوصيل",
-                            style: TextStyles.orderInfoText.copyWith(
-                              fontSize: 15.sp,
-                            ),
-                          )
+                          if (selectedLocation != null)
+                            Text(
+                              selectedLocation.street,
+                              style: TextStyles.orderInfoText.copyWith(
+                                fontSize: 15.sp,
+                              ),
+                            )
                         ],
                       ),
                       subtitleWidget: const SizedBox(),
@@ -115,6 +114,8 @@ class _LocationSelectionWidgetState extends State<LocationSelectionWidget> {
                                 }
                                 locations.add(newLocation);
                                 await LocationStorage.saveLocations(locations);
+                                // Refresh the default location in cubit
+                                context.read<LocationCubit>().refreshDefaultLocation();
                                 Navigator.pop(context); // Close bottom sheet
                               }
                             },

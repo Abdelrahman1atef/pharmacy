@@ -1,3 +1,5 @@
+import '../../../../core/enum/delivery_method.dart';
+
 class CheckoutState {
   final bool isHomeDeliverySelected;
   final bool isCallRequestEnabled;
@@ -47,5 +49,5 @@ class CheckoutState {
   }
 
   // Helper getter for delivery method
-  String get deliveryMethod => isHomeDeliverySelected ? 'home_delivery' : 'pharmacy_pickup';
+  DeliveryMethod get deliveryMethod => isHomeDeliverySelected ? DeliveryMethod.homeDelivery : DeliveryMethod.pharmacyPickup;
 }

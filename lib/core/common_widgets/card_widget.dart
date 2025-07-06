@@ -6,6 +6,7 @@ import '../../features/cart/logic/cart/cart_cubit.dart';
 import '../../features/cart/logic/cart/cart_state.dart';
 import '../../features/details/logic/favorite/favorite_cubit.dart';
 import '../../features/details/logic/favorite/favorite_state.dart';
+import '../../features/details/logic/product/product_cubit.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../generated/l10n.dart';
@@ -37,36 +38,40 @@ class _CardWidgetState extends State<CardWidget> {
   }
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap:() =>  Navigator.pushNamed(
-          context, Routes.productDetail,
-          arguments: widget.product.productId),
-        borderRadius: BorderRadius.circular(12),
-      child: BlocBuilder<CartCubit, CartState>(
-        builder: (context, state) {
-          return SizedBox(
-            width: 180.w,
-            height: 300.h,
-            child: Card(
-              color: ColorName.whiteColor,
-              shadowColor: ColorName.blackColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              elevation: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _buildProductDetails(context),
-                    buildCartAction(context, state,widget.product),
-                  ],
+    return BlocProvider(
+      create: (context) => ProductCubit()
+        ..selectUnit("productUnit1", widget.product.sellPrice ?? 0.0),
+      child: InkWell(
+        onTap:() =>  Navigator.pushNamed(
+            context, Routes.productDetail,
+            arguments: widget.product.productId),
+          borderRadius: BorderRadius.circular(12),
+        child: BlocBuilder<CartCubit, CartState>(
+          builder: (context, state) {
+            return SizedBox(
+              width: 180.w,
+              height: 300.h,
+              child: Card(
+                color: ColorName.whiteColor,
+                shadowColor: ColorName.blackColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildProductDetails(context),
+                      buildCartAction(context, state,widget.product),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

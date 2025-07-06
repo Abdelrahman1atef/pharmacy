@@ -405,6 +405,11 @@ class S {
     );
   }
 
+  /// `Unknown`
+  String get unknown {
+    return Intl.message('Unknown', name: 'unknown', desc: '', args: []);
+  }
+
   /// `Categories`
   String get titles_category {
     return Intl.message(
@@ -655,10 +660,10 @@ class S {
     return Intl.message('Optional', name: 'optional', desc: '', args: []);
   }
 
-  /// `Cash On Delivery`
+  /// `Cash on Delivery`
   String get cashOnDelivery {
     return Intl.message(
-      'Cash On Delivery',
+      'Cash on Delivery',
       name: 'cashOnDelivery',
       desc: '',
       args: [],
@@ -848,6 +853,16 @@ class S {
   /// `Best seller`
   String get best_seller {
     return Intl.message('Best seller', name: 'best_seller', desc: '', args: []);
+  }
+
+  /// `See Our Products`
+  String get see_our_products {
+    return Intl.message(
+      'See Our Products',
+      name: 'see_our_products',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Sign Up`
@@ -1143,6 +1158,686 @@ class S {
   /// `New User`
   String get login_new_user {
     return Intl.message('New User', name: 'login_new_user', desc: '', args: []);
+  }
+
+  /// `Choose how you want to reorder:`
+  String get reorderOptions {
+    return Intl.message(
+      'Choose how you want to reorder:',
+      name: 'reorderOptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quick Reorder`
+  String get directReorder {
+    return Intl.message(
+      'Quick Reorder',
+      name: 'directReorder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reorder with the same details as the original order`
+  String get directReorderDescription {
+    return Intl.message(
+      'Reorder with the same details as the original order',
+      name: 'directReorderDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reorder with Checkout`
+  String get reorderWithCheckout {
+    return Intl.message(
+      'Reorder with Checkout',
+      name: 'reorderWithCheckout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reorder and modify delivery/payment details`
+  String get reorderWithCheckoutDescription {
+    return Intl.message(
+      'Reorder and modify delivery/payment details',
+      name: 'reorderWithCheckoutDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No items available to reorder`
+  String get noItemsToReorder {
+    return Intl.message(
+      'No items available to reorder',
+      name: 'noItemsToReorder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Processing your reorder...`
+  String get reorderProcessing {
+    return Intl.message(
+      'Processing your reorder...',
+      name: 'reorderProcessing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No orders yet`
+  String get noOrdersYet {
+    return Intl.message(
+      'No orders yet',
+      name: 'noOrdersYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start shopping to see your orders here`
+  String get startShoppingToSeeOrders {
+    return Intl.message(
+      'Start shopping to see your orders here',
+      name: 'startShoppingToSeeOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start Shopping`
+  String get startShopping {
+    return Intl.message(
+      'Start Shopping',
+      name: 'startShopping',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Users Management`
+  String get usersManagement {
+    return Intl.message(
+      'Users Management',
+      name: 'usersManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User Details`
+  String get userDetails {
+    return Intl.message(
+      'User Details',
+      name: 'userDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search users by name, email, or phone...`
+  String get searchUsers {
+    return Intl.message(
+      'Search users by name, email, or phone...',
+      name: 'searchUsers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No users found`
+  String get noUsersFound {
+    return Intl.message(
+      'No users found',
+      name: 'noUsersFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No users found for "{searchQuery}"`
+  String noUsersFoundFor(Object searchQuery) {
+    return Intl.message(
+      'No users found for "$searchQuery"',
+      name: 'noUsersFoundFor',
+      desc: '',
+      args: [searchQuery],
+    );
+  }
+
+  /// `Error`
+  String get error {
+    return Intl.message('Error', name: 'error', desc: '', args: []);
+  }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message('Retry', name: 'retry', desc: '', args: []);
+  }
+
+  /// `Authentication required`
+  String get authenticationRequired {
+    return Intl.message(
+      'Authentication required',
+      name: 'authenticationRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Active`
+  String get active {
+    return Intl.message('Active', name: 'active', desc: '', args: []);
+  }
+
+  /// `Inactive`
+  String get inactive {
+    return Intl.message('Inactive', name: 'inactive', desc: '', args: []);
+  }
+
+  /// `Active User`
+  String get activeUser {
+    return Intl.message('Active User', name: 'activeUser', desc: '', args: []);
+  }
+
+  /// `Inactive User`
+  String get inactiveUser {
+    return Intl.message(
+      'Inactive User',
+      name: 'inactiveUser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `orders`
+  String get orders {
+    return Intl.message('orders', name: 'orders', desc: '', args: []);
+  }
+
+  /// `Total Spent`
+  String get totalSpent {
+    return Intl.message('Total Spent', name: 'totalSpent', desc: '', args: []);
+  }
+
+  /// `Avg Order`
+  String get avgOrder {
+    return Intl.message('Avg Order', name: 'avgOrder', desc: '', args: []);
+  }
+
+  /// `Last order`
+  String get lastOrder {
+    return Intl.message('Last order', name: 'lastOrder', desc: '', args: []);
+  }
+
+  /// `Member Since`
+  String get memberSince {
+    return Intl.message(
+      'Member Since',
+      name: 'memberSince',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Login`
+  String get lastLogin {
+    return Intl.message('Last Login', name: 'lastLogin', desc: '', args: []);
+  }
+
+  /// `Auth Type`
+  String get authType {
+    return Intl.message('Auth Type', name: 'authType', desc: '', args: []);
+  }
+
+  /// `Birth Date`
+  String get birthDate {
+    return Intl.message('Birth Date', name: 'birthDate', desc: '', args: []);
+  }
+
+  /// `User Statistics`
+  String get userStatistics {
+    return Intl.message(
+      'User Statistics',
+      name: 'userStatistics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Status Distribution`
+  String get orderStatusDistribution {
+    return Intl.message(
+      'Order Status Distribution',
+      name: 'orderStatusDistribution',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order History`
+  String get orderHistory {
+    return Intl.message(
+      'Order History',
+      name: 'orderHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment Method`
+  String get paymentMethod {
+    return Intl.message(
+      'Payment Method',
+      name: 'paymentMethod',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivery Method`
+  String get deliveryMethod {
+    return Intl.message(
+      'Delivery Method',
+      name: 'deliveryMethod',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address`
+  String get address {
+    return Intl.message('Address', name: 'address', desc: '', args: []);
+  }
+
+  /// `Items`
+  String get items {
+    return Intl.message('Items', name: 'items', desc: '', args: []);
+  }
+
+  /// `First Order`
+  String get firstOrder {
+    return Intl.message('First Order', name: 'firstOrder', desc: '', args: []);
+  }
+
+  /// `Dashboard`
+  String get dashboardTitle {
+    return Intl.message(
+      'Dashboard',
+      name: 'dashboardTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dashboard Initial State`
+  String get dashboardInitial {
+    return Intl.message(
+      'Dashboard Initial State',
+      name: 'dashboardInitial',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sales Overview`
+  String get dashboardSalesOverview {
+    return Intl.message(
+      'Sales Overview',
+      name: 'dashboardSalesOverview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Status Distribution`
+  String get dashboardOrderStatus {
+    return Intl.message(
+      'Order Status Distribution',
+      name: 'dashboardOrderStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User Statistics`
+  String get dashboardUserStatistics {
+    return Intl.message(
+      'User Statistics',
+      name: 'dashboardUserStatistics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product Performance`
+  String get dashboardProductPerformance {
+    return Intl.message(
+      'Product Performance',
+      name: 'dashboardProductPerformance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recent Activity`
+  String get dashboardRecentActivity {
+    return Intl.message(
+      'Recent Activity',
+      name: 'dashboardRecentActivity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Revenue Trends`
+  String get dashboardRevenueTrends {
+    return Intl.message(
+      'Revenue Trends',
+      name: 'dashboardRevenueTrends',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment Method Distribution`
+  String get dashboardPaymentMethod {
+    return Intl.message(
+      'Payment Method Distribution',
+      name: 'dashboardPaymentMethod',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivery Method Distribution`
+  String get dashboardDeliveryMethod {
+    return Intl.message(
+      'Delivery Method Distribution',
+      name: 'dashboardDeliveryMethod',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quick Stats`
+  String get dashboardQuickStats {
+    return Intl.message(
+      'Quick Stats',
+      name: 'dashboardQuickStats',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error: {msg}`
+  String dashboardError(Object msg) {
+    return Intl.message(
+      'Error: $msg',
+      name: 'dashboardError',
+      desc: '',
+      args: [msg],
+    );
+  }
+
+  /// `Quick Overview`
+  String get quickOverview {
+    return Intl.message(
+      'Quick Overview',
+      name: 'quickOverview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending Orders`
+  String get pendingOrders {
+    return Intl.message(
+      'Pending Orders',
+      name: 'pendingOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivered Orders`
+  String get deliveredOrders {
+    return Intl.message(
+      'Delivered Orders',
+      name: 'deliveredOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Products`
+  String get totalProducts {
+    return Intl.message(
+      'Total Products',
+      name: 'totalProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `In Stock`
+  String get inStock {
+    return Intl.message('In Stock', name: 'inStock', desc: '', args: []);
+  }
+
+  /// `Out of Stock`
+  String get outOfStock {
+    return Intl.message('Out of Stock', name: 'outOfStock', desc: '', args: []);
+  }
+
+  /// `Low Stock Products`
+  String get lowStockProducts {
+    return Intl.message(
+      'Low Stock Products',
+      name: 'lowStockProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Out of Stock Products`
+  String get outOfStockProducts {
+    return Intl.message(
+      'Out of Stock Products',
+      name: 'outOfStockProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sales Overview`
+  String get salesOverview {
+    return Intl.message(
+      'Sales Overview',
+      name: 'salesOverview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Orders`
+  String get totalOrders {
+    return Intl.message(
+      'Total Orders',
+      name: 'totalOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Revenue`
+  String get totalRevenue {
+    return Intl.message(
+      'Total Revenue',
+      name: 'totalRevenue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recent Orders`
+  String get recentOrders {
+    return Intl.message(
+      'Recent Orders',
+      name: 'recentOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Avg Order Value`
+  String get avgOrderValue {
+    return Intl.message(
+      'Avg Order Value',
+      name: 'avgOrderValue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending`
+  String get pending {
+    return Intl.message('Pending', name: 'pending', desc: '', args: []);
+  }
+
+  /// `Preparing`
+  String get preparing {
+    return Intl.message('Preparing', name: 'preparing', desc: '', args: []);
+  }
+
+  /// `Shipped`
+  String get shipped {
+    return Intl.message('Shipped', name: 'shipped', desc: '', args: []);
+  }
+
+  /// `Delivered`
+  String get delivered {
+    return Intl.message('Delivered', name: 'delivered', desc: '', args: []);
+  }
+
+  /// `Cancelled`
+  String get cancelled {
+    return Intl.message('Cancelled', name: 'cancelled', desc: '', args: []);
+  }
+
+  /// `Total Users`
+  String get totalUsers {
+    return Intl.message('Total Users', name: 'totalUsers', desc: '', args: []);
+  }
+
+  /// `Active Users`
+  String get activeUsers {
+    return Intl.message(
+      'Active Users',
+      name: 'activeUsers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New This Month`
+  String get newThisMonth {
+    return Intl.message(
+      'New This Month',
+      name: 'newThisMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Growth Rate`
+  String get growthRate {
+    return Intl.message('Growth Rate', name: 'growthRate', desc: '', args: []);
+  }
+
+  /// `Product Performance`
+  String get productPerformance {
+    return Intl.message(
+      'Product Performance',
+      name: 'productPerformance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Top Selling Products`
+  String get topSellingProducts {
+    return Intl.message(
+      'Top Selling Products',
+      name: 'topSellingProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count} shown`
+  String lowStockProductsShown(Object count) {
+    return Intl.message(
+      '$count shown',
+      name: 'lowStockProductsShown',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Recent Activity`
+  String get recentActivity {
+    return Intl.message(
+      'Recent Activity',
+      name: 'recentActivity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order #{id}`
+  String orderNumber(Object id) {
+    return Intl.message(
+      'Order #$id',
+      name: 'orderNumber',
+      desc: '',
+      args: [id],
+    );
+  }
+
+  /// `Payment & Delivery Methods`
+  String get paymentDeliveryMethods {
+    return Intl.message(
+      'Payment & Delivery Methods',
+      name: 'paymentDeliveryMethods',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Revenue Trends`
+  String get revenueTrends {
+    return Intl.message(
+      'Revenue Trends',
+      name: 'revenueTrends',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading dashboard data...`
+  String get loadingDashboardData {
+    return Intl.message(
+      'Loading dashboard data...',
+      name: 'loadingDashboardData',
+      desc: '',
+      args: [],
+    );
   }
 }
 

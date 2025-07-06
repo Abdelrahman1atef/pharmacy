@@ -1,6 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../../../generated/l10n.dart';
 import '../../../enum/order_status.dart';
+import '../../../enum/delivery_method.dart';
+import '../../../enum/payment_method.dart';
 import 'customer_order_item_model.dart';
 
 part 'customer_order_model.g.dart';
@@ -29,12 +33,36 @@ class CustomerOrderModel {
 
   @JsonKey(name: "total_price")
   final double totalPrice;
+
   @JsonKey(name: "status")
   final OrderStatus status;
 
   final List<CustomerOrderItemModel>? items;
 
-  CustomerOrderModel({
+  // New fields from your JSON
+  @JsonKey(name: "address_name")
+  final String? addressName;
+  @JsonKey(name: "address_street")
+  final String? addressStreet;
+  final double? latitude;
+  final double? longitude;
+
+  @JsonKey(name: "payment_method")
+  final PaymentMethod? paymentMethod;
+
+  @JsonKey(name: "delivery_method")
+  final DeliveryMethod? deliveryMethod;
+
+  @JsonKey(name: "is_home_delivery")
+  final bool? isHomeDelivery;
+
+  @JsonKey(name: "call_request_enabled")
+  final bool? callRequestEnabled;
+
+  @JsonKey(name: "promo_code")
+  final String? promoCode;
+
+  CustomerOrderModel( {
     required this.id,
     required this.userId,
     required this.firstName,
@@ -44,12 +72,53 @@ class CustomerOrderModel {
     required this.createdAt,
     required this.totalPrice,
     required this.status,
-    required this.items,
+    this.items,
+    this.addressName,
+    this.addressStreet,
+    this.latitude,
+    this.longitude,
+    this.paymentMethod,
+    this.deliveryMethod,
+    this.isHomeDelivery,
+    this.callRequestEnabled,
+    this.promoCode,
   });
 
   factory CustomerOrderModel.fromJson(Map<String, dynamic> json) =>
       _$CustomerOrderModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$CustomerOrderModelToJson(this);
 
+  // Helper method to get full customer name
+  String get fullName => '$firstName $lastName';
 
+  String getStatusText(BuildContext context) {
+    switch (status) {
+      case OrderStatus.pending:
+        return S.of(context).orderStatusPending;
+      case OrderStatus.preparing:
+        return S.of(context).orderStatusPreparing;
+      case OrderStatus.shipped:
+        return S.of(context).orderStatusShipped;
+      case OrderStatus.delivered:
+        return S.of(context).orderStatusDelivered;
+      case OrderStatus.cancelled:
+        return S.of(context).orderStatusCancelled;
+      default:
+        return 'Unknown';
+    }
+  }
+
+  String getDeliveryMethodText(BuildContext context) {
+    if (deliveryMethod == null) return 'Unknown';
+    return deliveryMethod!.getLocalizedDisplayName(S.of(context));
+  }
+
+  String getPaymentMethodText(BuildContext context) {
+    if (paymentMethod == null) return 'Unknown';
+    return paymentMethod!.getLocalizedDisplayName(S.of(context));
+  }
+
+  // Helper method to check if order is active
+  bool get isActive => status != OrderStatus.cancelled && status != OrderStatus.delivered;
 }

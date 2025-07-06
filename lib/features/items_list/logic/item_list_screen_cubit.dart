@@ -1,9 +1,10 @@
 import 'package:bloc/bloc.dart';
 import '../../../core/models/product/product_response.dart';
+import '../../../core/network/api_result.dart';
 import '../repository/item_list/item_list_repository.dart';
 import 'item_list_screen_state.dart';
 
-enum FetchType { all, category }
+enum FetchType { all, category, bestSellers, seeOurProducts }
 
 class ItemListScreenCubit extends Cubit<ItemListScreenState> {
   final ItemListRepository _itemListRepository;
@@ -15,17 +16,14 @@ class ItemListScreenCubit extends Cubit<ItemListScreenState> {
 
   ItemListScreenCubit(this._itemListRepository) : super(const Initial());
 
-  Future<void> fetchInitialItems({int? categoryId}) async {
+  Future<void> fetchInitialItems({int? categoryId, FetchType? fetchType}) async {
     emit(const Loading());
     _currentPage = 1;
     _hasReachedMax = false;
     _selectedCategoryId = categoryId;
-    _fetchType = categoryId == null ? FetchType.all : FetchType.category;
+    _fetchType = fetchType ?? (categoryId != null ? FetchType.category : FetchType.all);
 
-    final result = categoryId == null
-        ? await _itemListRepository.fetchAllProduct(page: _currentPage)
-        : await _itemListRepository.fetchProductByCategory(
-        page: _currentPage, categoryId: categoryId);
+    final result = await _getApiResult(_currentPage);
 
     result.when(
       success: (data) {
@@ -52,12 +50,7 @@ class ItemListScreenCubit extends Cubit<ItemListScreenState> {
 
     emit(ItemListScreenState.loadingMore(currentData));
 
-    final result = _fetchType == FetchType.all
-        ? await _itemListRepository.fetchAllProduct(page: _currentPage + 1)
-        : await _itemListRepository.fetchProductByCategory(
-      page: _currentPage + 1,
-      categoryId: _selectedCategoryId!,
-    );
+    final result = await _getApiResult(_currentPage + 1);
 
       result.when(
         success: (newData) {
@@ -76,5 +69,21 @@ class ItemListScreenCubit extends Cubit<ItemListScreenState> {
         failure: (e) => emit(Error(e)),
       );
     _isLoadingMore = false;
+  }
+
+  Future<ApiResult<ProductResponse>> _getApiResult(int page) async {
+    switch (_fetchType) {
+      case FetchType.all:
+        return await _itemListRepository.fetchAllProduct(page: page);
+      case FetchType.category:
+        return await _itemListRepository.fetchProductByCategory(
+          page: page, 
+          categoryId: _selectedCategoryId!
+        );
+      case FetchType.bestSellers:
+        return await _itemListRepository.fetchBestSellers(page: page);
+      case FetchType.seeOurProducts:
+        return await _itemListRepository.fetchSeeOurProducts(page: page);
+    }
   }
 }

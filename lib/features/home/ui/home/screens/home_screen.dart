@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy/features/home/logic/best_seller/best_seller_cubit.dart';
+import 'package:pharmacy/features/home/logic/see_our_products/see_our_products_cubit.dart';
 
 import '../../../logic/category/category_cubit.dart';
 import '../widgets/best_seller_widget.dart';
 import '../widgets/category_widget.dart';
+import '../widgets/see_our_products_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await Future.wait([
       Future(() => context.read<CategoryCubit>().emitCategoryState()),
       Future(() => context.read<BestSellerCubit>().emitBestSellerState()),
+      Future(() => context.read<SeeOurProductsCubit>().emitSeeOurProductsState()),
     ]);
   }
   @override
@@ -28,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<CategoryCubit>().emitCategoryState();
       context.read<BestSellerCubit>().emitBestSellerState();
+      context.read<SeeOurProductsCubit>().emitSeeOurProductsState();
     });
   }
 
@@ -55,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   SizedBox(
                     height: 340.h ,
-                    child: const BestSellerWidget(),
+                    child: const SeeOurProductsWidget(),
                   ),
                 ],
               ),

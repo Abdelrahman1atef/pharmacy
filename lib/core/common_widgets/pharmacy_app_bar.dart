@@ -150,6 +150,7 @@ class PharmacyAppBar extends StatelessWidget implements PreferredSizeWidget {
               const SizedBox()
             ],
           ),
+          SizedBox(height: 8.h,),
         ],
       ),
     );

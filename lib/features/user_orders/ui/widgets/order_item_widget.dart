@@ -27,7 +27,7 @@ class OrderItemWidget extends StatelessWidget {
       ),
       title: Text(
         orderItemInfo.nameAr,
-        maxLines: 1,
+        maxLines: 2,
         overflow: TextOverflow.ellipsis,
         style: TextStyles.productHomeTitles,
       ),

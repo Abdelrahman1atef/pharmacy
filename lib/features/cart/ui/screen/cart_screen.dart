@@ -14,139 +14,45 @@ import '../../../../generated/l10n.dart';
 import '../../../main/logic/main_cubit.dart';
 import '../../logic/cart/cart_cubit.dart';
 import '../../logic/cart/cart_state.dart';
-import '../../logic/order/order_cubit.dart';
-import '../../logic/order/order_state.dart' as order_state;
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<OrderCubit, order_state.OrderState>(
-      listener: (context, state) {
-        final scaffold = ScaffoldMessenger.of(context);
+    return BlocBuilder<CartCubit, CartState>(
+      builder: (context, state) {
+        if (state is Loading) {
+          return _ShimmerWidget();
+        } else if (state is Error) {
+          return Center(child: Text('Error: ${state.e}'));
+        } else if (state is Success) {
+          final cartItems = state.data as List<Product>;
+          final cartItemsNum = cartItems.length;
 
-        state.maybeWhen(
-          loading: () {
-            scaffold.hideCurrentSnackBar();
-            scaffold.showSnackBar(
-              SnackBar(
-                content: Row(
-                  children: [
-                    const CircularProgressIndicator(),
-                    const SizedBox(width: 16),
-                    Text(S.of(context).processingOrder),
-                  ],
-                ),
-                duration: const Duration(minutes: 1),
-                dismissDirection: DismissDirection.none,
-              ),
-            );
-          },
-          error: (e) {
-            scaffold.hideCurrentSnackBar();
-            scaffold.showSnackBar(
-              SnackBar(
-                content: Text(e.message),
-                backgroundColor: Colors.red,
-                duration: const Duration(seconds: 3),
-              ),
-            );
-          },
-          success: (data) {
-            scaffold.hideCurrentSnackBar();
-            context.read<CartCubit>().dropCartItem();
-            scaffold.showSnackBar(
-              SnackBar(
-                content: Text("Order successful! ID: ${data.orderId}"),
-                backgroundColor: Colors.green,
-                duration: const Duration(seconds: 4),
-              ),
-            );
-          },
-          orElse: () {},
-        );
-      },
-      child: BlocBuilder<CartCubit, CartState>(
-        builder: (context, state) {
-          if (state is Loading) {
-            return _ShimmerWidget();
-          } else if (state is Error) {
-            return Center(child: Text('Error: ${state.e}'));
-          } else if (state is Success) {
-            final cartItems = state.data as List<Product>;
-            final cartItemsNum = cartItems.length;
-
-            if (cartItems.isEmpty) {
-              return const CartIsEmpty();
-            }
-
-            double totalSellPrice = cartItems.fold(
-                0, (sum, item) => sum + (item.sellPrice! * item.quantity));
-
-            return Scaffold(
-              body: Column(
-                children: [
-                  Expanded(
-                    child: _buildProductList(context, cartItems),
-                  ),
-                  _buildCheckoutSection(
-                      context, cartItemsNum, totalSellPrice, cartItems),
-                ],
-              ),
-            );
+          if (cartItems.isEmpty) {
+            return const CartIsEmpty();
           }
-          return const SizedBox.shrink();
-        },
-      ),
+
+          double totalSellPrice = cartItems.fold(
+              0, (sum, item) => sum + (item.selectedUnitPrice! * item.quantity));
+
+          return Scaffold(
+            body: Column(
+              children: [
+                Expanded(
+                  child: _buildProductList(context, cartItems),
+                ),
+                _buildCheckoutSection(
+                    context, cartItemsNum, totalSellPrice, cartItems),
+              ],
+            ),
+          );
+        }
+        return const SizedBox.shrink();
+      },
     );
   }
-
-  // Snackbar helper methods
-  void _showLoadingSnackbar(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Row(
-          children: [
-            const CircularProgressIndicator(),
-            const SizedBox(width: 16),
-            Text(/*S.of(context).processingOrder*/"########"),
-          ],
-        ),
-        duration: const Duration(minutes: 1), // Long duration for loading
-      ),
-    );
-  }
-
-  void _showErrorSnackbar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: Colors.red,
-        duration: const Duration(seconds: 3),
-      ),
-    );
-  }
-
-  void _showSuccessSnackbar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: Colors.green,
-        duration: const Duration(seconds: 4),
-        action: SnackBarAction(
-          label: 'OK',
-          textColor: Colors.white,
-          onPressed: () {
-            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          },
-        ),
-      ),
-    );
-  }
-
   Widget _buildProductList(BuildContext context, List<Product> cartItems) {
     final screenWidth = MediaQuery.of(context).size.width;
 

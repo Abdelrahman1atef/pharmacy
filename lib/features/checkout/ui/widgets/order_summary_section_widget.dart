@@ -20,11 +20,8 @@ class OrderSummarySectionWidget extends StatelessWidget {
         double? subtotal = 0;
         const double deliveryFee = 15;
         double total = 0;
-        String currency = S
-            .of(context)
-            .pound;
         subtotal = cartItems.fold(
-            0, (sum, item) => sum + (item.sellPrice! * item.quantity));
+            0, (sum, item) => sum + (item.selectedUnitPrice! * item.quantity));
         if (state.isHomeDeliverySelected) {
           total = (subtotal + deliveryFee);
         } else {
@@ -64,11 +61,12 @@ class OrderSummarySectionWidget extends StatelessWidget {
                       style: TextStyles.orderInfoText
                           .copyWith(
                           fontSize: 18.sp, color: ColorName.blackColor)),
-                  Text('$subtotal $currency',
-                      style: TextStyles.orderInfoText.copyWith(
-                          fontSize: 14.sp,
-                          color: ColorName.primaryColor,
-                          fontWeight: FontWeight.bold)),
+                  Text(
+                    "${S.of(context).pound} ${(subtotal).toStringAsFixed(2)}",
+                    style: TextStyles.orderInfoText.copyWith(
+                        fontSize: 14.sp,
+                        color: ColorName.primaryColor,
+                        fontWeight: FontWeight.bold)),
                 ],
               ),
               const SizedBox(height: 8),
@@ -82,11 +80,12 @@ class OrderSummarySectionWidget extends StatelessWidget {
                       style: TextStyles.orderInfoText
                           .copyWith(
                           fontSize: 18.sp, color: ColorName.blackColor)),
-                  trailing: Text('$deliveryFee $currency',
-                      style: TextStyles.orderInfoText
-                          .copyWith(fontSize: 18.sp,
-                          color: ColorName.primaryColor,
-                          fontWeight: FontWeight.bold)),
+                  trailing: Text(
+                    "${S.of(context).pound} $deliveryFee",
+                    style: TextStyles.orderInfoText
+                        .copyWith(fontSize: 18.sp,
+                        color: ColorName.primaryColor,
+                        fontWeight: FontWeight.bold)),
                   subtitle: Text(
                     S
                         .of(context)
@@ -107,11 +106,12 @@ class OrderSummarySectionWidget extends StatelessWidget {
                           .copyWith(fontSize: 18.sp,
                           color: ColorName.blackColor,
                           fontWeight: FontWeight.bold)),
-                  Text('$total $currency',
-                      style: TextStyles.orderInfoText
-                          .copyWith(fontSize: 18.sp,
-                          color: ColorName.primaryColor,
-                          fontWeight: FontWeight.bold)),
+                  Text(
+                    "${S.of(context).pound} ${(total).toStringAsFixed(2)}",
+                    style: TextStyles.orderInfoText
+                        .copyWith(fontSize: 18.sp,
+                        color: ColorName.primaryColor,
+                        fontWeight: FontWeight.bold)),
                 ],
               ),
               const SizedBox(height: 8),

@@ -18,105 +18,107 @@ class CartItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 445.w,
-      height: 200.h,
-      child: Card(
-        elevation: 5,
-        color: ColorName.whiteColor,
-        margin: const EdgeInsetsDirectional.all(12),
-        child: Padding(
-          padding:
-              const EdgeInsetsDirectional.symmetric(horizontal: 8, vertical: 5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Card(
-                        child: SizedBox(
-                          width: 100,
-                          height: 100,
-                          child: Image.network(
-                              (product.productImages != null && product.productImages!.isNotEmpty)
-                                  ? product.productImages![0]
-                                  : "",
-                            fit: BoxFit.cover,
-                            loadingBuilder: loadingBuilder(),
-                            errorBuilder:
-                                errorBuilder(Assets.images.pWatermarkV2.path),
-                          ),
-                        ),
+    return Card(
+      elevation: 5,
+      color: ColorName.whiteColor,
+      margin: const EdgeInsetsDirectional.all(12),
+      child: Padding(
+        padding: const EdgeInsetsDirectional.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Product Image
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Card(
+                    child: SizedBox(
+                      width: 100.w,
+                      height: 100.h,
+                      child: Image.network(
+                        (product.productImages != null && product.productImages!.isNotEmpty)
+                            ? product.productImages![0]
+                            : "",
+                        fit: BoxFit.cover,
+                        loadingBuilder: loadingBuilder(),
+                        errorBuilder: errorBuilder(Assets.images.pWatermarkV2.path),
                       ),
                     ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Column(
+                  ),
+                ),
+                SizedBox(width: 12.w),
+                
+                // Product Details
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Product Name and Remove Button
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(
-                            height: 10,
+                          Expanded(
+                            child: Text(
+                              product.productNameAr ?? "",
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyles.productHomeTitles,
+                            ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  product.productNameAr ?? "",
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyles.productHomeTitles,
-                                ),
+                          SizedBox(width: 8.w),
+                          InkWell(
+                            onTap: () => showConfirmationDialog(context, product),
+                            child: Assets.images.remove.svg(
+                              colorFilter: const ColorFilter.mode(
+                                ColorName.productDetailTextColor,
+                                BlendMode.srcIn,
                               ),
-                              InkWell(
-                                onTap: () =>
-                                    showConfirmationDialog(context, product),
-                                child: Assets.images.remove.svg(
-                                    colorFilter: const ColorFilter.mode(
-                                        ColorName.productDetailTextColor,
-                                        BlendMode.srcIn)),
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                product.productUnit1 ?? "",
-                                style: TextStyles.cartProductType,
-                              ),
-                              Text(
-                                "${S.of(context).pound} ${product.sellPrice}",
-                                style: TextStyles.cartProductPrice,
-                              ),
-                            ],
+                            ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                      
+                      SizedBox(height: 12.h),
+                      
+                      // Product Unit and Price
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            product.selectedUnitType ?? "",
+                            style: TextStyles.cartProductType,
+                          ),
+                          SizedBox(height: 4.h),
+                          Text(
+                            "${S.of(context).pound} ${product.selectedUnitPrice}",
+                            style: TextStyles.cartProductPrice,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            
+            SizedBox(height: 16.h),
+            
+            // Quantity Selector
+            Align(
+              alignment: Alignment.centerLeft,
+              child: SizedBox(
+                width: 160.w,
+                child: QuantitySelector(
+                  product: product,
                 ),
               ),
-              SizedBox(
-                  width: 160.w,
-                  child: QuantitySelector(
-                    product: product,
-                  ))
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

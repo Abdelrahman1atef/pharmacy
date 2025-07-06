@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:pharmacy/core/enum/delivery_method.dart';
 import 'checkout_state.dart';
 
 class CheckoutCubit extends Cubit<CheckoutState> {
@@ -40,6 +41,6 @@ class CheckoutCubit extends Cubit<CheckoutState> {
   bool get isHomeDelivery => state.isHomeDeliverySelected;
   bool get isPharmacyPickup => !state.isHomeDeliverySelected;
   bool get isCallRequestEnabled => !state.isCallRequestEnabled;
-  String get deliveryMethod => state.deliveryMethod;
+  DeliveryMethod get deliveryMethod => state.deliveryMethod;
   DateTime? get selectedDateTime => state.selectedDateTime;
 }

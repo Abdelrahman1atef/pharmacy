@@ -35,7 +35,12 @@ class CashHelper {
 
   static String? getToken() {
     final token = getData(key: 'token') as String?;
-    return token;
+    return token?.isNotEmpty == true ? token : null;
+  }
+
+  static bool hasValidToken() {
+    final token = getToken();
+    return token != null && token.isNotEmpty;
   }
 
   static Future<void> clearToken() async {

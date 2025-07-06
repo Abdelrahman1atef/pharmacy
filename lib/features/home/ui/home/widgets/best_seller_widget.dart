@@ -5,6 +5,7 @@ import 'package:pharmacy/core/common_widgets/card_widget.dart';
 import 'package:pharmacy/core/models/product/product_response.dart';
 import 'package:pharmacy/features/home/logic/best_seller/best_seller_cubit.dart';
 import 'package:pharmacy/features/home/logic/best_seller/best_seller_state.dart';
+import 'package:pharmacy/features/items_list/logic/item_list_screen_cubit.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/common_widgets/header_widget.dart';
@@ -24,6 +25,7 @@ class BestSellerWidget extends StatelessWidget {
               HeaderWidget(
                 widgetTitle: S.of(context).best_seller,
                 showAllIsVisible: true,
+                fetchType: FetchType.bestSellers,
               ),
               SizedBox(
                 height: 12.h,

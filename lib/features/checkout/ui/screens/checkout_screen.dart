@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy/core/common_widgets/gradient_button.dart';
 import 'package:pharmacy/core/common_widgets/pharmacy_app_bar.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
+import 'package:pharmacy/features/cart/logic/order/order_state.dart';
 import 'package:pharmacy/features/checkout/logic/payment/payment_cubit.dart';
 import 'package:pharmacy/features/checkout/ui/widgets/discount_section_widget.dart';
 import 'package:pharmacy/gen/colors.gen.dart';
@@ -17,7 +17,7 @@ import '../../../../core/db/cart/model/product.dart';
 import '../../../../core/models/order/create/order_request.dart';
 import '../../../../core/routes/routes.dart';
 import '../../../../generated/l10n.dart';
-import '../../../admin/orders/logic/admin_orders_state.dart';
+import '../../../cart/logic/cart/cart_cubit.dart';
 import '../../../cart/logic/order/order_cubit.dart';
 import '../../logic/toggle_buttons_logic/checkout_cubit.dart';
 import '../../logic/toggle_buttons_logic/checkout_state.dart';
@@ -26,8 +26,7 @@ import '../widgets/location_section_widget.dart';
 import '../widgets/order_summary_section_widget.dart';
 import '../widgets/payment_section_widget.dart';
 import '../../logic/location/location_cubit.dart';
-import '../../logic/location/saved_location.dart';
-import '../../logic/payment/payment_options.dart';
+import '../../logic/payment/payment_helper.dart';
 
 class CheckoutScreen extends StatelessWidget {
   final List<Product> cartItems;
@@ -36,92 +35,92 @@ class CheckoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CheckoutCubit(),
-      child: Scaffold(
-        appBar: const PharmacyAppBar(
-          isGeneralLayout: false,
-          heightFactor: 1.1,
-        ),
-        body: Column(
-          children: [
-            SizedBox(height: 10.h),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
+    return BlocListener<OrderCubit, OrderState>(
+      listener: (context, state) {
+        final scaffold = ScaffoldMessenger.of(context);
+        state.maybeWhen(
+          loading: () {
+            scaffold.hideCurrentSnackBar();
+            scaffold.showSnackBar(
+              SnackBar(
+                content: Row(
                   children: [
-                    Text(
-                      S.of(context).checkout,
-                      style: TextStyles.orderInfoText.copyWith(
-                        fontSize: 30,
-                        color: ColorName.productDetailTextColor,
-                      ),
-                    ),
-                    SizedBox(height: 20.h),
-                    const LocationSelectionWidget(),
-                    SizedBox(height: 20.h),
-                    const DeliverSectionWidget(),
-                    SizedBox(height: 20.h),
-                     const PaymentSectionWidget(),
-                    SizedBox(height: 20.h),
-                    const DiscountSectionWidget(),
-                    SizedBox(height: 20.h),
-                    OrderSummarySectionWidget(cartItems: cartItems,),
-                    // _buildOrderSummary(context),
+                    const CircularProgressIndicator(),
+                    const SizedBox(width: 16),
+                    Text(S.of(context).processingOrder),
                   ],
                 ),
+                duration: const Duration(minutes: 1),
+                dismissDirection: DismissDirection.none,
               ),
-            ),
-            _buildCheckoutButton(context),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildOrderSummary(BuildContext context) {
-    return BlocBuilder<CheckoutCubit, CheckoutState>(
-      builder: (context, state) {
-        return Container(
-          margin: EdgeInsets.symmetric(horizontal: 20.w),
-          padding: EdgeInsets.all(16.w),
-          decoration: BoxDecoration(
-            color: Colors.grey[50],
-            borderRadius: BorderRadius.circular(12.r),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                S.of(context).orderSummary,
-                style: TextStyles.orderInfoText.copyWith(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.bold,
-                ),
+            );
+          },
+          error: (e) {
+            scaffold.hideCurrentSnackBar();
+            scaffold.showSnackBar(
+              SnackBar(
+                content: Text(e.message),
+                backgroundColor: Colors.red,
+                duration: const Duration(seconds: 3),
               ),
-              SizedBox(height: 10.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    S.of(context).delivery,
-                    style: TextStyles.productTitles,
-                  ),
-                  Text(
-                    state.isHomeDeliverySelected
-                        ? S.of(context).homeDelivery
-                        : S.of(context).pharmacyPickup,
-                    style: TextStyles.productTitles.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+            );
+          },
+          success: (data) {
+            scaffold.hideCurrentSnackBar();
+            context.read<CartCubit>().dropCartItem();
+            scaffold.showSnackBar(
+              SnackBar(
+                content: Text("Order successful! ID: ${data.orderId}"),
+                backgroundColor: Colors.green,
+                duration: const Duration(seconds: 4),
               ),
-              // Add more order summary details here
-            ],
-          ),
+            );
+            Navigator.pop(context);
+          },
+          orElse: () {},
         );
       },
+      child: BlocProvider(
+        create: (context) => CheckoutCubit(),
+        child: Scaffold(
+          appBar: const PharmacyAppBar(
+            isGeneralLayout: false,
+            heightFactor: 1.1,
+          ),
+          body: Column(
+            children: [
+              SizedBox(height: 10.h),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Text(
+                        S.of(context).checkout,
+                        style: TextStyles.orderInfoText.copyWith(
+                          fontSize: 30,
+                          color: ColorName.productDetailTextColor,
+                        ),
+                      ),
+                      SizedBox(height: 20.h),
+                      const LocationSelectionWidget(),
+                      SizedBox(height: 20.h),
+                      const DeliverSectionWidget(),
+                      SizedBox(height: 20.h),
+                      const PaymentSectionWidget(),
+                      SizedBox(height: 20.h),
+                      const DiscountSectionWidget(),
+                      SizedBox(height: 20.h),
+                      OrderSummarySectionWidget(cartItems: cartItems,),
+                      // _buildOrderSummary(context),
+                    ],
+                  ),
+                ),
+              ),
+              _buildCheckoutButton(context),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -159,30 +158,45 @@ void _handleCheckout(BuildContext context, List<Product> cartItems,
   }
 
   final user = authState.user;
-  final paymentMethod = context.read<PaymentCubit>().state;
+  final paymentState = context.read<PaymentCubit>().state;
   final selectedLocation = context.read<LocationCubit>().state;
+
+  // Convert payment index to PaymentMethod enum using helper
+  final paymentMethod = PaymentHelper.getPaymentMethodFromIndex(paymentState.selectedPaymentIndex);
 
   final orderRequest = OrderRequest(
     userId: user.id,
     products: cartItems,
-    address: selectedLocation?.street ?? "No address selected",
+    address: selectedLocation?.name?? "No address selected",
+    addressName: selectedLocation?.name ?? "No street selected",
+    addressStreet: selectedLocation?.street ?? "No address selected",
     latitude: selectedLocation?.latitude ?? 0.0,
     longitude: selectedLocation?.longitude ?? 0.0,
-    paymentMethod: paymentMethod.selectedPaymentIndex == 0
-        ? "cash_on_delivery"
-        : paymentMethod.selectedPaymentIndex == 1
-        ? "debit_credit_card"
-        : paymentMethod.selectedPaymentIndex == 2
-        ?"debit_credit_card_on_delivery"
-        : null,
+    paymentMethod: paymentMethod,
     deliveryMethod: checkoutState.deliveryMethod,
     isHomeDelivery: checkoutState.isHomeDeliverySelected,
     callRequestEnabled: checkoutState.isCallRequestEnabled,
     promoCode: checkoutState.promoCode,
   );
-
-  context.read<OrderCubit>().createOrder(orderRequest);
-  if(context.read<OrderCubit>().state is Success) {
-    Navigator.pop(context);
-  }
+   context.read<OrderCubit>().createOrder(orderRequest);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

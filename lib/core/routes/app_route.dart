@@ -3,17 +3,19 @@ import 'package:pharmacy/core/db/cart/model/product.dart';
 import 'package:pharmacy/core/models/category/category_response.dart';
 import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/core/routes/transition/transition_type.dart';
+import 'package:pharmacy/features/admin/dashboard/ui/screens/dashboard_screen.dart';
 import 'package:pharmacy/features/admin/orders/ui/screens/admin_orders_screen.dart';
 import 'package:pharmacy/features/checkout/ui/screens/checkout_screen.dart';
 import 'package:pharmacy/features/details/ui/DetailsScreen.dart';
 import 'package:pharmacy/features/items_list/ui/item_list_screen.dart';
+import 'package:pharmacy/features/items_list/logic/item_list_screen_cubit.dart';
 import 'package:pharmacy/features/login&signup/ui/screen/signup_screen.dart';
 import 'package:pharmacy/features/splash/splash_screen.dart';
 import 'package:pharmacy/features/user/ui/screens/user_screen.dart';
 
-import '../../app_config_provider/logic/auth/logic/auth_state.dart';
 import '../../features/admin/main/ui/screens/main_admin_screen.dart';
-import '../../features/admin/users/ui/screens/user_manger_screen.dart';
+import '../../features/admin/users/ui/screens/admin_users_screen.dart';
+import '../../features/admin/users/ui/screens/admin_user_detail_screen.dart';
 import '../../features/login&signup/ui/screen/login_screen.dart';
 import '../../features/main/presentation/screens/main_screen.dart';
 import '../../features/search/ui/screens/search_screen.dart';
@@ -51,6 +53,12 @@ class AppRouter {
               widgetTitle: arguments,
               categoryId: null, // No category, fetch all
             );
+          } else if (arguments is Map<String, dynamic>) {
+            return ItemListScreen(
+              widgetTitle: arguments['title'] as String,
+              categoryId: arguments['categoryId'] as int?,
+              fetchType: arguments['fetchType'] as FetchType?,
+            );
           } else {
             return const Scaffold(
               body: Center(child: Text('Invalid arguments')),
@@ -83,17 +91,24 @@ class AppRouter {
         );
       case Routes.adminUsers:
         return navigateWithAnimation(
-          screen: const AdminUserMangerScreen(),
+          screen: const AdminUsersScreen(),
+          transition: TransitionType.fade,
+        );
+      case Routes.adminUserDetail:
+        return navigateWithAnimation(
+          screen: AdminUserDetailScreen(
+            userId: settings.arguments as int,
+          ),
           transition: TransitionType.fade,
         );
       case Routes.adminDashboard:
         return navigateWithAnimation(
-          screen: const AdminUserMangerScreen(),
+          screen: const DashboardScreen(),
           transition: TransitionType.fade,
         );
       case Routes.adminReports:
         return navigateWithAnimation(
-          screen: const AdminUserMangerScreen(),
+          screen: const AdminUsersScreen(),
           transition: TransitionType.fade,
         );
 

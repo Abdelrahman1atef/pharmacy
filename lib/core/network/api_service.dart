@@ -6,7 +6,10 @@ import 'package:pharmacy/core/models/order/create/order_request.dart';
 import 'package:pharmacy/core/models/product/product_response.dart';
 import 'package:pharmacy/core/models/register_login/login_response.dart';
 import 'package:pharmacy/core/models/search/search_response.dart';
+import 'package:pharmacy/core/models/admin_user/admin_user_list_response.dart';
+import 'package:pharmacy/core/models/admin_user/admin_user_detail_response.dart';
 import 'package:pharmacy/core/network/constant.dart';
+import 'package:pharmacy/features/admin/dashboard/data/models/dashboard_response.dart';
 import '../../app_config_provider/logic/auth/model/data.dart';
 import '../enum/order_status.dart';
 import '../models/order/admin/admin_order_model.dart';
@@ -21,6 +24,10 @@ abstract class ApiService {
   Future<bool> checkServerStatus();
 
   Future<ApiResult<ProductResponse>> fetchAllProduct(int page);
+
+  Future<ApiResult<ProductResponse>> fetchBestSellers(int page);
+
+  Future<ApiResult<ProductResponse>> fetchSeeOurProducts(int page);
 
   Future<ApiResult<Results>> fetchProductDetails(int productId);
 
@@ -45,6 +52,11 @@ abstract class ApiService {
       int orderId, OrderStatus newStatus, token);
 
   Future<ApiResult<List<CustomerOrderModel>>> getCustomerOrders(token);
+
+  Future<ApiResult<AdminUserListResponse>> fetchAdminUsers({String? search, required int page,required token});
+  Future<ApiResult<AdminUserDetailResponse>> fetchAdminUserDetail(int userId,{required token});
+
+  Future<ApiResult<DashboardResponse>> fetchAdminDashboard({required String token});
 }
 
 class ApiServiceImpl implements ApiService {
@@ -55,7 +67,11 @@ class ApiServiceImpl implements ApiService {
   @override
   Future<bool> checkServerStatus() async {
     try {
-      Response response = await _dio.get(Constant.apiHealth);
+      Response response = await _dio.get(Constant.apiHealth,options:Options(
+        headers: {
+          'Accept': 'application/json'
+        }
+      ) );
       if (response.statusCode == 200) {
         return true;
       } else {
@@ -81,6 +97,44 @@ class ApiServiceImpl implements ApiService {
     } on DioException catch (e) {
       return ApiResult<ProductResponse>.failure(ApiException(
           message: e.message ?? "Unable to fetch Now Showing Movies",
+          code: e.response?.statusCode ?? 0));
+    }
+  }
+
+  @override
+  Future<ApiResult<ProductResponse>> fetchBestSellers(int page) async {
+    try {
+      Response response = await _dio
+          .get(Constant.bestSellersEndPoint, queryParameters: {'page': page});
+      if (response.statusCode == 200) {
+        return ApiResult<ProductResponse>.success(
+            ProductResponse.formJson(response.data));
+      } else {
+        return ApiResult<ProductResponse>.failure(
+            ApiException.fromJson(response.data));
+      }
+    } on DioException catch (e) {
+      return ApiResult<ProductResponse>.failure(ApiException(
+          message: e.message ?? "Unable to fetch Best Sellers",
+          code: e.response?.statusCode ?? 0));
+    }
+  }
+
+  @override
+  Future<ApiResult<ProductResponse>> fetchSeeOurProducts(int page) async {
+    try {
+      Response response = await _dio
+          .get(Constant.seeOurProductsEndPoint, queryParameters: {'page': page});
+      if (response.statusCode == 200) {
+        return ApiResult<ProductResponse>.success(
+            ProductResponse.formJson(response.data));
+      } else {
+        return ApiResult<ProductResponse>.failure(
+            ApiException.fromJson(response.data));
+      }
+    } on DioException catch (e) {
+      return ApiResult<ProductResponse>.failure(ApiException(
+          message: e.message ?? "Unable to fetch See Our Products",
           code: e.response?.statusCode ?? 0));
     }
   }
@@ -324,5 +378,71 @@ class ApiServiceImpl implements ApiService {
         'status': newStatus.name,
       }),
     );
+  }
+
+  @override
+  Future<ApiResult<AdminUserListResponse>> fetchAdminUsers({String? search, required int page,required token}) async {
+    try {
+      final params = <String, dynamic>{'page': page};
+      if (search != null && search.isNotEmpty) {
+        params['search'] = search;
+      }
+      final response = await _dio.get(
+        Constant.adminUsersEndPoint,
+        queryParameters: params,
+        options: Options(
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Token $token',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        return ApiResult.success(AdminUserListResponse.fromJson(response.data));
+      } else {
+        return ApiResult.failure(ApiException.fromJson(response.data));
+      }
+    } on DioException catch (e) {
+      return ApiResult.failure(ApiException(message: e.message ?? 'Unknown error', code: e.response?.statusCode ?? 0));
+    }
+  }
+
+  @override
+  Future<ApiResult<AdminUserDetailResponse>> fetchAdminUserDetail(int userId,
+      {required token}) async {
+    try {
+      final response = await _dio.get('${Constant.adminUserDetailEndPoint}$userId/',
+        options: Options(
+        headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Token $token',
+        },
+      ),);
+      if (response.statusCode == 200) {
+        return ApiResult.success(AdminUserDetailResponse.fromJson(response.data));
+      } else {
+        return ApiResult.failure(ApiException.fromJson(response.data));
+      }
+    } on DioException catch (e) {
+      return ApiResult.failure(ApiException(message: e.message ?? 'Unknown error', code: e.response?.statusCode ?? 0));
+    }
+  }
+
+  @override
+  Future<ApiResult<DashboardResponse>> fetchAdminDashboard({required String token}) async {
+    final response = await _dio.get(
+      Constant.adminDashboardEndPoint,
+      options: Options(
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Token $token',
+        },
+      ),
+    );
+    if (response.statusCode == 200) {
+      return ApiResult.success(DashboardResponse.fromJson(response.data));
+    } else {
+      throw ApiException.fromJson(response.data);
+    }
   }
 }

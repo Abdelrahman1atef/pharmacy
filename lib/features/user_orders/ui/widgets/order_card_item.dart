@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy/core/common_widgets/gradient_button.dart';
 import 'package:pharmacy/features/user_orders/ui/widgets/order_item_widget.dart';
+import 'package:pharmacy/features/user_orders/ui/widgets/reorder_helper.dart';
+import 'package:pharmacy/features/user_orders/ui/widgets/simple_order_status_indicator.dart';
 
-import '../../../../app_config_provider/logic/auth/logic/auth_cubit.dart';
-import '../../../../app_config_provider/logic/auth/logic/auth_state.dart';
 import '../../../../core/models/order/customer/customer_order_model.dart';
-import '../../../../core/routes/routes.dart';
 import '../../../../core/themes/text/text_styles.dart';
 import '../../../../gen/colors.gen.dart';
 import '../../../../generated/l10n.dart';
 import 'order_details_dialog.dart';
-import 'order_status_widget.dart';
 
 class OrderCardItem extends StatelessWidget {
   final CustomerOrderModel orderInfo;
@@ -42,13 +39,26 @@ class OrderCardItem extends StatelessWidget {
               padding: const EdgeInsetsDirectional.symmetric(
                   vertical: widgetPaddingVertical,
                   horizontal: widgetPaddingHorizontal),
-              constraints: const BoxConstraints(minHeight: 200),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("#${orderInfo.id}"),
+                      Row(
+                        children: [
+                          Text("#${orderInfo.id}"),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.symmetric(
+                                horizontal: 5),
+                            child: Text(
+                              orderInfo.getDeliveryMethodText(context),
+                              style: TextStyles.orderInfoText.copyWith(
+                                fontSize: 15.sp
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                       Row(
                         children: [
                           Text(
@@ -64,12 +74,13 @@ class OrderCardItem extends StatelessWidget {
                     ],
                   ),
 
+                  // const SizedBox(height: 16),
+                  // CompactOrderProgressIndicator(currentStatus: orderInfo.status,),
                   const SizedBox(height: 16),
-                  SimpleOrderStatusIndicator(currentStatus: orderInfo.status,),
-                  const SizedBox(height: 16),
-                  OrderStatusWidget(
+                  OrderProgressIndicator(
                     currentStatus: orderInfo.status,
                   ),
+
                   const SizedBox(height: 16),
                 ],
               ),
@@ -113,19 +124,32 @@ class OrderCardItem extends StatelessWidget {
                     padding: const EdgeInsetsDirectional.symmetric(
                         vertical: 8, horizontal: 100),
                     child: GradientElevatedButton(
-                        onPressed: () {
-                          final authState = context.read<AuthCubit>().state;
-
-                          if (authState is! AuthAuthenticated) {
-                            Navigator.pushNamed(context, Routes.login);
-                            return;
-                          }
-
-                          final user = authState.user;
-                          // final orderRequest = OrderRequest(
-                          //     userId: user.id, products: orderItemInfo!);
-                          // context.read<OrderCubit>().createOrder(orderRequest);
-                        },
+                        onPressed: () =>ReorderHelper.showReorderOptions(context, orderInfo),
+                          // final authState = context.read<AuthCubit>().state;
+                          //
+                          // if (authState is! AuthAuthenticated) {
+                          //   Navigator.pushNamed(context, Routes.login);
+                          //   return;
+                          // }
+                          //
+                          // final user = authState.user;
+                          // if (orderItemInfo != null) {
+                          //   final orderRequest = OrderRequest(
+                          //     userId: user.id,
+                          //     products: orderItemInfo,
+                          //     address: orderInfo.addressName ?? "No address selected",
+                          //     addressName: orderInfo.addressName ?? "No address selected",
+                          //     addressStreet: orderInfo.addressStreet ?? "No street selected",
+                          //     latitude: orderInfo.latitude ?? 0.0,
+                          //     longitude: orderInfo.longitude ?? 0.0,
+                          //     paymentMethod: orderInfo.paymentMethod,
+                          //     deliveryMethod: orderInfo.deliveryMethod ?? DeliveryMethod.homeDelivery,
+                          //     isHomeDelivery: orderInfo.isHomeDelivery ?? true,
+                          //     callRequestEnabled: orderInfo.callRequestEnabled ?? false,
+                          //     promoCode: orderInfo.promoCode,
+                          //   );
+                          //   context.read<OrderCubit>().createOrder(orderRequest);
+                          // }
                         child: Text(
                           S.of(context).reorder,
                           style: TextStyles.gradientElevatedButtonText.copyWith(
@@ -141,4 +165,3 @@ class OrderCardItem extends StatelessWidget {
     );
   }
 }
-

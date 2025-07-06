@@ -15,11 +15,22 @@ AdminOrderModel _$AdminOrderModelFromJson(Map<String, dynamic> json) =>
       userEmail: json['user_email'] as String?,
       userPhone: json['user_phone'] as String?,
       createdAt: json['created_at'] as String?,
-      totalPrice: json['total_price'] as String?,
+      totalPrice: AdminOrderModel._totalPriceFromJson(json['total_price']),
       status: $enumDecodeNullable(_$OrderStatusEnumMap, json['status']),
       items: (json['items'] as List<dynamic>?)
           ?.map((e) => AdminOrderItemModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      addressName: json['address_name'] as String?,
+      addressStreet: json['address_street'] as String?,
+      latitude: (json['latitude'] as num?)?.toDouble(),
+      longitude: (json['longitude'] as num?)?.toDouble(),
+      paymentMethod:
+          $enumDecodeNullable(_$PaymentMethodEnumMap, json['payment_method']),
+      deliveryMethod:
+          $enumDecodeNullable(_$DeliveryMethodEnumMap, json['delivery_method']),
+      isHomeDelivery: json['is_home_delivery'] as bool?,
+      callRequestEnabled: json['call_request_enabled'] as bool?,
+      promoCode: json['promo_code'] as String?,
     );
 
 Map<String, dynamic> _$AdminOrderModelToJson(AdminOrderModel instance) =>
@@ -31,9 +42,18 @@ Map<String, dynamic> _$AdminOrderModelToJson(AdminOrderModel instance) =>
       'user_email': instance.userEmail,
       'user_phone': instance.userPhone,
       'created_at': instance.createdAt,
-      'total_price': instance.totalPrice,
+      'total_price': AdminOrderModel._totalPriceToJson(instance.totalPrice),
       'status': _$OrderStatusEnumMap[instance.status],
       'items': instance.items,
+      'address_name': instance.addressName,
+      'address_street': instance.addressStreet,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
+      'payment_method': _$PaymentMethodEnumMap[instance.paymentMethod],
+      'delivery_method': _$DeliveryMethodEnumMap[instance.deliveryMethod],
+      'is_home_delivery': instance.isHomeDelivery,
+      'call_request_enabled': instance.callRequestEnabled,
+      'promo_code': instance.promoCode,
     };
 
 const _$OrderStatusEnumMap = {
@@ -42,4 +62,15 @@ const _$OrderStatusEnumMap = {
   OrderStatus.shipped: 'shipped',
   OrderStatus.delivered: 'delivered',
   OrderStatus.cancelled: 'cancelled',
+};
+
+const _$PaymentMethodEnumMap = {
+  PaymentMethod.cashOnDelivery: 'cash_on_delivery',
+  PaymentMethod.debitCreditCard: 'debit_credit_card',
+  PaymentMethod.debitCreditCardOnDelivery: 'debit_credit_card_on_delivery',
+};
+
+const _$DeliveryMethodEnumMap = {
+  DeliveryMethod.homeDelivery: 'home_delivery',
+  DeliveryMethod.pharmacyPickup: 'pharmacy_pickup',
 };

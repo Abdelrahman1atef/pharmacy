@@ -16,51 +16,42 @@ class Product {
 
   @JsonKey(name: 'product_name_en')
   String? productNameEn;
-
-  @JsonKey(name: 'product_unit1')
-  String? productUnit1;
-
-  @JsonKey(name: 'sell_price')
-  double? sellPrice;
-
-  @JsonKey(name: 'product_unit2')
-  String? productUnit2;
-
-  @JsonKey(name: 'product_unit1_2')
-  double? productUnit1_2;
-
-  @JsonKey(name: 'unit2_sell_price')
-  double? unit2SellPrice;
+  
+  /// Selected unit type (e.g., "علبة", "شريط")
+  @JsonKey(name: 'selected_unit_type')
+  String? selectedUnitType;
+  
+  /// Price of the selected unit type
+  @JsonKey(name: 'selected_unit_price')
+  double? selectedUnitPrice;
 
   @JsonKey(name: 'product_image_url')
   String? productImageUrl;
+  
   @JsonKey(
     name: 'product_images',
     fromJson: Product._imagesFromJson,
     toJson: Product._imagesToJson,
   )
   List<String>? productImages;
+  
   int quantity;
 
-  Product(
-      {required this.productId,
-      this.productNameAr,
-      this.productNameEn,
-      this.productUnit1,
-      this.sellPrice,
-      this.productUnit2,
-      this.productUnit1_2,
-      this.unit2SellPrice,
-      this.productImageUrl,
-      required this.quantity,
-      required this.productImages,
-      });
+  Product({
+    required this.productId,
+    this.productNameAr,
+    this.productNameEn,
+    this.selectedUnitType,
+    this.selectedUnitPrice,
+    this.productImageUrl,
+    required this.quantity,
+    required this.productImages,
+  });
 
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProductToJson(this);
-
 
   static List<String>? _imagesFromJson(dynamic raw) {
     if (raw == null) return null;
@@ -87,16 +78,22 @@ class Product {
 }
 
 extension ResultsToProduct on Results {
-  Product toProduct({int quantity = 1}) {
+  /// Convert Results to Product with selected unit type and price
+  Product toProduct({
+    int quantity = 1,
+    String? selectedUnitType,
+    double? selectedUnitPrice,
+  }) {
+    // If no specific unit is selected, default to unit1
+    final unitType = selectedUnitType ?? productUnit1 ?? "";
+    final unitPrice = selectedUnitPrice ?? sellPrice ?? 0.0;
+    
     return Product(
       productId: productId ?? 0,
       productNameAr: productNameAr,
       productNameEn: productNameEn,
-      productUnit1: productUnit1,
-      sellPrice: sellPrice,
-      productUnit2: productUnit2,
-      productUnit1_2: productUnit1_2,
-      unit2SellPrice: unit2SellPrice,
+      selectedUnitType: unitType,
+      selectedUnitPrice: unitPrice,
       productImageUrl: productImageUrl,
       quantity: quantity,
       productImages: productImages,

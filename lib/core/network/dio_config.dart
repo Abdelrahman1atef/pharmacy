@@ -25,7 +25,7 @@ class DioConfig {
         PrettyDioLogger(
           compact: true,
           requestBody: true,
-          responseBody: true,
+          responseBody: false,
           error: true,
         ),
         // Retry Interceptor

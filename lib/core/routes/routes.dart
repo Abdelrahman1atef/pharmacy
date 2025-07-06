@@ -17,6 +17,7 @@ class Routes {
   static const adminDashboard='/admin_dashboard';
   static const adminOrders='/admin_orders';
   static const adminUsers='/admin_users';
+  static const adminUserDetail='/admin/user-detail';
   static const adminReports='/admin_reports';
 
 }

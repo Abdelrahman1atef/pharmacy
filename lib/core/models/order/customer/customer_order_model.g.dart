@@ -21,6 +21,17 @@ CustomerOrderModel _$CustomerOrderModelFromJson(Map<String, dynamic> json) =>
           ?.map(
               (e) => CustomerOrderItemModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      addressName: json['address_name'] as String?,
+      addressStreet: json['address_street'] as String?,
+      latitude: (json['latitude'] as num?)?.toDouble(),
+      longitude: (json['longitude'] as num?)?.toDouble(),
+      paymentMethod:
+          $enumDecodeNullable(_$PaymentMethodEnumMap, json['payment_method']),
+      deliveryMethod:
+          $enumDecodeNullable(_$DeliveryMethodEnumMap, json['delivery_method']),
+      isHomeDelivery: json['is_home_delivery'] as bool?,
+      callRequestEnabled: json['call_request_enabled'] as bool?,
+      promoCode: json['promo_code'] as String?,
     );
 
 Map<String, dynamic> _$CustomerOrderModelToJson(CustomerOrderModel instance) =>
@@ -35,6 +46,15 @@ Map<String, dynamic> _$CustomerOrderModelToJson(CustomerOrderModel instance) =>
       'total_price': instance.totalPrice,
       'status': _$OrderStatusEnumMap[instance.status]!,
       'items': instance.items,
+      'address_name': instance.addressName,
+      'address_street': instance.addressStreet,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
+      'payment_method': _$PaymentMethodEnumMap[instance.paymentMethod],
+      'delivery_method': _$DeliveryMethodEnumMap[instance.deliveryMethod],
+      'is_home_delivery': instance.isHomeDelivery,
+      'call_request_enabled': instance.callRequestEnabled,
+      'promo_code': instance.promoCode,
     };
 
 const _$OrderStatusEnumMap = {
@@ -43,4 +63,15 @@ const _$OrderStatusEnumMap = {
   OrderStatus.shipped: 'shipped',
   OrderStatus.delivered: 'delivered',
   OrderStatus.cancelled: 'cancelled',
+};
+
+const _$PaymentMethodEnumMap = {
+  PaymentMethod.cashOnDelivery: 'cash_on_delivery',
+  PaymentMethod.debitCreditCard: 'debit_credit_card',
+  PaymentMethod.debitCreditCardOnDelivery: 'debit_credit_card_on_delivery',
+};
+
+const _$DeliveryMethodEnumMap = {
+  DeliveryMethod.homeDelivery: 'home_delivery',
+  DeliveryMethod.pharmacyPickup: 'pharmacy_pickup',
 };

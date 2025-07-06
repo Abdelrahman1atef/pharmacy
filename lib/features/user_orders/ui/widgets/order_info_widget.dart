@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/models/order/customer/customer_order_model.dart';
-import '../../../../core/themes/text/text_styles.dart';
-import '../../../../generated/l10n.dart';
 import 'order_item_widget.dart';
 
 class OrderInfoWidget extends StatelessWidget {
@@ -26,8 +23,6 @@ class OrderInfoWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(S.of(context).orderDetails,
-            style: TextStyles.settingsTitle.copyWith(fontSize: 15.sp)),
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),

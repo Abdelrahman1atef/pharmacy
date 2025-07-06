@@ -15,7 +15,14 @@ import '../../../core/routes/routes.dart';
 class ItemListScreen extends StatefulWidget {
   final String widgetTitle;
   final int? categoryId;
-  const ItemListScreen({super.key, required this.widgetTitle,this.categoryId});
+  final FetchType? fetchType;
+  
+  const ItemListScreen({
+    super.key, 
+    required this.widgetTitle,
+    this.categoryId,
+    this.fetchType,
+  });
 
   @override
   State<ItemListScreen> createState() => _ItemListScreenState();
@@ -28,7 +35,10 @@ class _ItemListScreenState extends State<ItemListScreen> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    context.read<ItemListScreenCubit>().fetchInitialItems(categoryId: widget.categoryId);
+    context.read<ItemListScreenCubit>().fetchInitialItems(
+      categoryId: widget.categoryId,
+      fetchType: widget.fetchType,
+    );
   }
 
   @override

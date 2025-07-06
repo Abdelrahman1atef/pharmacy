@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import '../../../../core/enum/payment_method.dart';
 import '../../../../generated/l10n.dart';
 
 class PaymentOption {
-  final String Function(BuildContext) labelBuilder;
+  final PaymentMethod method;
   final IconData icon;
 
-  PaymentOption({required this.labelBuilder, required this.icon});
+  PaymentOption({required this.method, required this.icon});
+  
+  String getLocalizedLabel(S s) {
+    return method.getLocalizedDisplayName(s);
+  }
 }
 
-List<PaymentOption> getPaymentOptions(BuildContext context) => [
-  PaymentOption(labelBuilder: (ctx) => S.of(ctx).cashOnDelivery, icon: Icons.attach_money),
-  PaymentOption(labelBuilder: (ctx) => S.of(ctx).debitCreditCard, icon: Icons.credit_card),
-  PaymentOption(labelBuilder: (ctx) => S.of(ctx).debitCreditCardUponReceipt, icon: Icons.payments),
+List<PaymentOption> getPaymentOptions() => [
+  PaymentOption(method: PaymentMethod.cashOnDelivery, icon: Icons.attach_money),
+  PaymentOption(method: PaymentMethod.debitCreditCard, icon: Icons.credit_card),
+  PaymentOption(method: PaymentMethod.debitCreditCardOnDelivery, icon: Icons.payments),
 ]; 

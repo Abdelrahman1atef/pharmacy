@@ -11,11 +11,11 @@ AdminOrderItemModel _$AdminOrderItemModelFromJson(Map<String, dynamic> json) =>
       productId: (json['product_id'] as num).toInt(),
       nameEn: json['product_name_en'] as String?,
       nameAr: json['product_name_ar'] as String?,
-      sellPrice: json['sell_price'] as String?,
-      unitPrice: json['unit_price'] as String?,
+      sellPrice: AdminOrderItemModel._priceFromJson(json['sell_price']),
+      unitPrice: AdminOrderItemModel._priceFromJson(json['unit_price']),
       unitType: json['unit_type'] as String?,
       quantity: (json['quantity'] as num?)?.toInt(),
-      itemTotal: json['item_total'] as String?,
+      itemTotal: AdminOrderItemModel._priceFromJson(json['item_total']),
       productImages: (json['product_images'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -27,10 +27,10 @@ Map<String, dynamic> _$AdminOrderItemModelToJson(
       'product_id': instance.productId,
       'product_name_en': instance.nameEn,
       'product_name_ar': instance.nameAr,
-      'sell_price': instance.sellPrice,
-      'unit_price': instance.unitPrice,
+      'sell_price': AdminOrderItemModel._priceToJson(instance.sellPrice),
+      'unit_price': AdminOrderItemModel._priceToJson(instance.unitPrice),
       'unit_type': instance.unitType,
       'quantity': instance.quantity,
-      'item_total': instance.itemTotal,
+      'item_total': AdminOrderItemModel._priceToJson(instance.itemTotal),
       'product_images': instance.productImages,
     };

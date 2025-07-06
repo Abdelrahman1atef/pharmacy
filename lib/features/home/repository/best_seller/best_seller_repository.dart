@@ -7,7 +7,7 @@ class BestSellerRepository {
   final ApiService _apiService;
 
   BestSellerRepository(this._apiService);
-  Future<ApiResult<ProductResponse>> fetchAllProduct({required int page}) async{
-    return _apiService.fetchAllProduct(page);
+  Future<ApiResult<ProductResponse>> fetchBestSellers({required int page}) async{
+    return _apiService.fetchBestSellers(page);
   }
 }
