@@ -32,7 +32,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
   }
 
   void _pickLocation() async {
-    const initialPosition = LatLng(30.0444, 31.2357);
+    const initialPosition = LatLng(31.345208, 31.366374);
     final pos = await MapPickerDialog.show(
       context,
       initialPosition: _selectedPosition ?? initialPosition,
@@ -105,7 +105,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                       if (_selectedPosition != null)
                         Padding(
                           padding: const EdgeInsets.only(left: 8.0),
-                          child: Text('${_selectedPosition!.latitude}, ${_selectedPosition!.longitude}', style: const TextStyle(fontSize: 12)),
+                          child: Text('${_selectedPosition!.latitude},\n ${_selectedPosition!.longitude}', style: const TextStyle(fontSize: 12)),
                         ),
                     ],
                   ),

@@ -66,6 +66,7 @@ dependencies:
   google_maps_flutter:
   uuid:
   shared_preferences:
+  flutter_local_notifications:
 #  geolocator:
 #  geocoding:
 

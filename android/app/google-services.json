@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "773300433762",
+    "project_id": "ramzy-pharmacy",
+    "storage_bucket": "ramzy-pharmacy.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773300433762:android:bab1b2a1aaad098d69b23b",
+        "android_client_info": {
+          "package_name": "com.example.pharmacy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiSvFuKjOeItJq0Cyakczrl_L56Bj3g2M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

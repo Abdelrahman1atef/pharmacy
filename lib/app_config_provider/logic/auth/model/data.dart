@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'data.g.dart';
 
 @JsonSerializable()
-class Data  {
+class Data {
   final int id;
   final String email;
   final String phone;
@@ -20,21 +20,27 @@ class Data  {
   final bool isActive;
   @JsonKey(name: "is_staff")
   final bool isStaff;
+  @JsonKey(name: "is_superuser")
+  final bool isSuperuser;
+  @JsonKey(name: "is_email_verified")
+  final bool isEmailVerified;
 
-  Data(
-      {
-        required this.id,
-        required this.email,
-        required this.phone,
-        required this.firstName,
-        required this.lastName,
-        required this.birthdate,
-        required this.gender,
-        required this.password,
-        required this.profilePicture,
-        required this.isActive,
-        required this.isStaff});
+  Data({
+    required this.id,
+    required this.email,
+    required this.phone,
+    required this.firstName,
+    required this.lastName,
+    required this.birthdate,
+    required this.gender,
+    required this.password,
+    required this.profilePicture,
+    required this.isActive,
+    required this.isStaff,
+    required this.isSuperuser,
+    required this.isEmailVerified,
+  });
 
   factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
-  Map<String,dynamic> toJson()=>_$DataToJson(this);
+  Map<String, dynamic> toJson() => _$DataToJson(this);
 }

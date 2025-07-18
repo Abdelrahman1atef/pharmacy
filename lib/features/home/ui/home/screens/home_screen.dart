@@ -46,21 +46,12 @@ class _HomeScreenState extends State<HomeScreen> {
               physics: const AlwaysScrollableScrollPhysics(), // Required for RefreshIndicator
               child: Column(
                 children: [
-                  SizedBox(height: 10.h,),
-                  SizedBox(
-                      height: 260.h ,
-                      child: const CategoryWidget(),
-                  ),
-                  SizedBox(
-                    height: 340.h ,
-                    child: const BestSellerWidget(),
-                  ),
-                  SizedBox(height: 20.h,),
-
-                  SizedBox(
-                    height: 340.h ,
-                    child: const SeeOurProductsWidget(),
-                  ),
+                  SizedBox(height: 10.h),
+                  const CategoryWidget(),
+                  SizedBox(height: 20.h),
+                  const BestSellerWidget(),
+                  SizedBox(height: 20.h),
+                  const SeeOurProductsWidget(),
                 ],
               ),
             ),

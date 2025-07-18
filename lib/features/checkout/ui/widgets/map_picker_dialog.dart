@@ -45,6 +45,7 @@ class _MapPickerDialogState extends State<MapPickerDialog> {
               zoom: 15,
             ),
             onMapCreated: (controller) => _mapController = controller,
+            myLocationEnabled: true,
             onTap: (position) {
               setState(() {
                 _selectedPosition = position;

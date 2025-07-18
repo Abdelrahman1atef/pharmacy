@@ -1,0 +1,23 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "ramzy-pharmacy",
+                    "appId": "1:773300433762:android:bab1b2a1aaad098d69b23b",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "ramzy-pharmacy",
+                    "configurations": {
+                        "android": "1:773300433762:android:bab1b2a1aaad098d69b23b",
+                        "ios": "1:773300433762:ios:b53e303cce2cd99169b23b",
+                        "web": "1:773300433762:web:7ebf435a1ca90b3469b23b"
+                    }
+                }
+            }
+        }
+    }
+}

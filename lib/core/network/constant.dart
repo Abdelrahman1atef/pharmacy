@@ -23,5 +23,6 @@ class Constant {
  static const String register = '/api/register/';
  static const String login = '/api/login/';
  static const String createOrder = '/api/create-order/';
+ static const String fcmToken = '/api/device/fcm-token/';
 }
 

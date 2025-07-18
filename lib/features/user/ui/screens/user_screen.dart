@@ -32,11 +32,10 @@ class UserScreen extends StatelessWidget {
                 child: Padding(
                   padding:
                       const EdgeInsetsDirectional.symmetric(horizontal: 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _userInfoBody(context, user),
-                    ],
+                  child: SingleChildScrollView(
+
+                     child:  _userInfoBody(context, user),
+
                   ),
                 ),
               ),
@@ -59,7 +58,8 @@ Widget _userInfoBody(BuildContext context, Data user) {
           ),
         ],
       ),
-      _userInfo(user),
+      SizedBox(height: 20.h,)
+,      _userInfo(user),
       const Divider(
         color: ColorName.blackColor,
       ),
@@ -69,7 +69,8 @@ Widget _userInfoBody(BuildContext context, Data user) {
           _accountDetails(context, user),
           _actionInAccount(context),
         ],
-      )
+      ),
+      SizedBox(height: 50.h,)
     ],
   );
 }

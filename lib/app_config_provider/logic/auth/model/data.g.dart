@@ -18,6 +18,8 @@ Data _$DataFromJson(Map<String, dynamic> json) => Data(
       profilePicture: json['profile_picture'] as String?,
       isActive: json['is_active'] as bool,
       isStaff: json['is_staff'] as bool,
+      isSuperuser: json['is_superuser'] as bool,
+      isEmailVerified: json['is_email_verified'] as bool,
     );
 
 Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
@@ -32,4 +34,6 @@ Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
       'profile_picture': instance.profilePicture,
       'is_active': instance.isActive,
       'is_staff': instance.isStaff,
+      'is_superuser': instance.isSuperuser,
+      'is_email_verified': instance.isEmailVerified,
     };

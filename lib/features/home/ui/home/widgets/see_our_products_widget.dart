@@ -16,16 +16,15 @@ class SeeOurProductsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
-          child: Column(
+    return  Column(
             children: [
-              HeaderWidget(
-                widgetTitle: S.of(context).see_our_products,
-                showAllIsVisible: true,
-                fetchType: FetchType.seeOurProducts,
+              Padding(
+                padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
+                child: HeaderWidget(
+                  widgetTitle: S.of(context).see_our_products,
+                  showAllIsVisible: true,
+                  fetchType: FetchType.seeOurProducts,
+                ),
               ),
               SizedBox(
                 height: 12.h,
@@ -64,10 +63,7 @@ class SeeOurProductsWidget extends StatelessWidget {
                 ),
               )
             ],
-          ),
-        ),
-      ),
-    );
+          );
   }
 }
 

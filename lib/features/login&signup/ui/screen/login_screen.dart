@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,6 +16,10 @@ import '../../../../app_config_provider/logic/auth/logic/auth_state.dart';
 import '../../../../core/common_widgets/pharmacy_app_bar.dart';
 import '../../logic/login/login_state.dart';
 import '../widgets/toggle_buttons.dart';
+import 'package:pharmacy/features/main/logic/fcm_service.dart';
+import 'package:pharmacy/core/network/api_service.dart';
+import 'package:get_it/get_it.dart';
+import '../../../../app_config_provider/cashe_helper.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -174,8 +177,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           builder: (_) => const Center(child: CircularProgressIndicator()),
                         );
                       },
-                      authenticated: (user) {
+                      authenticated: (user) async {
                          Navigator.pop(context); // Close loading dialog
+                        // Initialize FCM after login
+                        final apiService = GetIt.I<ApiService>();
+                        final userToken = CashHelper.getToken();
+                        final fcmService = FCMService(apiService: apiService, userToken: userToken);
+                        await fcmService.initFCM(context);
                         WidgetsBinding.instance.addPostFrameCallback((_) {
                           Navigator.pop(context); // Close signup screen
                         }); // Close login screen
@@ -246,31 +254,31 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
                 const SizedBox(height: 20),
-
-                  Center(
-                    child: Text(
-                      s.login_social_text,
-                      style: TextStyles.loginSignupText,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-
-                  _socialButton(
-                    label: s.login_google,
-                    icon: Assets.images.google.svg(),
-                    onPressed: () => _googleLogin(),
-                  ),
-                  const SizedBox(height: 10),
-
-                  _socialButton(
-                    label: s.login_facebook,
-                    icon: Assets.images.facebook.svg(),
-                    onPressed: () {
-                      _googleSignIn.signOut();
-                    },
-                  ),
-                  const SizedBox(height: 20),
+                  //
+                  // Center(
+                  //   child: Text(
+                  //     s.login_social_text,
+                  //     style: TextStyles.loginSignupText,
+                  //     textAlign: TextAlign.center,
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 15),
+                  //
+                  // _socialButton(
+                  //   label: s.login_google,
+                  //   icon: Assets.images.google.svg(),
+                  //   onPressed: () => _googleLogin(),
+                  // ),
+                  // const SizedBox(height: 10),
+                  //
+                  // _socialButton(
+                  //   label: s.login_facebook,
+                  //   icon: Assets.images.facebook.svg(),
+                  //   onPressed: () {
+                  //     _googleSignIn.signOut();
+                  //   },
+                  // ),
+                  // const SizedBox(height: 20),
 
                   Center(
                     child: Text(

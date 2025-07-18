@@ -11,7 +11,7 @@ class SearchResponse {
   @JsonKey(name: 'product_name_ar')
   final String? productNameAr;
   @JsonKey(name: 'sell_price')
-  final String? sellPrice;
+  final double? sellPrice;
   @JsonKey(name: 'product_image_url')
   final String? productImageUrl;
 

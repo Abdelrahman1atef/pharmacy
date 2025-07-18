@@ -17,31 +17,28 @@ class CategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
-          child: Column(
-            children: [
-              HeaderWidget(
-                widgetTitle: S.of(context).titles_category,
-                showAllIsVisible: false,
-              ),
-              SizedBox(
-                height: 12.h,
-              ),
-              SizedBox(
-                width: 411.w,
-                height: 220.h,
-                child: BlocBuilder<CategoryCubit, CategoryState>(
+    final screenWidth = MediaQuery.of(context).size.width;
+    final crossAxisCount = (screenWidth ~/ 90).clamp(2, 6);
+    return  Padding(
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
+      child: Column(
+              children: [
+                HeaderWidget(
+                  widgetTitle: S.of(context).titles_category,
+                  showAllIsVisible: false,
+                ),
+                SizedBox(
+                  height: 12.h,
+                ),
+                BlocBuilder<CategoryCubit, CategoryState>(
                   builder: (context, state) {
                     if (state is Loading) {
                       return const _ShimmerWidget();
                     } else if (state is Error) {
                       return Center(
                         child: Text(
-                          'Error: ${state.e}',
-                          style: const TextStyle(color: Colors.red),
+                          'Error:  [${state.e}',
+                          style: TextStyle(color: Colors.red, fontSize: 14.sp),
                         ),
                       );
                     } else if (state is Success) {
@@ -49,11 +46,11 @@ class CategoryWidget extends StatelessWidget {
                       return GridView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 4,
-                          mainAxisSpacing: 8.0,
-                          crossAxisSpacing: 8.0,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: crossAxisCount,
+                          mainAxisSpacing: 8.w,
+                          crossAxisSpacing: 8.w,
+                          childAspectRatio: 1,
                         ),
                         itemCount: categories.length,
                         itemBuilder: (BuildContext context, int index) {
@@ -63,42 +60,41 @@ class CategoryWidget extends StatelessWidget {
                             child: Card(
                               elevation: 5,
                               child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                   SizedBox(
-                                     height: 30,
-                                     width: 20,
-                                     child: Image.network(
-                                       "",
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 30.h,
+                                    width: 20.w,
+                                    child: Image.network(
+                                      "",
                                       fit: BoxFit.cover,
-                                       loadingBuilder: loadingBuilder(),
-                                       errorBuilder: (context, error, stackTrace) => Assets.images.categoryDefaultIcon.svg(),
-                                                                       ),
-                                   ),
-                                // Display product name
-                                Text(
-                                  category.categoryNameAr ??"",
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
+                                      loadingBuilder: loadingBuilder(),
+                                      errorBuilder: (context, error, stackTrace) => Assets.images.categoryDefaultIcon.svg(),
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      category.categoryNameAr ??"",
+                                      textAlign: TextAlign.center,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(fontSize: 12.sp),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
-
-
                         },
                       );
                     } else {
                       return Container();
                     }
                   },
-                ),
-              )
-            ],
-          ),
-        ),
+                )
+              ],
+
+
       ),
     );
   }
@@ -109,17 +105,19 @@ class _ShimmerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final crossAxisCount = (screenWidth ~/ 90).clamp(2, 6);
     return Shimmer.fromColors(
       baseColor: Colors.grey[300]!,
       highlightColor: Colors.grey[100]!,
       child: GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        gridDelegate:
-        const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4,
-          mainAxisSpacing: 8.0,
-          crossAxisSpacing: 8.0,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: crossAxisCount,
+          mainAxisSpacing: 8.w,
+          crossAxisSpacing: 8.w,
+          childAspectRatio: 0.7,
         ),
         itemCount: 8, // Show 8 shimmer items
         itemBuilder: (BuildContext context, int index) {
@@ -129,14 +127,14 @@ class _ShimmerWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 30,
-                  width: 20,
+                  height: 30.h,
+                  width: 20.w,
                   color: Colors.white,
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8.h),
                 Container(
-                  height: 12,
-                  width: 40,
+                  height: 12.h,
+                  width: 40.w,
                   color: Colors.white,
                 ),
               ],

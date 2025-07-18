@@ -57,6 +57,8 @@ abstract class ApiService {
   Future<ApiResult<AdminUserDetailResponse>> fetchAdminUserDetail(int userId,{required token});
 
   Future<ApiResult<DashboardResponse>> fetchAdminDashboard({required String token});
+
+  Future<void> sendFCMToken(String fcmToken, String userToken);
 }
 
 class ApiServiceImpl implements ApiService {
@@ -443,6 +445,24 @@ class ApiServiceImpl implements ApiService {
       return ApiResult.success(DashboardResponse.fromJson(response.data));
     } else {
       throw ApiException.fromJson(response.data);
+    }
+  }
+
+  @override
+  Future<void> sendFCMToken(String fcmToken, String userToken) async {
+    try {
+      await _dio.post(
+        Constant.fcmToken,
+        data: {'token': fcmToken},
+        options: Options(
+            headers: {
+              'Authorization': 'Token $userToken'
+            }
+        ),
+      );
+    } catch (e) {
+      // Optionally handle/log error
+      rethrow;
     }
   }
 }

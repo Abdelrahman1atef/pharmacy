@@ -16,57 +16,53 @@ class BestSellerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Padding(
+    return  Column(
+      children: [
+        Padding(
           padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
-          child: Column(
-            children: [
-              HeaderWidget(
-                widgetTitle: S.of(context).best_seller,
-                showAllIsVisible: true,
-                fetchType: FetchType.bestSellers,
-              ),
-              SizedBox(
-                height: 12.h,
-              ),
-              SizedBox(
-                height: 300.h,
-                child: BlocBuilder<BestSellerCubit, BestSellerState>(
-                  builder: (context, state) {
-                    if (state is Loading) {
-                      return const _ShimmerWidget();
-                    } else if (state is Error) {
-                      return Center(
-                        child: Text(
-                          'Error: ${state.e}',
-                          style: const TextStyle(color: Colors.red),
-                        ),
-                      );
-                    } else if (state is Success) {
-                      final products = state.data as ProductResponse;
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: products.results.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final product = products.results[index];
-                          return Padding(
-                            padding: const EdgeInsetsDirectional.only(
-                                end: 0, start: 5),
-                            child: CardWidget(product: product),
-                          );
-                        },
-                      );
-                    }
-                    return const Text("data");
-                  },
-                ),
-              )
-            ],
+          child: HeaderWidget(
+            widgetTitle: S.of(context).best_seller,
+            showAllIsVisible: true,
+            fetchType: FetchType.bestSellers,
           ),
         ),
-      ),
+        SizedBox(
+          height: 12.h,
+        ),
+        SizedBox(
+          height: 300.h,
+          child: BlocBuilder<BestSellerCubit, BestSellerState>(
+            builder: (context, state) {
+              if (state is Loading) {
+                return const _ShimmerWidget();
+              } else if (state is Error) {
+                return Center(
+                  child: Text(
+                    'Error: ${state.e}',
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                );
+              } else if (state is Success) {
+                final products = state.data as ProductResponse;
+                return ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: products.results.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final product = products.results[index];
+                    return Padding(
+                      padding: const EdgeInsetsDirectional.only(
+                          end: 0, start: 5),
+                      child: CardWidget(product: product),
+                    );
+                  },
+                );
+              }
+              return const Text("data");
+            },
+          ),
+        )
+      ],
     );
   }
 }
