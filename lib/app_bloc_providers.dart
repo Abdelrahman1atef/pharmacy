@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy/core/di/module.dart';
 import 'package:pharmacy/features/admin/dashboard/logic/dashboard_cubit.dart';
 import 'package:pharmacy/features/admin/orders/logic/admin_orders_cubit.dart';
+import 'package:pharmacy/features/admin/orders/logic/order_filter_cubit.dart';
 import 'package:pharmacy/features/cart/logic/cart/cart_cubit.dart';
 import 'package:pharmacy/features/cart/logic/order/order_cubit.dart';
 import 'package:pharmacy/features/details/logic/product/product_cubit.dart';
@@ -18,12 +19,14 @@ import 'app_config_provider/logic/auth/logic/auth_cubit.dart';
 import 'app_config_provider/logic/internet_server_connection/logic/internet_server_connection_cubit.dart';
 import 'features/checkout/logic/location/location_cubit.dart';
 import 'features/checkout/logic/payment/payment_cubit.dart';
+import 'features/checkout/logic/branch/branch_cubit.dart';
 import 'features/details/logic/details/details_cubit.dart';
 import 'features/details/logic/favorite/favorite_cubit.dart';
 import 'features/home/logic/best_seller/best_seller_cubit.dart';
 import 'features/home/logic/category/category_cubit.dart';
 import 'features/items_list/logic/item_list_screen_cubit.dart';
 import 'features/login&signup/logic/login/login_cubit.dart';
+import 'features/login&signup/logic/otp/otp_cubit.dart';
 import 'features/search/logic/search_cubit.dart';
 
 class AppBlocProviders extends StatelessWidget {
@@ -51,13 +54,16 @@ class AppBlocProviders extends StatelessWidget {
         BlocProvider(create: (_)=> getIt<OrderCubit>()),
         BlocProvider(create: (_)=> LoginScreenCubit()),
         BlocProvider(create: (_)=> getIt<SignupCubit>()),
+        BlocProvider(create: (_)=> getIt<OtpCubit>()),
         BlocProvider(create: (_)=> getIt<AdminOrdersCubit>()),
+        BlocProvider(create: (_)=> getIt<OrderFilterCubit>()),
         BlocProvider(create: (_)=> getIt<UserOrdersCubit>()),
         BlocProvider(create: (_)=> getIt<AdminUsersCubit>()),
         BlocProvider(create: (_)=> getIt<AdminUserDetailCubit>()),
         BlocProvider(create: (_)=> getIt<DashboardCubit>()),
         BlocProvider(create: (_)=> PaymentCubit()),
         BlocProvider(create: (_)=> LocationCubit()),
+        BlocProvider(create: (_)=> getIt<BranchCubit>()),
       ],
       child: child,
     );

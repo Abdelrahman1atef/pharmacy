@@ -11,6 +11,7 @@ class Routes {
   static const userOrdersScreen = '/user_orders';
   //authentication
   static const signUp = '/sign_up';
+  static const otpValidation = '/otp_validation';
   static const login = '/Log_in';
   //admin
   static const adminMain='/admin_main';

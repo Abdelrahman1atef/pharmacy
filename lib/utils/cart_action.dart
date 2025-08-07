@@ -14,9 +14,30 @@ import '../features/details/logic/product/product_state.dart';
 import '../gen/colors.gen.dart';
 import '../generated/l10n.dart';
 
+// Simple cart checking - no complex caching
+class SimpleCartChecker {
+  static bool isInCart(CartState state, int? productId) {
+    if (productId == null || state is! Success) return false;
+    
+    // Simple linear search - but only when needed
+    for (final item in state.data) {
+      if (item.productId == productId) return true;
+    }
+    return false;
+  }
+  
+  static Product? getCartProduct(CartState state, int? productId) {
+    if (productId == null || state is! Success) return null;
+    
+    for (final item in state.data) {
+      if (item.productId == productId) return item;
+    }
+    return null;
+  }
+}
 
 Widget buildCartAction(BuildContext context, CartState state, Results product) {
-  final isAvailable = product.amount != 0;
+  final isAvailable = product.stockAmount != 0;
 
   if (!isAvailable) {
     return GradientElevatedButton(
@@ -34,53 +55,50 @@ Widget buildCartAction(BuildContext context, CartState state, Results product) {
     );
   }
 
-  if (state is Success) {
-    final isInCart = state.data.any((p) => p.productId == product.productId);
+  // Simple cart checking
+  final isInCart = SimpleCartChecker.isInCart(state, product.productId);
 
-    if (isInCart) {
-      // Get latest product from cart
-      final Product cartProduct = state.data.firstWhere(
-            (p) => p.productId == product.productId,
-        orElse: () => product.toProduct(), // fallback
-      );
-
-      return BlocBuilder<CartCubit, CartState>(
-        builder: (context, state) {
-          return Padding(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 5),
-            child: QuantitySelector(product: cartProduct),
-          );
-        },
-      );
-    } else {
-      return BlocBuilder<ProductCubit, ProductState>(
-        builder: (context, productState) {
-          return GradientElevatedButton(
-            onPressed: () {
-              // Get the selected unit type and price from ProductCubit
-              String selectedUnitType;
-              double selectedUnitPrice;
-              
-              if (productState.selectedUnit == 'productUnit2' && product.unit2SellPrice != null) {
-                selectedUnitType = product.productUnit2 ?? "";
-                selectedUnitPrice = product.unit2SellPrice!;
-              } else {
-                selectedUnitType = product.productUnit1 ?? "";
-                selectedUnitPrice = product.sellPrice ?? 0.0;
-              }
-              context.read<CartCubit>().addItemToCart(
-                product.toProduct(
-                  selectedUnitType: selectedUnitType,
-                  selectedUnitPrice: selectedUnitPrice,
-                ),
-              );
-            },
-            child: Text(S.of(context).addToCart,style: TextStyles.gradientElevatedButtonText,),
-          );
-        },
+  if (isInCart) {
+    // Get cart product
+    final cartProduct = SimpleCartChecker.getCartProduct(state, product.productId);
+    if (cartProduct != null) {
+      return Padding(
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 5),
+        child: QuantitySelector(product: cartProduct),
       );
     }
-  } else {
-    return const Center(child: CircularProgressIndicator());
   }
+
+  // Show add to cart button
+  return BlocProvider(
+    create: (context) => ProductCubit()
+      ..selectUnit("productUnit1", product.sellPrice ?? 0.0),
+    child: BlocBuilder<ProductCubit, ProductState>(
+      builder: (context, productState) {
+        return GradientElevatedButton(
+          onPressed: () {
+            // Get the selected unit type and price from ProductCubit
+            String selectedUnitType;
+            double selectedUnitPrice;
+            
+            if (productState.selectedUnit == 'productUnit2' && product.unit2SellPrice != null) {
+              selectedUnitType = product.productUnit2 ?? "";
+              selectedUnitPrice = product.unit2SellPrice!;
+            } else {
+              selectedUnitType = product.productUnit1 ?? "";
+              selectedUnitPrice = product.sellPrice ?? 0.0;
+            }
+            
+            context.read<CartCubit>().addItemToCart(
+              product.toProduct(
+                selectedUnitType: selectedUnitType,
+                selectedUnitPrice: selectedUnitPrice,
+              ),
+            );
+          },
+          child: Text(S.of(context).addToCart,style: TextStyles.gradientElevatedButtonText,),
+        );
+      },
+    ),
+  );
 }

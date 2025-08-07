@@ -5,9 +5,6 @@ import '../cart/cart_table_constants.dart';
 import 'db_constants.dart';
 
 class DbHelper {
-
-
-
   //2- get Db Path
   Future<String> _getDbPath() async {
     String path = await getDatabasesPath();
@@ -21,30 +18,39 @@ class DbHelper {
         path,
         version: dbVersion,
         onConfigure: (db) => print("onConfigure"),
-        onCreate: (db, version) => _createTable(db),
+        onCreate: (db, version) => _createTables(db),
         onDowngrade: (db, oldVersion, newVersion) => print("onDowngrade"),
-        onUpgrade: (db, oldVersion, newVersion) => _upgrade(db),
+        onUpgrade: (db, oldVersion, newVersion) => _upgrade(db, oldVersion, newVersion),
         onOpen: (db) => print("onOpen"),
         singleInstance: true
     );
   }
 
-}
-_upgrade(Database db) {
-  try {
-    db.execute(dropTable);
-    _createTable(db);
-  } on Exception catch (e) {
-    print(e.toString());
+  void _upgrade(Database db, int oldVersion, int newVersion) {
+    try {
+      if (oldVersion < 3) {
+        // Create cache table for new version
+        db.execute(createCacheTable);
+        print('Cache table created during upgrade');
+      }
+    } on Exception catch (e) {
+      print(e.toString());
+    }
   }
-}
 
-_createTable(Database db) {
-  try {
-    db.execute(createTable).then(
-          (value) => print('Table created'),
-    );
-  } on Exception catch (e) {
-    print(e.toString());
+  void _createTables(Database db) {
+    try {
+      // Create cart table
+      db.execute(createTable).then(
+        (value) => print('Cart table created'),
+      );
+      
+      // Create cache table
+      db.execute(createCacheTable).then(
+        (value) => print('Cache table created'),
+      );
+    } on Exception catch (e) {
+      print(e.toString());
+    }
   }
 }

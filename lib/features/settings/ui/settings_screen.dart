@@ -1,9 +1,12 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacy/gen/colors.gen.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../app_config_provider/app_config_provider.dart';
 import '../../../app_config_provider/logic/auth/logic/auth_cubit.dart';
@@ -14,6 +17,7 @@ import '../../../core/routes/routes.dart';
 import '../../../core/themes/text/text_styles.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../generated/l10n.dart';
+import '../../../utils/constant.dart';
 import '../model/user_panel_item.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -46,49 +50,101 @@ class _SettingsScreenState extends State<SettingsScreen> {
     var provider = Provider.of<AppConfigProvider>(context);
     _selectedLang=provider.appLang;
     return Scaffold(
-      body: Padding(
-        padding:
-            EdgeInsetsDirectional.symmetric(horizontal: 12.w, vertical: 10.h),
-        child: SizedBox(
-          height: double.infinity,
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _userSection(context),
-                const Divider(),
-                _appLang(
-                  context: context,
-                  languages: languages,
-                  selectedLang: _selectedLang,
-                  action: (value) {
-                    setState(() {
-                      provider.changeLang(value);
-                    });
-                  },
-                ),
-                Visibility(
-                  visible: false,
-                  child: _appTheme(
-                    context: context,
-                    themeMode: themeMode,
-                    selectedThemeMode: _selectedThemeMode,
-                    action: (value) {
-                      setState(() {
-                        provider.changeTheme(value);
-                      });
-                    },
+      body: Column(
+        children: [
+          Expanded(
+            flex: 10,
+            child: Padding(
+              padding:
+                  EdgeInsetsDirectional.symmetric(horizontal: 12.w, vertical: 10.h),
+              child: SizedBox(
+                height: double.infinity,
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _userSection(context),
+                      const Divider(),
+                      Visibility(
+                        visible: false,
+                        child: _appLang(
+                          context: context,
+                          languages: languages,
+                          selectedLang: _selectedLang,
+                          action: (value) {
+                            setState(() {
+                              provider.changeLang(value);
+                            });
+                          },
+                        ),
+                      ),
+                      Visibility(
+                        visible: false,
+                        child: _appTheme(
+                          context: context,
+                          themeMode: themeMode,
+                          selectedThemeMode: _selectedThemeMode,
+                          action: (value) {
+                            setState(() {
+                              provider.changeTheme(value);
+                            });
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+          
+          _devloperSection(context),
+          SizedBox(height: 10.h,)
+        ],
       ),
     );
   }
+}
+
+_devloperSection(BuildContext context) {
+  return Container(
+    width: double.infinity,
+    height: 25.h,
+    color: ColorName.primaryColor,
+    child: Center(
+      child: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: "Developed by: ",
+              style: TextStyles.productHomeTitles.copyWith(
+                fontSize: 15,
+                color: ColorName.whiteColor,
+              ),
+            ),
+            TextSpan(
+              text: "Abdelrahman Atef",
+              style: TextStyles.productHomeTitles.copyWith(
+                fontSize: 15,
+                color: ColorName.whiteColor,
+                decoration: TextDecoration.underline,
+                decorationColor: ColorName.whiteColor,
+              ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () async {
+                  final Uri url = Uri.parse(Constant.developerTreeLink); // Replace with your actual URL
+                  if (await canLaunchUrl(url)) {
+                    await launchUrl(url);
+                  }
+                },
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
 
 Widget _appLang(
@@ -149,34 +205,6 @@ Widget _userSection(context) {
           loading: () => const CircularProgressIndicator(),
           unauthenticated: (message) => _userUnAuthenticatedSection(context),
           authenticated: (user) {
-            // Column(
-            //   crossAxisAlignment: CrossAxisAlignment.start,
-            //   children: [
-            //     Visibility(
-            //       visible: user.isStaff,
-            //       child: ElevatedButton(
-            //           style: ButtonStyle(
-            //               backgroundColor:
-            //               const WidgetStatePropertyAll(
-            //                   ColorName.secondaryColor),
-            //               shape: WidgetStatePropertyAll(
-            //                   RoundedRectangleBorder(
-            //                       borderRadius:
-            //                       BorderRadiusDirectional
-            //                           .circular(25))),
-            //               fixedSize: const WidgetStatePropertyAll(
-            //                   Size(200, 50))),
-            //           onPressed: () => Navigator.pushNamed(
-            //               context, Routes.adminMain),
-            //           child: Text(
-            //             "Admin Screen",
-            //             style: TextStyle(
-            //                 color: ColorName.whiteColor,
-            //                 fontSize: 22.sp),
-            //           )),
-            //     )
-            //   ],
-            // )
             return _userAuthenticatedSection(context, user);
           });
     },

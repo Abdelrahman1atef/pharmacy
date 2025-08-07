@@ -36,7 +36,7 @@ class OrderProgressIndicator extends StatelessWidget {
     int currentIndex = progressStatuses.indexOf(currentStatus);
     bool isCancelled = currentStatus == OrderStatus.cancelled;
 
-    return Container(
+    return SizedBox(
       width: isVertical ? width : width,
       height: isVertical ? height : height,
       child: isVertical ? _buildVerticalLayout(progressStatuses, currentIndex, isCancelled, context)
@@ -67,7 +67,7 @@ class OrderProgressIndicator extends StatelessWidget {
                     color: isCancelled
                         ? Colors.red.shade300
                         : isActive
-                        ? _getStatusColor(progressStatuses[index])
+                        ? progressStatuses[index].getStatusColor()
                         : Colors.grey.shade300,
                   ),
                 ),
@@ -98,11 +98,11 @@ class OrderProgressIndicator extends StatelessWidget {
                       color: isCancelled
                           ? Colors.red
                           : isActive
-                          ? _getStatusColor(status)
+                          ? status.getStatusColor()
                           : Colors.grey.shade300,
                       border: Border.all(
                         color: isCurrent
-                            ? _getStatusColor(status)
+                            ? status.getStatusColor()
                             : Colors.transparent,
                         width: 2,
                       ),
@@ -128,7 +128,7 @@ class OrderProgressIndicator extends StatelessWidget {
                       color: isCancelled
                           ? Colors.red
                           : isActive
-                          ? _getStatusColor(status)
+                          ? status.getStatusColor()
                           : Colors.grey.shade600,
                       fontWeight: isCurrent ? FontWeight.bold : FontWeight.normal,
                     ),
@@ -186,7 +186,7 @@ class OrderProgressIndicator extends StatelessWidget {
                     color: isCancelled
                         ? Colors.red.shade300
                         : isActive
-                        ? _getStatusColor(progressStatuses[index])
+                        ? progressStatuses[index].getStatusColor()
                         : Colors.grey.shade300,
                   ),
                 ),
@@ -219,11 +219,11 @@ class OrderProgressIndicator extends StatelessWidget {
                         color: isCancelled
                             ? Colors.red
                             : isActive
-                            ? _getStatusColor(status)
+                            ? status.getStatusColor()
                             : Colors.grey.shade300,
                         border: Border.all(
                           color: isCurrent
-                              ? _getStatusColor(status)
+                              ? status.getStatusColor()
                               : Colors.transparent,
                           width: 2,
                         ),
@@ -249,7 +249,7 @@ class OrderProgressIndicator extends StatelessWidget {
                         color: isCancelled
                             ? Colors.red
                             : isActive
-                            ? _getStatusColor(status)
+                            ? status.getStatusColor()
                             : Colors.grey.shade600,
                         fontWeight: isCurrent ? FontWeight.bold : FontWeight.normal,
                       ),
@@ -286,23 +286,6 @@ class OrderProgressIndicator extends StatelessWidget {
         ],
       ],
     );
-  }
-
-  Color _getStatusColor(OrderStatus status) {
-    switch (status) {
-      case OrderStatus.pending:
-        return Colors.orange;
-      case OrderStatus.preparing:
-        return Colors.purple;
-      case OrderStatus.shipped:
-        return Colors.blue;
-      case OrderStatus.delivered:
-        return Colors.green.shade700;
-      case OrderStatus.cancelled:
-        return Colors.red;
-      default:
-        return Colors.grey;
-    }
   }
 
   String _getStatusText(context,OrderStatus status) {
@@ -365,7 +348,7 @@ class CompactOrderProgressIndicator extends StatelessWidget {
             borderRadius: BorderRadius.circular(height / 2),
             color: isCancelled
                 ? Colors.red
-                : _getStatusColor(currentStatus),
+                : currentStatus.getStatusColor(),
           ),
         ),
       ),

@@ -5,6 +5,7 @@ import 'package:pharmacy/app_config_provider/logic/internet_server_connection/re
 import 'package:pharmacy/features/admin/dashboard/data/repository/dashboard_repository.dart';
 import 'package:pharmacy/features/admin/dashboard/logic/dashboard_cubit.dart';
 import 'package:pharmacy/features/admin/orders/logic/admin_orders_cubit.dart';
+import 'package:pharmacy/features/admin/orders/logic/order_filter_cubit.dart';
 import 'package:pharmacy/features/admin/orders/repository/orders_repository.dart';
 import 'package:pharmacy/features/cart/logic/cart/cart_cubit.dart';
 import 'package:pharmacy/features/cart/logic/order/order_cubit.dart';
@@ -28,10 +29,13 @@ import 'package:pharmacy/features/admin/users/logic/admin_users/admin_users_cubi
 import 'package:pharmacy/features/admin/users/logic/admin_user_detail/admin_user_detail_cubit.dart';
 import 'package:pharmacy/features/admin/users/repository/admin_users_repository.dart';
 import 'package:pharmacy/features/admin/users/repository/admin_user_detail_repository.dart';
+import 'package:pharmacy/features/checkout/logic/branch/branch_cubit.dart';
+import 'package:pharmacy/features/checkout/repository/branch_repository.dart';
 
 import '../../app_config_provider/logic/auth/logic/auth_cubit.dart';
 import '../../app_config_provider/logic/auth/repository/auth_repository.dart';
 import '../../app_config_provider/logic/internet_server_connection/logic/internet_server_connection_cubit.dart';
+import '../../features/login&signup/logic/otp/otp_cubit.dart';
 import '../../features/search/logic/search_cubit.dart';
 import '../../features/search/repository/search_repository.dart';
 import '../db/cart/cart_crud.dart';
@@ -63,6 +67,7 @@ void setupDependencies() {
   getIt.registerFactory<AdminUsersRepository>(() => AdminUsersRepositoryImpl(getIt()));
   getIt.registerFactory<AdminUserDetailRepository>(() => AdminUserDetailRepositoryImpl(getIt()));
   getIt.registerFactory<DashboardRepository>(() => DashboardRepository(getIt()));
+  getIt.registerFactory<BranchRepository>(() => BranchRepository(getIt()));
 
   getIt.registerFactory<SearchCubit>(() => SearchCubit(getIt()));
   getIt.registerFactory<DetailsCubit>(() => DetailsCubit(getIt()));
@@ -73,12 +78,15 @@ void setupDependencies() {
   getIt.registerFactory<CartCubit>(() => CartCubit(getIt()));
   getIt.registerFactory<OrderCubit>(() => OrderCubit(getIt()));
   getIt.registerFactory<SignupCubit>(() => SignupCubit(getIt()));
+  getIt.registerFactory<OtpCubit>(() => OtpCubit(getIt()));
   getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt()));
   getIt.registerFactory<InternetServerConnectionCubit>(() => InternetServerConnectionCubit(Connectivity(),getIt()));
   getIt.registerFactory<AdminOrdersCubit>(() => AdminOrdersCubit(getIt()));
+  getIt.registerFactory<OrderFilterCubit>(() => OrderFilterCubit());
   getIt.registerFactory<UserOrdersCubit>(() => UserOrdersCubit(getIt()));
   getIt.registerFactory<AdminUsersCubit>(() => AdminUsersCubit(getIt()));
   getIt.registerFactory<AdminUserDetailCubit>(() => AdminUserDetailCubit(getIt()));
   getIt.registerFactory<DashboardCubit>(() => DashboardCubit(getIt()));
+  getIt.registerFactory<BranchCubit>(() => BranchCubit(getIt()));
 
 }

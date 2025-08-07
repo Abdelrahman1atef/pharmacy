@@ -13,13 +13,14 @@ Data _$DataFromJson(Map<String, dynamic> json) => Data(
       firstName: json['first_name'] as String,
       lastName: json['last_name'] as String,
       birthdate: json['birthdate'] as String?,
-      gender: json['gender'] as String,
+      gender: json['gender'] as String?,
       password: json['password'] as String?,
       profilePicture: json['profile_picture'] as String?,
       isActive: json['is_active'] as bool,
       isStaff: json['is_staff'] as bool,
       isSuperuser: json['is_superuser'] as bool,
       isEmailVerified: json['is_email_verified'] as bool,
+      totalOrders: (json['total_orders'] as num).toInt(),
     );
 
 Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
@@ -36,4 +37,5 @@ Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
       'is_staff': instance.isStaff,
       'is_superuser': instance.isSuperuser,
       'is_email_verified': instance.isEmailVerified,
+      'total_orders': instance.totalOrders,
     };

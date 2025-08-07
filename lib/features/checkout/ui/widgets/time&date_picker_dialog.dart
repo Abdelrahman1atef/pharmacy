@@ -60,7 +60,7 @@ class TimeAndDatePickerDialog {
                           builder: (context, child) {
                             return Theme(
                               data: Theme.of(context).copyWith(
-                                colorScheme: ColorScheme.light(
+                                colorScheme: const ColorScheme.light(
                                   primary: ColorName.secondaryColor,
                                   onPrimary: ColorName.whiteColor,
                                   surface: ColorName.whiteColor,
@@ -127,7 +127,7 @@ class TimeAndDatePickerDialog {
                           builder: (context, child) {
                             return Theme(
                               data: Theme.of(context).copyWith(
-                                colorScheme: ColorScheme.light(
+                                colorScheme: const ColorScheme.light(
                                   primary: ColorName.secondaryColor,
                                   onPrimary: ColorName.whiteColor,
                                   surface: ColorName.whiteColor,

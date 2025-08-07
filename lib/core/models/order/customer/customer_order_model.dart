@@ -10,6 +10,26 @@ import 'customer_order_item_model.dart';
 part 'customer_order_model.g.dart';
 
 @JsonSerializable()
+class CustomerOrderResponse {
+  final int count;
+  final String? next;
+  final String? previous;
+  final List<CustomerOrderModel> results;
+
+  CustomerOrderResponse({
+    required this.count,
+    required this.next,
+    required this.previous,
+    required this.results,
+  });
+
+  factory CustomerOrderResponse.fromJson(Map<String, dynamic> json) =>
+      _$CustomerOrderResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CustomerOrderResponseToJson(this);
+}
+
+@JsonSerializable()
 class CustomerOrderModel {
   final int id;
 
@@ -54,13 +74,19 @@ class CustomerOrderModel {
   final DeliveryMethod? deliveryMethod;
 
   @JsonKey(name: "is_home_delivery")
-  final bool? isHomeDelivery;
+  final bool isHomeDelivery;
 
   @JsonKey(name: "call_request_enabled")
   final bool? callRequestEnabled;
 
   @JsonKey(name: "promo_code")
   final String? promoCode;
+
+  @JsonKey(name: "pharmacy_name")
+  final String? pharmacyName;
+
+  @JsonKey(name: "branch_id")
+  final int? branchId;
 
   CustomerOrderModel( {
     required this.id,
@@ -79,9 +105,11 @@ class CustomerOrderModel {
     this.longitude,
     this.paymentMethod,
     this.deliveryMethod,
-    this.isHomeDelivery,
+    required this.isHomeDelivery,
     this.callRequestEnabled,
     this.promoCode,
+    this.pharmacyName,
+    this.branchId,
   });
 
   factory CustomerOrderModel.fromJson(Map<String, dynamic> json) =>

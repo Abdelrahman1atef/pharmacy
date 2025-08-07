@@ -10,6 +10,8 @@ class ItemListScreenState<T> with _$ItemListScreenState {
   const factory ItemListScreenState.initial() = Initial;
 
   const factory ItemListScreenState.loading() = Loading;
+  
+  const factory ItemListScreenState.loadingFromCache() = LoadingFromCache;
 
   const factory ItemListScreenState.error(ApiException e, {ProductResponse? previousData}) = Error;
 

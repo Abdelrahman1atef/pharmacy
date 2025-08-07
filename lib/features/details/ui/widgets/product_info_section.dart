@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy/core/models/product/product_response.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
+import 'package:pharmacy/core/services/share_service.dart';
 import 'package:pharmacy/gen/assets.gen.dart';
 import 'package:pharmacy/generated/l10n.dart';
 import '../widgets/product_unit_toggle.dart';
@@ -30,7 +31,7 @@ class _ProductInfoSectionState extends State<ProductInfoSection> {
   }
   @override
   Widget build(BuildContext context) {
-    final isAvailable = widget.product.amount != 0;
+    final isAvailable = widget.product.stockAmount != 0;
     return Container(
       width: 445.w,
       margin: const EdgeInsetsDirectional.symmetric(horizontal: 8),
@@ -58,7 +59,11 @@ class _ProductInfoSectionState extends State<ProductInfoSection> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      // TODO: Implement share functionality
+                      // Show native share sheet with all available apps
+                      ShareService.shareProduct(
+                        product: widget.product,
+                        context: context,
+                      );
                     },
                     icon: Assets.images.share.svg(),
                   ),
@@ -79,7 +84,7 @@ class _ProductInfoSectionState extends State<ProductInfoSection> {
 
           // Unit toggle (if multiple units available)
           Visibility(
-            visible: widget.product.productUnit1_3 != widget.product.productUnit1_2,
+            visible: widget.product.productUnit1 != widget.product.productUnit2,
             child: ProductUnitToggle(product: widget.product),
           ),
 

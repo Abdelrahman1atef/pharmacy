@@ -7,7 +7,6 @@ import 'package:pharmacy/core/models/register_login/login_request.dart';
 import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
 import 'package:pharmacy/features/login&signup/logic/login/login_cubit.dart';
-import 'package:pharmacy/gen/assets.gen.dart';
 import 'package:pharmacy/gen/colors.gen.dart';
 import 'package:pharmacy/generated/l10n.dart'; // <-- import your localization file
 

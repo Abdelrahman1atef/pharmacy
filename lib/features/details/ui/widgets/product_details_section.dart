@@ -78,7 +78,7 @@ class ProductDetailsSection extends StatelessWidget {
               style: TextStyles.productSubTitles,
             ),
             Text(
-              product.productDescription ?? '',
+              product.productDescription?.pdNameAr ?? '',
               style: TextStyles.productSubTitles,
             ),
           ],

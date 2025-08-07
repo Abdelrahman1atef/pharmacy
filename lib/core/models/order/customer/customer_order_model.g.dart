@@ -6,6 +6,26 @@ part of 'customer_order_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+CustomerOrderResponse _$CustomerOrderResponseFromJson(
+        Map<String, dynamic> json) =>
+    CustomerOrderResponse(
+      count: (json['count'] as num).toInt(),
+      next: json['next'] as String?,
+      previous: json['previous'] as String?,
+      results: (json['results'] as List<dynamic>)
+          .map((e) => CustomerOrderModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$CustomerOrderResponseToJson(
+        CustomerOrderResponse instance) =>
+    <String, dynamic>{
+      'count': instance.count,
+      'next': instance.next,
+      'previous': instance.previous,
+      'results': instance.results,
+    };
+
 CustomerOrderModel _$CustomerOrderModelFromJson(Map<String, dynamic> json) =>
     CustomerOrderModel(
       id: (json['id'] as num).toInt(),
@@ -29,9 +49,11 @@ CustomerOrderModel _$CustomerOrderModelFromJson(Map<String, dynamic> json) =>
           $enumDecodeNullable(_$PaymentMethodEnumMap, json['payment_method']),
       deliveryMethod:
           $enumDecodeNullable(_$DeliveryMethodEnumMap, json['delivery_method']),
-      isHomeDelivery: json['is_home_delivery'] as bool?,
+      isHomeDelivery: json['is_home_delivery'] as bool,
       callRequestEnabled: json['call_request_enabled'] as bool?,
       promoCode: json['promo_code'] as String?,
+      pharmacyName: json['pharmacy_name'] as String?,
+      branchId: (json['branch_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$CustomerOrderModelToJson(CustomerOrderModel instance) =>
@@ -55,6 +77,8 @@ Map<String, dynamic> _$CustomerOrderModelToJson(CustomerOrderModel instance) =>
       'is_home_delivery': instance.isHomeDelivery,
       'call_request_enabled': instance.callRequestEnabled,
       'promo_code': instance.promoCode,
+      'pharmacy_name': instance.pharmacyName,
+      'branch_id': instance.branchId,
     };
 
 const _$OrderStatusEnumMap = {

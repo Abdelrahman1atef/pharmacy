@@ -80,9 +80,9 @@ class _StatusReactionBarState extends State<StatusReactionBar>
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               CircleAvatar(
-                                backgroundColor: _getStatusColor(status),
+                                backgroundColor: status.getStatusColor(),
                                 child: Icon(
-                                  _getStatusIcon(status),
+                                  status.getStatusIcon(),
                                   color: Colors.white,
                                 ),
                               ),
@@ -104,39 +104,5 @@ class _StatusReactionBarState extends State<StatusReactionBar>
         ),
       ),
     );
-  }
-
-  Color _getStatusColor(OrderStatus status) {
-    switch (status) {
-      case OrderStatus.delivered:
-        return Colors.green;
-      case OrderStatus.pending:
-        return Colors.orange;
-      case OrderStatus.cancelled:
-        return Colors.red;
-      case OrderStatus.preparing:
-        return Colors.blue;
-      case OrderStatus.shipped:
-        return Colors.purple;
-      default:
-        return Colors.grey;
-    }
-  }
-
-  IconData _getStatusIcon(OrderStatus status) {
-    switch (status) {
-      case OrderStatus.delivered:
-        return Icons.check_circle;
-      case OrderStatus.pending:
-        return Icons.schedule;
-      case OrderStatus.cancelled:
-        return Icons.cancel;
-      case OrderStatus.preparing:
-        return Icons.build;
-      case OrderStatus.shipped:
-        return Icons.local_shipping;
-      default:
-        return Icons.help;
-    }
   }
 } 

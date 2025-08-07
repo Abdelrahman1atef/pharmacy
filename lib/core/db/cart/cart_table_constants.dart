@@ -1,3 +1,5 @@
+import '../dbHelper/db_constants.dart';
+
 //-------------------------------------------
 const tableName = "Cart";
 const colProductId = "product_id";
@@ -25,3 +27,16 @@ CREATE TABLE $tableName (
 """;
 
 String dropTable = "DROP TABLE IF EXISTS $tableName";
+
+// Cache table constants
+//-------------------------------------------
+String createCacheTable = """
+CREATE TABLE $cacheTableName (
+    $cacheKeyColumn TEXT PRIMARY KEY,                     -- Cache key (e.g., "categories", "best_sellers")
+    $cacheDataColumn TEXT NOT NULL,                       -- Cached data as JSON string
+    $cacheTimestampColumn INTEGER NOT NULL,               -- Timestamp when data was cached
+    $cacheExpiryColumn INTEGER NOT NULL                   -- Expiry timestamp
+);
+""";
+
+String dropCacheTable = "DROP TABLE IF EXISTS $cacheTableName";

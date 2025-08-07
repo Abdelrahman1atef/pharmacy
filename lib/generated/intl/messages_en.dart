@@ -28,6 +28,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(id) => "Order #${id}";
 
+  static String m4(timer) => "Resend Code (${timer})";
+
+  static String m5(productName, price, productUrl) =>
+      "🔔 Check out this amazing product!\n\n📦 ${productName}\n💰 Price: ${price} EGP\n🔗 View details: ${productUrl}\n\nGet it now from our Ramzy Pharmacy app! 💊";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "CreatedAt": MessageLookupByLibrary.simpleMessage("Created At"),
@@ -77,6 +82,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "changeTimePickup": MessageLookupByLibrary.simpleMessage(
       "Change Pickup Time",
     ),
+    "checkOutProduct": MessageLookupByLibrary.simpleMessage(
+      "Check out this amazing product!",
+    ),
+    "checkSpamFolder": MessageLookupByLibrary.simpleMessage(
+      "Check your spam folder or",
+    ),
     "checkout": MessageLookupByLibrary.simpleMessage("Checkout"),
     "closeNow": MessageLookupByLibrary.simpleMessage("Close Now"),
     "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
@@ -89,6 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirm_password": MessageLookupByLibrary.simpleMessage(
       "Confirm Password",
     ),
+    "contactSupport": MessageLookupByLibrary.simpleMessage("contact support"),
     "continueShopping": MessageLookupByLibrary.simpleMessage(
       "Continue Shopping",
     ),
@@ -145,6 +157,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "deliveryFees": MessageLookupByLibrary.simpleMessage("Delivery Fees"),
     "deliveryMethod": MessageLookupByLibrary.simpleMessage("Delivery Method"),
     "details": MessageLookupByLibrary.simpleMessage("Details"),
+    "didntReceiveCode": MessageLookupByLibrary.simpleMessage(
+      "Didn\'t receive the code?",
+    ),
     "directReorder": MessageLookupByLibrary.simpleMessage("Quick Reorder"),
     "directReorderDescription": MessageLookupByLibrary.simpleMessage(
       "Reorder with the same details as the original order",
@@ -152,6 +167,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "edit": MessageLookupByLibrary.simpleMessage("Edit"),
     "email": MessageLookupByLibrary.simpleMessage("Email"),
     "english": MessageLookupByLibrary.simpleMessage("English"),
+    "enterSixDigitCode": MessageLookupByLibrary.simpleMessage(
+      "Enter the 6-digit code",
+    ),
     "enter_email": MessageLookupByLibrary.simpleMessage(
       "Please enter your email",
     ),
@@ -169,6 +187,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "firstOrder": MessageLookupByLibrary.simpleMessage("First Order"),
     "first_name": MessageLookupByLibrary.simpleMessage("First Name"),
     "gender": MessageLookupByLibrary.simpleMessage("Gender"),
+    "getItNow": MessageLookupByLibrary.simpleMessage(
+      "Get it now from our pharmacy app!",
+    ),
     "goToCart": MessageLookupByLibrary.simpleMessage("Go To Cart"),
     "growthRate": MessageLookupByLibrary.simpleMessage("Growth Rate"),
     "homeDelivery": MessageLookupByLibrary.simpleMessage("Home Delivery"),
@@ -268,6 +289,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "orderStatusUndefined": MessageLookupByLibrary.simpleMessage("Undefined"),
     "orderSummary": MessageLookupByLibrary.simpleMessage("Order Summary"),
     "orders": MessageLookupByLibrary.simpleMessage("orders"),
+    "other": MessageLookupByLibrary.simpleMessage("Other"),
+    "otpSentTo": MessageLookupByLibrary.simpleMessage(
+      "We\'ve sent a verification code to",
+    ),
     "outOfStock": MessageLookupByLibrary.simpleMessage("Out of Stock"),
     "outOfStockProducts": MessageLookupByLibrary.simpleMessage(
       "Out of Stock Products",
@@ -290,6 +315,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pickup": MessageLookupByLibrary.simpleMessage("Pickup"),
     "pound": MessageLookupByLibrary.simpleMessage("EGP"),
     "preparing": MessageLookupByLibrary.simpleMessage("Preparing"),
+    "price": MessageLookupByLibrary.simpleMessage("Price"),
     "proceedToCheckout": MessageLookupByLibrary.simpleMessage(
       "Proceed To Checkout",
     ),
@@ -299,6 +325,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Product Details:",
     ),
     "productId": MessageLookupByLibrary.simpleMessage("product Id"),
+    "productName": MessageLookupByLibrary.simpleMessage("Product Name"),
     "productPerformance": MessageLookupByLibrary.simpleMessage(
       "Product Performance",
     ),
@@ -323,6 +350,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "requestACallToConfirmTheOrder": MessageLookupByLibrary.simpleMessage(
       "Request a Call To Confirm The Order",
     ),
+    "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
+    "resendCodeAvailable": MessageLookupByLibrary.simpleMessage("Resend Code"),
+    "resendCodeTimer": m4,
     "retry": MessageLookupByLibrary.simpleMessage("Retry"),
     "revenueTrends": MessageLookupByLibrary.simpleMessage("Revenue Trends"),
     "salesOverview": MessageLookupByLibrary.simpleMessage("Sales Overview"),
@@ -335,9 +365,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "see_our_products": MessageLookupByLibrary.simpleMessage(
       "See Our Products",
     ),
+    "selectAddressError": MessageLookupByLibrary.simpleMessage(
+      "Please select a delivery address before proceeding with checkout.",
+    ),
     "selectDate": MessageLookupByLibrary.simpleMessage("Select Date"),
     "selectDeliveryTime": MessageLookupByLibrary.simpleMessage(
       "Select Delivery Time",
+    ),
+    "selectPharmacyError": MessageLookupByLibrary.simpleMessage(
+      "Please select a pharmacy before proceeding with checkout.",
     ),
     "selectPickupTime": MessageLookupByLibrary.simpleMessage(
       "Select Pickup Time",
@@ -356,6 +392,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "We\'ll send a text message to verify this number",
     ),
     "settings_item": MessageLookupByLibrary.simpleMessage("Settings"),
+    "share": MessageLookupByLibrary.simpleMessage("Share"),
+    "shareProductMessage": m5,
+    "shareWithDetails": MessageLookupByLibrary.simpleMessage(
+      "Share with Details",
+    ),
     "shipped": MessageLookupByLibrary.simpleMessage("Shipped"),
     "show_all": MessageLookupByLibrary.simpleMessage("Show All"),
     "signup": MessageLookupByLibrary.simpleMessage("Sign Up"),
@@ -380,9 +421,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "unitType": MessageLookupByLibrary.simpleMessage("unit Type"),
     "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
     "userDetails": MessageLookupByLibrary.simpleMessage("User Details"),
+    "userOrdersCount": MessageLookupByLibrary.simpleMessage("My Orders"),
     "userStatistics": MessageLookupByLibrary.simpleMessage("User Statistics"),
     "user_item": MessageLookupByLibrary.simpleMessage("Profile"),
     "usersManagement": MessageLookupByLibrary.simpleMessage("Users Management"),
+    "verifyCode": MessageLookupByLibrary.simpleMessage("Verify Code"),
+    "verifyYourEmail": MessageLookupByLibrary.simpleMessage(
+      "Verify Your Email",
+    ),
+    "viewDetails": MessageLookupByLibrary.simpleMessage("View Details"),
     "yourAccount": MessageLookupByLibrary.simpleMessage("Your Account"),
     "yourDiscount": MessageLookupByLibrary.simpleMessage("Your Discount"),
   };

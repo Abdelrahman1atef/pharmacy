@@ -2,39 +2,51 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy/core/models/branch/branch_response.dart';
 import 'package:pharmacy/features/checkout/repository/branch_repository.dart';
 
-part 'branch_state.dart';
+import 'branch_state.dart';
 
 class BranchCubit extends Cubit<BranchState> {
   final BranchRepository _branchRepository;
 
-  BranchCubit(this._branchRepository) : super(BranchInitial());
+  BranchCubit(this._branchRepository) : super(const BranchState.initial());
 
   Future<void> fetchBranches() async {
-    emit(BranchLoading());
+    emit(const BranchState.loading());
     
     final result = await _branchRepository.getBranches();
     
     result.when(
       success: (branches) {
-        emit(BranchLoaded(branches));
+        emit(BranchState.loaded(branches));
       },
       failure: (error) {
-        emit(BranchError(error.message));
+        emit(BranchState.error(error.message));
       },
     );
   }
 
   void selectBranch(Branch branch) {
-    if (state is BranchLoaded) {
-      final currentState = state as BranchLoaded;
-      emit(BranchSelected(currentState.branches, branch));
-    }
+    state.when(
+      initial: () {},
+      loading: () {},
+      loaded: (branches) {
+        emit(BranchState.selected(branches, branch));
+      },
+      selected: (branches, selectedBranch) {
+        emit(BranchState.selected(branches, branch));
+      },
+      error: (message) {},
+    );
   }
 
   void clearSelection() {
-    if (state is BranchSelected) {
-      final currentState = state as BranchSelected;
-      emit(BranchLoaded(currentState.branches));
-    }
+    state.when(
+      initial: () {},
+      loading: () {},
+      loaded: (branches) {},
+      selected: (branches, selectedBranch) {
+        emit(BranchState.loaded(branches));
+      },
+      error: (message) {},
+    );
   }
 } 

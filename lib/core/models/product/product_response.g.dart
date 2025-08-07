@@ -37,9 +37,12 @@ Results _$ResultsFromJson(Map<String, dynamic> json) => Results(
       productUnit3: json['product_unit3'] as String?,
       productUnit1_3: (json['product_unit1_3'] as num?)?.toDouble(),
       unit3SellPrice: (json['unit3_sell_price'] as num?)?.toDouble(),
-      amount: (json['amount'] as num?)?.toInt(),
+      stockAmount: (json['stock_amount'] as num?)?.toInt(),
       productImageUrl: json['product_image_url'] as String?,
-      productDescription: json['product_description'] as String?,
+      productDescription: json['product_description'] == null
+          ? null
+          : ProductDescription.fromJson(
+              json['product_description'] as Map<String, dynamic>),
       company: json['company'] == null
           ? null
           : Company.fromJson(json['company'] as Map<String, dynamic>),
@@ -65,12 +68,24 @@ Map<String, dynamic> _$ResultsToJson(Results instance) => <String, dynamic>{
       'product_unit3': instance.productUnit3,
       'product_unit1_3': instance.productUnit1_3,
       'unit3_sell_price': instance.unit3SellPrice,
-      'amount': instance.amount,
+      'stock_amount': instance.stockAmount,
       'product_image_url': instance.productImageUrl,
       'product_description': instance.productDescription,
       'company': instance.company,
       'product_group': instance.productGroup,
       'product_images': instance.productImages,
+    };
+
+ProductDescription _$ProductDescriptionFromJson(Map<String, dynamic> json) =>
+    ProductDescription(
+      pdNameAr: json['pd_name_ar'] as String?,
+      pdNameEn: json['pd_name_en'] as String?,
+    );
+
+Map<String, dynamic> _$ProductDescriptionToJson(ProductDescription instance) =>
+    <String, dynamic>{
+      'pd_name_ar': instance.pdNameAr,
+      'pd_name_en': instance.pdNameEn,
     };
 
 Company _$CompanyFromJson(Map<String, dynamic> json) => Company(

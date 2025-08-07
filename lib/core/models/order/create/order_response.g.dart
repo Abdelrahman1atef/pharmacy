@@ -8,16 +8,28 @@ part of 'order_response.dart';
 
 OrderResponse _$OrderResponseFromJson(Map<String, dynamic> json) =>
     OrderResponse(
-      json['status'] as String,
       json['message'] as String,
-      (json['order_id'] as num).toInt(),
-      (json['total_amount'] as num).toDouble(),
+      Order.fromJson(json['order']),
     );
 
 Map<String, dynamic> _$OrderResponseToJson(OrderResponse instance) =>
     <String, dynamic>{
-      'status': instance.status,
       'message': instance.message,
-      'order_id': instance.orderId,
-      'total_amount': instance.totalAmount,
+      'order': instance.order,
+    };
+
+Order _$OrderFromJson(Map<String, dynamic> json) => Order(
+      (json['id'] as num).toInt(),
+      (json['total_price'] as num).toDouble(),
+      (json['delivery_fee'] as num).toDouble(),
+      pharmacyName: json['pharmacy_name'] as String?,
+      branchId: (json['branch_id'] as num?)?.toInt(),
+    );
+
+Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
+      'id': instance.orderId,
+      'total_price': instance.totalPrice,
+      'delivery_fee': instance.deliveryFee,
+      'pharmacy_name': instance.pharmacyName,
+      'branch_id': instance.branchId,
     };

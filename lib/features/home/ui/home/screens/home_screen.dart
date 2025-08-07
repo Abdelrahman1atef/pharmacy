@@ -18,12 +18,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Future<void> _onRefresh(BuildContext context) async {
+    // Refresh all data with cache invalidation
     await Future.wait([
-      Future(() => context.read<CategoryCubit>().emitCategoryState()),
-      Future(() => context.read<BestSellerCubit>().emitBestSellerState()),
-      Future(() => context.read<SeeOurProductsCubit>().emitSeeOurProductsState()),
+      Future(() => context.read<CategoryCubit>().refreshCategories()),
+      Future(() => context.read<BestSellerCubit>().refreshBestSellers()),
+      Future(() => context.read<SeeOurProductsCubit>().refreshSeeOurProducts()),
     ]);
   }
+
   @override
   void initState() {
     super.initState();
@@ -39,23 +41,26 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          top: false,
-          child: RefreshIndicator(
-            onRefresh: () => _onRefresh(context),
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(), // Required for RefreshIndicator
-              child: Column(
-                children: [
-                  SizedBox(height: 10.h),
-                  const CategoryWidget(),
-                  SizedBox(height: 20.h),
-                  const BestSellerWidget(),
-                  SizedBox(height: 20.h),
-                  const SeeOurProductsWidget(),
-                ],
-              ),
+        top: false,
+        child: RefreshIndicator(
+          onRefresh: () => _onRefresh(context),
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(), // Required for RefreshIndicator
+            child: Column(
+              children: [
+                SizedBox(height: 10.h),
+                const CategoryWidget(),
+                SizedBox(height: 20.h),
+                const BestSellerWidget(),
+                SizedBox(height: 20.h),
+                const SeeOurProductsWidget(),
+                // Add extra space to ensure pull-to-refresh works
+                SizedBox(height: 100.h),
+              ],
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

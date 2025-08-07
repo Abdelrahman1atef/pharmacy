@@ -1315,6 +1315,26 @@ class S {
     return Intl.message('Error', name: 'error', desc: '', args: []);
   }
 
+  /// `Please select a delivery address before proceeding with checkout.`
+  String get selectAddressError {
+    return Intl.message(
+      'Please select a delivery address before proceeding with checkout.',
+      name: 'selectAddressError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select a pharmacy before proceeding with checkout.`
+  String get selectPharmacyError {
+    return Intl.message(
+      'Please select a pharmacy before proceeding with checkout.',
+      name: 'selectPharmacyError',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Retry`
   String get retry {
     return Intl.message('Retry', name: 'retry', desc: '', args: []);
@@ -1835,6 +1855,185 @@ class S {
     return Intl.message(
       'Loading dashboard data...',
       name: 'loadingDashboardData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My Orders`
+  String get userOrdersCount {
+    return Intl.message(
+      'My Orders',
+      name: 'userOrdersCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other`
+  String get other {
+    return Intl.message('Other', name: 'other', desc: '', args: []);
+  }
+
+  /// `Share`
+  String get share {
+    return Intl.message('Share', name: 'share', desc: '', args: []);
+  }
+
+  /// `Share with Details`
+  String get shareWithDetails {
+    return Intl.message(
+      'Share with Details',
+      name: 'shareWithDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check out this amazing product!`
+  String get checkOutProduct {
+    return Intl.message(
+      'Check out this amazing product!',
+      name: 'checkOutProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product Name`
+  String get productName {
+    return Intl.message(
+      'Product Name',
+      name: 'productName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price`
+  String get price {
+    return Intl.message('Price', name: 'price', desc: '', args: []);
+  }
+
+  /// `View Details`
+  String get viewDetails {
+    return Intl.message(
+      'View Details',
+      name: 'viewDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get it now from our pharmacy app!`
+  String get getItNow {
+    return Intl.message(
+      'Get it now from our pharmacy app!',
+      name: 'getItNow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `🔔 Check out this amazing product!\n\n📦 {productName}\n💰 Price: {price} EGP\n🔗 View details: {productUrl}\n\nGet it now from our Ramzy Pharmacy app! 💊`
+  String shareProductMessage(
+    Object productName,
+    Object price,
+    Object productUrl,
+  ) {
+    return Intl.message(
+      '🔔 Check out this amazing product!\n\n📦 $productName\n💰 Price: $price EGP\n🔗 View details: $productUrl\n\nGet it now from our Ramzy Pharmacy app! 💊',
+      name: 'shareProductMessage',
+      desc: '',
+      args: [productName, price, productUrl],
+    );
+  }
+
+  /// `Verify Your Email`
+  String get verifyYourEmail {
+    return Intl.message(
+      'Verify Your Email',
+      name: 'verifyYourEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We've sent a verification code to`
+  String get otpSentTo {
+    return Intl.message(
+      'We\'ve sent a verification code to',
+      name: 'otpSentTo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the 6-digit code`
+  String get enterSixDigitCode {
+    return Intl.message(
+      'Enter the 6-digit code',
+      name: 'enterSixDigitCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify Code`
+  String get verifyCode {
+    return Intl.message('Verify Code', name: 'verifyCode', desc: '', args: []);
+  }
+
+  /// `Resend Code`
+  String get resendCode {
+    return Intl.message('Resend Code', name: 'resendCode', desc: '', args: []);
+  }
+
+  /// `Didn't receive the code?`
+  String get didntReceiveCode {
+    return Intl.message(
+      'Didn\'t receive the code?',
+      name: 'didntReceiveCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check your spam folder or`
+  String get checkSpamFolder {
+    return Intl.message(
+      'Check your spam folder or',
+      name: 'checkSpamFolder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `contact support`
+  String get contactSupport {
+    return Intl.message(
+      'contact support',
+      name: 'contactSupport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resend Code ({timer})`
+  String resendCodeTimer(Object timer) {
+    return Intl.message(
+      'Resend Code ($timer)',
+      name: 'resendCodeTimer',
+      desc: '',
+      args: [timer],
+    );
+  }
+
+  /// `Resend Code`
+  String get resendCodeAvailable {
+    return Intl.message(
+      'Resend Code',
+      name: 'resendCodeAvailable',
       desc: '',
       args: [],
     );

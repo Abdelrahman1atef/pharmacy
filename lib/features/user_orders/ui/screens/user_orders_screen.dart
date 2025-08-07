@@ -42,7 +42,7 @@ class _UserOrdersScreenState extends State<UserOrdersScreen> {
                 CustomSnackBar.showInfo(context, "Processing your reorder...");
               },
               success: (data) {
-                CustomSnackBar.showSuccess(context, "Reorder placed successfully! Order ID: ${data.orderId}");
+                CustomSnackBar.showSuccess(context, "Reorder placed successfully! Order ID: ${data.message}");
               },
               error: (e) {
                 CustomSnackBar.showError(context, e.message);
@@ -63,19 +63,19 @@ class _UserOrdersScreenState extends State<UserOrdersScreen> {
                 child: CircularProgressIndicator(),
               ),
               success: (data) {
-                List<CustomerOrderModel> orders = data;
+                CustomerOrderResponse orders = data;
                 
-                if (orders.isEmpty) {
+                if (orders.results.isEmpty) {
                   return const OrdersEmpty();
                 }
                 
                 return Padding(
                   padding:  EdgeInsetsDirectional.only(bottom: 30.h),
                   child: ListView.builder(
-                    itemCount: orders.length,
+                    itemCount: orders.results.length,
                     itemBuilder: (BuildContext context, int index) {
                       return OrderCardItem(
-                        orderInfo: orders[index],
+                        orderInfo: orders.results[index],
                       );
                     },
                   ),

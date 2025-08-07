@@ -6,6 +6,24 @@ part of 'admin_order_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+AdminOrderResponse _$AdminOrderResponseFromJson(Map<String, dynamic> json) =>
+    AdminOrderResponse(
+      count: (json['count'] as num).toInt(),
+      next: json['next'] as String?,
+      previous: json['previous'] as String?,
+      results: (json['results'] as List<dynamic>)
+          .map((e) => AdminOrderModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$AdminOrderResponseToJson(AdminOrderResponse instance) =>
+    <String, dynamic>{
+      'count': instance.count,
+      'next': instance.next,
+      'previous': instance.previous,
+      'results': instance.results,
+    };
+
 AdminOrderModel _$AdminOrderModelFromJson(Map<String, dynamic> json) =>
     AdminOrderModel(
       id: (json['id'] as num?)?.toInt(),
@@ -31,6 +49,8 @@ AdminOrderModel _$AdminOrderModelFromJson(Map<String, dynamic> json) =>
       isHomeDelivery: json['is_home_delivery'] as bool?,
       callRequestEnabled: json['call_request_enabled'] as bool?,
       promoCode: json['promo_code'] as String?,
+      pharmacyName: json['pharmacy_name'] as String?,
+      branchId: (json['branch_id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$AdminOrderModelToJson(AdminOrderModel instance) =>
@@ -54,6 +74,8 @@ Map<String, dynamic> _$AdminOrderModelToJson(AdminOrderModel instance) =>
       'is_home_delivery': instance.isHomeDelivery,
       'call_request_enabled': instance.callRequestEnabled,
       'promo_code': instance.promoCode,
+      'pharmacy_name': instance.pharmacyName,
+      'branch_id': instance.branchId,
     };
 
 const _$OrderStatusEnumMap = {

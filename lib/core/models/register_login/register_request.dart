@@ -16,8 +16,7 @@ class RegisterRequest {
   final String password;
   @JsonKey(name: "profile_picture")
   final String? profilePicture;
-  final bool isActive;
-  final bool isStaff;
+  
 
   RegisterRequest({
     required this.email,
@@ -28,8 +27,6 @@ class RegisterRequest {
     required this.gender,
     required this.password,
     required this.profilePicture,
-    required this.isActive,
-    required this.isStaff,
   });
 
   factory RegisterRequest.fromJson(Map<String, dynamic> json) =>

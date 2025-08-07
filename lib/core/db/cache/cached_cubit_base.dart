@@ -5,7 +5,7 @@ import 'cache_manager.dart';
 abstract class CachedCubitBase<T> extends Cubit<T> {
   final CacheManager _cacheManager = CacheManager();
 
-  CachedCubitBase(T initialState) : super(initialState);
+  CachedCubitBase(super.initialState);
 
   /// Load data with cache-first approach
   Future<void> loadCachedData<TData>({

@@ -1,9 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pharmacy/features/admin/orders/logic/order_filter_state.dart';
 import '../../../../core/enum/order_status.dart';
 
-part 'order_filter_state.dart';
-part 'order_filter_cubit.freezed.dart';
 
 class OrderFilterCubit extends Cubit<OrderFilterState> {
   OrderFilterCubit() : super(const OrderFilterState.initial());

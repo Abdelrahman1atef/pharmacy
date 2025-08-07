@@ -31,10 +31,12 @@ Map<String, dynamic> _$OrderHistoryItemToJson(OrderHistoryItem instance) =>
 OrderHistory _$OrderHistoryFromJson(Map<String, dynamic> json) => OrderHistory(
       orderId: (json['order_id'] as num).toInt(),
       createdAt: json['created_at'] as String,
-      status: json['status'] as String,
+      status: $enumDecode(_$OrderStatusEnumMap, json['status']),
       totalPrice: (json['total_price'] as num).toDouble(),
-      paymentMethod: json['payment_method'] as String,
-      deliveryMethod: json['delivery_method'] as String,
+      paymentMethod:
+          $enumDecodeNullable(_$PaymentMethodEnumMap, json['payment_method']),
+      deliveryMethod:
+          $enumDecodeNullable(_$DeliveryMethodEnumMap, json['delivery_method']),
       addressName: json['address_name'] as String,
       addressStreet: json['address_street'] as String,
       latitude: (json['latitude'] as num).toDouble(),
@@ -51,10 +53,10 @@ Map<String, dynamic> _$OrderHistoryToJson(OrderHistory instance) =>
     <String, dynamic>{
       'order_id': instance.orderId,
       'created_at': instance.createdAt,
-      'status': instance.status,
+      'status': _$OrderStatusEnumMap[instance.status]!,
       'total_price': instance.totalPrice,
-      'payment_method': instance.paymentMethod,
-      'delivery_method': instance.deliveryMethod,
+      'payment_method': _$PaymentMethodEnumMap[instance.paymentMethod],
+      'delivery_method': _$DeliveryMethodEnumMap[instance.deliveryMethod],
       'address_name': instance.addressName,
       'address_street': instance.addressStreet,
       'latitude': instance.latitude,
@@ -65,6 +67,25 @@ Map<String, dynamic> _$OrderHistoryToJson(OrderHistory instance) =>
       'items': instance.items,
     };
 
+const _$OrderStatusEnumMap = {
+  OrderStatus.pending: 'pending',
+  OrderStatus.preparing: 'preparing',
+  OrderStatus.shipped: 'shipped',
+  OrderStatus.delivered: 'delivered',
+  OrderStatus.cancelled: 'cancelled',
+};
+
+const _$PaymentMethodEnumMap = {
+  PaymentMethod.cashOnDelivery: 'cash_on_delivery',
+  PaymentMethod.debitCreditCard: 'debit_credit_card',
+  PaymentMethod.debitCreditCardOnDelivery: 'debit_credit_card_on_delivery',
+};
+
+const _$DeliveryMethodEnumMap = {
+  DeliveryMethod.homeDelivery: 'home_delivery',
+  DeliveryMethod.pharmacyPickup: 'pharmacy_pickup',
+};
+
 AdminUserDetailResponse _$AdminUserDetailResponseFromJson(
         Map<String, dynamic> json) =>
     AdminUserDetailResponse(
@@ -74,16 +95,16 @@ AdminUserDetailResponse _$AdminUserDetailResponseFromJson(
       firstName: json['first_name'] as String,
       lastName: json['last_name'] as String,
       fullName: json['full_name'] as String,
-      birthdate: json['birthdate'] as String,
-      gender: json['gender'] as String,
+      birthdate: json['birthdate'] as String?,
+      gender: json['gender'] as String?,
       authType: json['auth_type'] as String,
       socialId: json['social_id'] as String?,
-      profilePicture: json['profile_picture'] as String,
+      profilePicture: json['profile_picture'] as String?,
       isActive: json['is_active'] as bool,
       isStaff: json['is_staff'] as bool,
       createdAt: json['created_at'] as String,
       updatedAt: json['updated_at'] as String,
-      lastLogin: json['last_login'] as String,
+      lastLogin: json['last_login'] as String?,
       totalOrders: (json['total_orders'] as num).toInt(),
       totalSpent: (json['total_spent'] as num).toDouble(),
       avgOrderValue: (json['avg_order_value'] as num).toDouble(),

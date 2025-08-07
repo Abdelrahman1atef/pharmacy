@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy/core/enum/order_status.dart';
-import 'package:pharmacy/features/admin/orders/logic/admin_orders_cubit.dart';
-import 'package:pharmacy/features/admin/orders/logic/admin_orders_state.dart';
+import 'package:pharmacy/features/admin/orders/logic/order_filter_cubit.dart';
+import 'package:pharmacy/features/admin/orders/logic/order_filter_state.dart';
 import 'package:pharmacy/generated/l10n.dart';
 
 class OrderStatusFilter extends StatelessWidget {
@@ -10,9 +10,12 @@ class OrderStatusFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AdminOrdersCubit, AdminOrdersState>(
+    return BlocBuilder<OrderFilterCubit, OrderFilterState>(
       builder: (context, state) {
-        final currentFilter = context.read<AdminOrdersCubit>().currentFilter;
+        final currentFilter = state.when(
+          initial: () => null,
+          filtered: (status) => status,
+        );
         
         return Container(
           height: 50,
@@ -25,7 +28,7 @@ class OrderStatusFilter extends StatelessWidget {
                 context,
                 label: 'All',
                 isSelected: currentFilter == null,
-                onTap: () => context.read<AdminOrdersCubit>().clearFilter(),
+                onTap: () => context.read<OrderFilterCubit>().clearFilter(),
               ),
               const SizedBox(width: 8),
               // Pending filter
@@ -33,7 +36,7 @@ class OrderStatusFilter extends StatelessWidget {
                 context,
                 label: S.of(context).orderStatusPending,
                 isSelected: currentFilter == OrderStatus.pending,
-                onTap: () => context.read<AdminOrdersCubit>().filterByStatus(OrderStatus.pending),
+                onTap: () => context.read<OrderFilterCubit>().setFilter(OrderStatus.pending),
                 color: OrderStatus.pending.getStatusColor(),
               ),
               const SizedBox(width: 8),
@@ -42,7 +45,7 @@ class OrderStatusFilter extends StatelessWidget {
                 context,
                 label: S.of(context).orderStatusPreparing,
                 isSelected: currentFilter == OrderStatus.preparing,
-                onTap: () => context.read<AdminOrdersCubit>().filterByStatus(OrderStatus.preparing),
+                onTap: () => context.read<OrderFilterCubit>().setFilter(OrderStatus.preparing),
                 color: OrderStatus.preparing.getStatusColor(),
               ),
               const SizedBox(width: 8),
@@ -51,7 +54,7 @@ class OrderStatusFilter extends StatelessWidget {
                 context,
                 label: S.of(context).orderStatusShipped,
                 isSelected: currentFilter == OrderStatus.shipped,
-                onTap: () => context.read<AdminOrdersCubit>().filterByStatus(OrderStatus.shipped),
+                onTap: () => context.read<OrderFilterCubit>().setFilter(OrderStatus.shipped),
                 color: OrderStatus.shipped.getStatusColor(),
               ),
               const SizedBox(width: 8),
@@ -60,7 +63,7 @@ class OrderStatusFilter extends StatelessWidget {
                 context,
                 label: S.of(context).orderStatusDelivered,
                 isSelected: currentFilter == OrderStatus.delivered,
-                onTap: () => context.read<AdminOrdersCubit>().filterByStatus(OrderStatus.delivered),
+                onTap: () => context.read<OrderFilterCubit>().setFilter(OrderStatus.delivered),
                 color: OrderStatus.delivered.getStatusColor(),
               ),
               const SizedBox(width: 8),
@@ -69,7 +72,7 @@ class OrderStatusFilter extends StatelessWidget {
                 context,
                 label: S.of(context).orderStatusCancelled,
                 isSelected: currentFilter == OrderStatus.cancelled,
-                onTap: () => context.read<AdminOrdersCubit>().filterByStatus(OrderStatus.cancelled),
+                onTap: () => context.read<OrderFilterCubit>().setFilter(OrderStatus.cancelled),
                 color: OrderStatus.cancelled.getStatusColor(),
               ),
             ],
@@ -103,7 +106,7 @@ class OrderStatusFilter extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (isSelected)
-              Icon(
+              const Icon(
                 Icons.check,
                 size: 16,
                 color: Colors.white,

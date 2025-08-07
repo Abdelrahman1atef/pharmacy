@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/themes/text/text_styles.dart';
 import '../../../../gen/colors.gen.dart';
 import '../../../../generated/l10n.dart';

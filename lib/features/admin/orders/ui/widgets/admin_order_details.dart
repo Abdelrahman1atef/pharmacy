@@ -1,13 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy/core/models/order/admin/admin_order_model.dart';
-import 'package:pharmacy/features/admin/orders/logic/admin_orders_cubit.dart';
 import 'package:pharmacy/generated/l10n.dart';
 import 'admin_order_customer_info.dart';
 import 'admin_order_items_list.dart';
+import 'admin_order_location_map.dart';
+import 'admin_order_status_section.dart';
 import 'package:pharmacy/core/enum/order_status.dart';
-import 'status_reaction_bar.dart';
 
 class AdminOrderDetails extends StatefulWidget {
   final AdminOrderModel order;
@@ -19,47 +18,6 @@ class AdminOrderDetails extends StatefulWidget {
 }
 
 class _AdminOrderDetailsState extends State<AdminOrderDetails> {
-  final GlobalKey _statusKey = GlobalKey();
-  OverlayEntry? _overlayEntry;
-
-  void _showStatusReactionBar() {
-    final contextForKey = _statusKey.currentContext;
-    if (contextForKey == null) return;
-    final RenderBox? renderBox = contextForKey.findRenderObject() as RenderBox?;
-    if (renderBox == null) return;
-    final Offset offset = renderBox.localToGlobal(Offset.zero);
-    final overlay = Overlay.of(context);
-    _overlayEntry = OverlayEntry(
-      builder: (context) => StatusReactionBar(
-        position: Offset(offset.dx, offset.dy - 80),
-        onStatusSelected: (status) {
-          _removeOverlay();
-          final orderId = widget.order.id;
-          final cubit = context.read<AdminOrdersCubit?>();
-          if (orderId != null && cubit != null) {
-            cubit.updateOrdersStatus(orderId, status);
-          }
-          if (widget.onStatusChanged != null) {
-            widget.onStatusChanged!(status);
-          }
-        },
-        onDismiss: _removeOverlay,
-      ),
-    );
-    overlay.insert(_overlayEntry!);
-  }
-
-  void _removeOverlay() {
-    _overlayEntry?.remove();
-    _overlayEntry = null;
-  }
-
-  @override
-  void dispose() {
-    _removeOverlay();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -90,35 +48,10 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
             ),
             const Divider(),
             
-            // Order Status (with long press)
-            GestureDetector(
-              key: _statusKey,
-              onTap: _showStatusReactionBar,
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: _getStatusColor(widget.order.status?.name),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: [
-                    Icon(
-                      _getStatusIcon(widget.order.status?.name),
-                      color: Colors.white,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      '${S.of(context).orderStatus}: ${widget.order.getStatusText(context)}',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const Spacer(),
-                    const Icon(Icons.touch_app, color: Colors.white, size: 18),
-                  ],
-                ),
-              ),
+            // Order Status Section (optimized to only rebuild on status change)
+            AdminOrderStatusSection(
+              order: widget.order,
+              onStatusChanged: widget.onStatusChanged,
             ),
             const SizedBox(height: 16),
             
@@ -153,6 +86,55 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
                     ),
                     const SizedBox(height: 8),
                     AdminOrderCustomerInfo(order: widget.order),
+                    const SizedBox(height: 16),
+                    
+                    // Pharmacy Information (for pharmacy pickup orders)
+                    if (!widget.order.isHomeDelivery! && widget.order.pharmacyName != null)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            S.of(context).pharmacyPickup,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          _buildInfoRow(
+                            context,
+                            Icons.local_pharmacy,
+                            S.of(context).pharmacyPickup,
+                            widget.order.pharmacyName!,
+                          ),
+                          if (widget.order.branchId != null)
+                            _buildInfoRow(
+                              context,
+                              Icons.store,
+                              'Branch ID',
+                              '${widget.order.branchId}',
+                            ),
+                          const SizedBox(height: 16),
+                        ],
+                      ),
+                    
+                    // Location Map (only for home delivery)
+                    if (widget.order.isHomeDelivery!)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            S.of(context).location,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          AdminOrderLocationMap(order: widget.order),
+                          const SizedBox(height: 16),
+                        ],
+                      ),
                     const SizedBox(height: 16),
               
                     // Order Items
@@ -198,40 +180,6 @@ class _AdminOrderDetailsState extends State<AdminOrderDetails> {
         ],
       ),
     );
-  }
-
-  Color _getStatusColor(String? status) {
-    switch (status) {
-      case 'delivered':
-        return Colors.green;
-      case 'pending':
-        return Colors.orange;
-      case 'cancelled':
-        return Colors.red;
-      case 'preparing':
-        return Colors.blue;
-      case 'shipped':
-        return Colors.purple;
-      default:
-        return Colors.grey;
-    }
-  }
-
-  IconData _getStatusIcon(String? status) {
-    switch (status) {
-      case 'delivered':
-        return Icons.check_circle;
-      case 'pending':
-        return Icons.schedule;
-      case 'cancelled':
-        return Icons.cancel;
-      case 'preparing':
-        return Icons.build;
-      case 'shipped':
-        return Icons.local_shipping;
-      default:
-        return Icons.help;
-    }
   }
 
   String _formatDate(BuildContext context, String? createdAt) {

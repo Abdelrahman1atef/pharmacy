@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:pharmacy/gen/assets.gen.dart';
 
 
 ImageLoadingBuilder loadingBuilder() {
@@ -7,19 +8,7 @@ ImageLoadingBuilder loadingBuilder() {
     if (loadingProgress == null) {
       return child;
     } else {
-      return Center(
-        child: CircularProgressIndicator(
-          value: loadingProgress
-              .expectedTotalBytes !=
-              null
-              ? loadingProgress
-              .cumulativeBytesLoaded /
-              (loadingProgress
-                  .expectedTotalBytes ??
-                  1)
-              : null,
-        ),
-      );
+      return Image.asset(Assets.images.pWatermarkV2.path);
     }
   };
 }

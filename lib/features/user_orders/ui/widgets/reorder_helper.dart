@@ -11,6 +11,7 @@ import 'package:pharmacy/features/cart/logic/order/order_cubit.dart';
 import 'package:pharmacy/features/checkout/ui/screens/checkout_screen.dart';
 import 'package:pharmacy/generated/l10n.dart';
 import '../../../../core/common_widgets/custom_snackbar.dart';
+import '../../../../utils/constant.dart';
 
 
 class ReorderHelper {
@@ -47,20 +48,18 @@ class ReorderHelper {
         longitude: orderInfo.longitude ?? 0.0,
         paymentMethod: orderInfo.paymentMethod,
         deliveryMethod: orderInfo.deliveryMethod ?? DeliveryMethod.homeDelivery,
-        isHomeDelivery: orderInfo.isHomeDelivery ?? true,
+        deliveryFee: orderInfo.isHomeDelivery ? Constant.deliveryFee:0.0,
+        isHomeDelivery: orderInfo.isHomeDelivery,
         callRequestEnabled: orderInfo.callRequestEnabled ?? false,
         promoCode: orderInfo.promoCode,
       );
       context.read<OrderCubit>().createOrder(orderRequest);
     }
 
-
-
-
-    // CustomSnackBar.showSuccess(
-    //   context,
-    //   S.of(context).reorderProcessing,
-    // );
+    CustomSnackBar.showSuccess(
+      context,
+      S.of(context).reorderProcessing,
+    );
   }
 
   /// Reorder with checkout - allows user to modify details

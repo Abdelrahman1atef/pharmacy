@@ -16,8 +16,6 @@ RegisterRequest _$RegisterRequestFromJson(Map<String, dynamic> json) =>
       gender: json['gender'] as String,
       password: json['password'] as String,
       profilePicture: json['profile_picture'] as String?,
-      isActive: json['isActive'] as bool,
-      isStaff: json['isStaff'] as bool,
     );
 
 Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
@@ -30,6 +28,4 @@ Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
       'gender': instance.gender,
       'password': instance.password,
       'profile_picture': instance.profilePicture,
-      'isActive': instance.isActive,
-      'isStaff': instance.isStaff,
     };

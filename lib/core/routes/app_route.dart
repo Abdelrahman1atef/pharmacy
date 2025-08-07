@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pharmacy/core/db/cart/model/product.dart';
-import 'package:pharmacy/core/models/category/category_response.dart';
+import 'package:pharmacy/core/models/category/category_response.dart' as category_response;
 import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/core/routes/transition/transition_type.dart';
 import 'package:pharmacy/features/admin/dashboard/ui/screens/dashboard_screen.dart';
@@ -9,6 +9,7 @@ import 'package:pharmacy/features/checkout/ui/screens/checkout_screen.dart';
 import 'package:pharmacy/features/details/ui/DetailsScreen.dart';
 import 'package:pharmacy/features/items_list/ui/item_list_screen.dart';
 import 'package:pharmacy/features/items_list/logic/item_list_screen_cubit.dart';
+import 'package:pharmacy/features/login&signup/ui/screen/otp_verification_screen.dart';
 import 'package:pharmacy/features/login&signup/ui/screen/signup_screen.dart';
 import 'package:pharmacy/features/splash/splash_screen.dart';
 import 'package:pharmacy/features/user/ui/screens/user_screen.dart';
@@ -43,7 +44,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) {
           final arguments = settings.arguments;
 
-          if (arguments is CategoryResponse) {
+          if (arguments is category_response.Results) {
             return ItemListScreen(
               widgetTitle: arguments.categoryNameAr ?? "",
               categoryId: arguments.categoryId,
@@ -67,6 +68,11 @@ class AppRouter {
         });
       case Routes.signUp:
         return MaterialPageRoute(builder: (_) => const SignupScreen());
+        case Routes.otpValidation:
+        return MaterialPageRoute(builder: (_) {
+          final arguments = settings.arguments;
+         return OtpVerificationScreen(email: arguments as String);
+        });
       case Routes.login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case Routes.userScreen:

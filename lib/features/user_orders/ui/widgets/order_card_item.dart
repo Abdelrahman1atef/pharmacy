@@ -4,6 +4,7 @@ import 'package:pharmacy/core/common_widgets/gradient_button.dart';
 import 'package:pharmacy/features/user_orders/ui/widgets/order_item_widget.dart';
 import 'package:pharmacy/features/user_orders/ui/widgets/reorder_helper.dart';
 import 'package:pharmacy/features/user_orders/ui/widgets/simple_order_status_indicator.dart';
+import 'package:pharmacy/utils/constant.dart';
 
 import '../../../../core/models/order/customer/customer_order_model.dart';
 import '../../../../core/themes/text/text_styles.dart';
@@ -71,8 +72,33 @@ class OrderCardItem extends StatelessWidget {
                           )
                         ],
                       ),
-                    ],
-                  ),
+                                         ],
+                   ),
+
+                   // Show pharmacy information for pharmacy pickup orders
+                   if (!orderInfo.isHomeDelivery && orderInfo.pharmacyName != null)
+                     Padding(
+                       padding: const EdgeInsetsDirectional.only(top: 8),
+                       child: Row(
+                         children: [
+                           const Icon(
+                             Icons.local_pharmacy,
+                             size: 16,
+                             color: ColorName.secondaryColor,
+                           ),
+                           const SizedBox(width: 4),
+                           Expanded(
+                             child: Text(
+                               orderInfo.pharmacyName!,
+                               style: TextStyles.orderInfoText.copyWith(
+                                 fontSize: 12.sp,
+                                 color: ColorName.secondaryColor,
+                               ),
+                             ),
+                           ),
+                         ],
+                       ),
+                     ),
 
                   // const SizedBox(height: 16),
                   // CompactOrderProgressIndicator(currentStatus: orderInfo.status,),
@@ -112,7 +138,7 @@ class OrderCardItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(S.of(context).total),
+                      Text("${S.of(context).total}${orderInfo.isHomeDelivery?" + ${S.of(context).deliveryFees}(${Constant.deliveryFee})":""}"),
                       Text("${orderInfo.totalPrice}${S.of(context).pound}",
                           style: TextStyles.cartProductPrice),
                     ],
@@ -125,31 +151,6 @@ class OrderCardItem extends StatelessWidget {
                         vertical: 8, horizontal: 100),
                     child: GradientElevatedButton(
                         onPressed: () =>ReorderHelper.showReorderOptions(context, orderInfo),
-                          // final authState = context.read<AuthCubit>().state;
-                          //
-                          // if (authState is! AuthAuthenticated) {
-                          //   Navigator.pushNamed(context, Routes.login);
-                          //   return;
-                          // }
-                          //
-                          // final user = authState.user;
-                          // if (orderItemInfo != null) {
-                          //   final orderRequest = OrderRequest(
-                          //     userId: user.id,
-                          //     products: orderItemInfo,
-                          //     address: orderInfo.addressName ?? "No address selected",
-                          //     addressName: orderInfo.addressName ?? "No address selected",
-                          //     addressStreet: orderInfo.addressStreet ?? "No street selected",
-                          //     latitude: orderInfo.latitude ?? 0.0,
-                          //     longitude: orderInfo.longitude ?? 0.0,
-                          //     paymentMethod: orderInfo.paymentMethod,
-                          //     deliveryMethod: orderInfo.deliveryMethod ?? DeliveryMethod.homeDelivery,
-                          //     isHomeDelivery: orderInfo.isHomeDelivery ?? true,
-                          //     callRequestEnabled: orderInfo.callRequestEnabled ?? false,
-                          //     promoCode: orderInfo.promoCode,
-                          //   );
-                          //   context.read<OrderCubit>().createOrder(orderRequest);
-                          // }
                         child: Text(
                           S.of(context).reorder,
                           style: TextStyles.gradientElevatedButtonText.copyWith(

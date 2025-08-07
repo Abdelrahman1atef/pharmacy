@@ -8,10 +8,12 @@ part of 'register_response.dart';
 
 RegisterResponse _$RegisterResponseFromJson(Map<String, dynamic> json) =>
     RegisterResponse(
+      message: json['message'] as String,
       email: json['email'] as String,
     );
 
 Map<String, dynamic> _$RegisterResponseToJson(RegisterResponse instance) =>
     <String, dynamic>{
+      'message': instance.message,
       'email': instance.email,
     };

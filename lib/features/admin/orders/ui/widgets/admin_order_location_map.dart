@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pharmacy/core/models/order/admin/admin_order_model.dart';
-import 'package:pharmacy/generated/l10n.dart';
 
 class AdminOrderLocationMap extends StatefulWidget {
   final AdminOrderModel order;
@@ -17,7 +16,7 @@ class AdminOrderLocationMap extends StatefulWidget {
 
 class _AdminOrderLocationMapState extends State<AdminOrderLocationMap> {
   GoogleMapController? _mapController;
-  Set<Marker> _markers = {};
+  final Set<Marker> _markers = {};
 
   @override
   void initState() {
@@ -26,16 +25,16 @@ class _AdminOrderLocationMapState extends State<AdminOrderLocationMap> {
   }
 
   void _createMarkers() {
-    if (widget.order.latitude != null && widget.order.longitude != null) {
-      final position = LatLng(widget.order.latitude!, widget.order.longitude!);
+    if (widget.order.hasLocation) {
+      final position = widget.order.location!;
       
       _markers.add(
         Marker(
           markerId: const MarkerId('order_location'),
           position: position,
           infoWindow: InfoWindow(
-            title: '${widget.order.firstName} ${widget.order.lastName}',
-            snippet: widget.order.addressStreet ?? 'Delivery Address',
+            title: widget.order.fullName,
+            snippet: widget.order.fullAddress,
           ),
         ),
       );
@@ -45,7 +44,7 @@ class _AdminOrderLocationMapState extends State<AdminOrderLocationMap> {
   @override
   Widget build(BuildContext context) {
     // Check if we have valid coordinates
-    if (widget.order.latitude == null || widget.order.longitude == null) {
+    if (!widget.order.hasLocation) {
       return Container(
         height: 200,
         decoration: BoxDecoration(
@@ -75,10 +74,7 @@ class _AdminOrderLocationMapState extends State<AdminOrderLocationMap> {
       );
     }
 
-    final initialPosition = LatLng(
-      widget.order.latitude!,
-      widget.order.longitude!,
-    );
+    final initialPosition = widget.order.location!;
 
     return Container(
       height: 250,

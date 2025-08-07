@@ -4,13 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../features/cart/logic/cart/cart_cubit.dart';
 import '../../features/cart/logic/cart/cart_state.dart';
-import '../../features/details/logic/favorite/favorite_cubit.dart';
-import '../../features/details/logic/favorite/favorite_state.dart';
 import '../../features/details/logic/product/product_cubit.dart';
 import '../../gen/assets.gen.dart';
 import '../../gen/colors.gen.dart';
 import '../../generated/l10n.dart';
-import '../../utils/cart_action.dart';
+import '../../utils/simple_cart_action.dart';
 import '../../utils/network_image_utils.dart';
 import '../models/product/product_response.dart';
 import '../routes/routes.dart';
@@ -33,9 +31,15 @@ class CardWidget extends StatefulWidget {
 class _CardWidgetState extends State<CardWidget> {
   @override
   void initState() {
-    context.read<CartCubit>().emitCartState();
     super.initState();
+    // Only emit cart state once when widget is created
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context.read<CartCubit>().emitCartState();
+      }
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -47,30 +51,28 @@ class _CardWidgetState extends State<CardWidget> {
             arguments: widget.product.productId),
           borderRadius: BorderRadius.circular(12),
         child: BlocBuilder<CartCubit, CartState>(
-          builder: (context, state) {
-            return SizedBox(
-              width: 180.w,
-              height: 300.h,
-              child: Card(
-                color: ColorName.whiteColor,
-                shadowColor: ColorName.blackColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                elevation: 4,
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildProductDetails(context),
-                      buildCartAction(context, state,widget.product),
-                    ],
-                  ),
+          builder: (context, state) => SizedBox(
+            width: 180.w,
+            height: 300.h,
+            child: Card(
+              color: ColorName.whiteColor,
+              shadowColor: ColorName.blackColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              elevation: 4,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildProductDetails(context),
+                    buildSimpleCartAction(context, state, widget.product),
+                  ],
                 ),
               ),
-            );
-          },
+            ),
+          ),
         ),
       ),
     );
@@ -95,35 +97,36 @@ class _CardWidgetState extends State<CardWidget> {
                 errorBuilder: errorBuilder(Assets.images.pWatermarkV2.path),
               ),
             ),
-            Container(
-              width: 32.w,
-              height: 32.w,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-              ),
-              child: BlocBuilder<FavoriteCubit, FavoriteState>(
-                builder: (context, state) {
-                  return IconButton(
-                    icon: Assets.images.heart.svg(
-                      width: 16.w,
-                      height: 16.w,
-                      colorFilter: ColorFilter.mode(
-                        state.when(
-                          initial: () => Colors.grey,
-                          favorited: () => Colors.red,
-                          notFavorited: () => Colors.grey,
-                        ),
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                    onPressed: () {
-                      context.read<FavoriteCubit>().toggleFavorite();
-                    },
-                  );
-                },
-              ),
-            ),
+            ///TODO: Add favorite icon
+            // Container(
+            //   width: 32.w,
+            //   height: 32.w,
+            //   decoration: const BoxDecoration(
+            //     color: Colors.white,
+            //     shape: BoxShape.circle,
+            //   ),
+            //   child: BlocBuilder<FavoriteCubit, FavoriteState>(
+            //     builder: (context, state) {
+            //       return IconButton(
+            //         icon: Assets.images.heart.svg(
+            //           width: 16.w,
+            //           height: 16.w,
+            //           colorFilter: ColorFilter.mode(
+            //             state.when(
+            //               initial: () => Colors.grey,
+            //               favorited: () => Colors.red,
+            //               notFavorited: () => Colors.grey,
+            //             ),
+            //             BlendMode.srcIn,
+            //           ),
+            //         ),
+            //         onPressed: () {
+            //           context.read<FavoriteCubit>().toggleFavorite();
+            //         },
+            //       );
+            //     },
+            //   ),
+            // ),
           ],
         ),
         SizedBox(height: 12.h),
@@ -141,6 +144,4 @@ class _CardWidgetState extends State<CardWidget> {
       ],
     );
   }
-
-
 }

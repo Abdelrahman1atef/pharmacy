@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmacy/core/enum/order_status.dart';
 import 'package:pharmacy/features/admin/dashboard/data/models/dashboard_response.dart';
 import 'package:pharmacy/core/themes/theme_mode/colors.dart';
 import 'package:pharmacy/generated/l10n.dart';
@@ -48,10 +49,10 @@ class RecentActivityWidget extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 40,
+            width: 40,      
             height: 40,
             decoration: BoxDecoration(
-              color: _getStatusColor(order.status),
+              color: order.status.getStatusColor(),
               borderRadius: BorderRadius.circular(20),
             ),
             child: const Icon(
@@ -94,10 +95,10 @@ class RecentActivityWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                order.status.toUpperCase(),
+                order.getStatusText (context),
                 style: TextStyle(
                   fontSize: 10,
-                  color: _getStatusColor(order.status),
+                  color: order.status.getStatusColor(),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -106,22 +107,5 @@ class RecentActivityWidget extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Color _getStatusColor(String status) {
-    switch (status.toLowerCase()) {
-      case 'pending':
-        return Colors.orange;
-      case 'preparing':
-        return Colors.blue;
-      case 'shipped':
-        return Colors.purple;
-      case 'delivered':
-        return Colors.green;
-      case 'cancelled':
-        return Colors.red;
-      default:
-        return Colors.grey;
-    }
   }
 } 

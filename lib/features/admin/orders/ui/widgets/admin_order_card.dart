@@ -48,9 +48,42 @@ class AdminOrderCard extends StatelessWidget {
                 Text('${S.of(context).orderStatus}: ${order.getStatusText(context)}'),
               ],
             ),
+            if (order.hasLocation)
+              Row(
+                children: [
+                  const Icon(Icons.location_on, size: 16, color: Colors.red),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: Text(
+                      order.fullAddress,
+                      style: const TextStyle(fontSize: 12),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            if (!order.isHomeDelivery! && order.pharmacyName != null)
+              Row(
+                children: [
+                  const Icon(Icons.local_pharmacy, size: 16, color: Colors.blue),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: Text(
+                      '${S.of(context).pharmacyPickup}: ${order.pharmacyName}',
+                      style: const TextStyle(fontSize: 12),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
           ],
         ),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+        trailing: const Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.arrow_forward_ios, size: 18),
+          ],
+        ),
         onTap: () => showDialog(
           context: context,
           builder: (_) => AdminOrderDetails(order: order),

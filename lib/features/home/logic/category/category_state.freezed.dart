@@ -20,6 +20,7 @@ mixin _$CategoryState<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() loadingFromCache,
     required TResult Function(T data) success,
     required TResult Function(ApiException e) error,
   }) =>
@@ -28,6 +29,7 @@ mixin _$CategoryState<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function()? loadingFromCache,
     TResult? Function(T data)? success,
     TResult? Function(ApiException e)? error,
   }) =>
@@ -36,6 +38,7 @@ mixin _$CategoryState<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? loadingFromCache,
     TResult Function(T data)? success,
     TResult Function(ApiException e)? error,
     required TResult orElse(),
@@ -45,6 +48,7 @@ mixin _$CategoryState<T> {
   TResult map<TResult extends Object?>({
     required TResult Function(Initial<T> value) initial,
     required TResult Function(Loading<T> value) loading,
+    required TResult Function(LoadingFromCache<T> value) loadingFromCache,
     required TResult Function(Success<T> value) success,
     required TResult Function(Error<T> value) error,
   }) =>
@@ -53,6 +57,7 @@ mixin _$CategoryState<T> {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Initial<T> value)? initial,
     TResult? Function(Loading<T> value)? loading,
+    TResult? Function(LoadingFromCache<T> value)? loadingFromCache,
     TResult? Function(Success<T> value)? success,
     TResult? Function(Error<T> value)? error,
   }) =>
@@ -61,6 +66,7 @@ mixin _$CategoryState<T> {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Initial<T> value)? initial,
     TResult Function(Loading<T> value)? loading,
+    TResult Function(LoadingFromCache<T> value)? loadingFromCache,
     TResult Function(Success<T> value)? success,
     TResult Function(Error<T> value)? error,
     required TResult orElse(),
@@ -132,6 +138,7 @@ class _$InitialImpl<T> implements Initial<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() loadingFromCache,
     required TResult Function(T data) success,
     required TResult Function(ApiException e) error,
   }) {
@@ -143,6 +150,7 @@ class _$InitialImpl<T> implements Initial<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function()? loadingFromCache,
     TResult? Function(T data)? success,
     TResult? Function(ApiException e)? error,
   }) {
@@ -154,6 +162,7 @@ class _$InitialImpl<T> implements Initial<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? loadingFromCache,
     TResult Function(T data)? success,
     TResult Function(ApiException e)? error,
     required TResult orElse(),
@@ -169,6 +178,7 @@ class _$InitialImpl<T> implements Initial<T> {
   TResult map<TResult extends Object?>({
     required TResult Function(Initial<T> value) initial,
     required TResult Function(Loading<T> value) loading,
+    required TResult Function(LoadingFromCache<T> value) loadingFromCache,
     required TResult Function(Success<T> value) success,
     required TResult Function(Error<T> value) error,
   }) {
@@ -180,6 +190,7 @@ class _$InitialImpl<T> implements Initial<T> {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Initial<T> value)? initial,
     TResult? Function(Loading<T> value)? loading,
+    TResult? Function(LoadingFromCache<T> value)? loadingFromCache,
     TResult? Function(Success<T> value)? success,
     TResult? Function(Error<T> value)? error,
   }) {
@@ -191,6 +202,7 @@ class _$InitialImpl<T> implements Initial<T> {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Initial<T> value)? initial,
     TResult Function(Loading<T> value)? loading,
+    TResult Function(LoadingFromCache<T> value)? loadingFromCache,
     TResult Function(Success<T> value)? success,
     TResult Function(Error<T> value)? error,
     required TResult orElse(),
@@ -249,6 +261,7 @@ class _$LoadingImpl<T> implements Loading<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() loadingFromCache,
     required TResult Function(T data) success,
     required TResult Function(ApiException e) error,
   }) {
@@ -260,6 +273,7 @@ class _$LoadingImpl<T> implements Loading<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function()? loadingFromCache,
     TResult? Function(T data)? success,
     TResult? Function(ApiException e)? error,
   }) {
@@ -271,6 +285,7 @@ class _$LoadingImpl<T> implements Loading<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? loadingFromCache,
     TResult Function(T data)? success,
     TResult Function(ApiException e)? error,
     required TResult orElse(),
@@ -286,6 +301,7 @@ class _$LoadingImpl<T> implements Loading<T> {
   TResult map<TResult extends Object?>({
     required TResult Function(Initial<T> value) initial,
     required TResult Function(Loading<T> value) loading,
+    required TResult Function(LoadingFromCache<T> value) loadingFromCache,
     required TResult Function(Success<T> value) success,
     required TResult Function(Error<T> value) error,
   }) {
@@ -297,6 +313,7 @@ class _$LoadingImpl<T> implements Loading<T> {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Initial<T> value)? initial,
     TResult? Function(Loading<T> value)? loading,
+    TResult? Function(LoadingFromCache<T> value)? loadingFromCache,
     TResult? Function(Success<T> value)? success,
     TResult? Function(Error<T> value)? error,
   }) {
@@ -308,6 +325,7 @@ class _$LoadingImpl<T> implements Loading<T> {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Initial<T> value)? initial,
     TResult Function(Loading<T> value)? loading,
+    TResult Function(LoadingFromCache<T> value)? loadingFromCache,
     TResult Function(Success<T> value)? success,
     TResult Function(Error<T> value)? error,
     required TResult orElse(),
@@ -321,6 +339,130 @@ class _$LoadingImpl<T> implements Loading<T> {
 
 abstract class Loading<T> implements CategoryState<T> {
   const factory Loading() = _$LoadingImpl<T>;
+}
+
+/// @nodoc
+abstract class _$$LoadingFromCacheImplCopyWith<T, $Res> {
+  factory _$$LoadingFromCacheImplCopyWith(_$LoadingFromCacheImpl<T> value,
+          $Res Function(_$LoadingFromCacheImpl<T>) then) =
+      __$$LoadingFromCacheImplCopyWithImpl<T, $Res>;
+}
+
+/// @nodoc
+class __$$LoadingFromCacheImplCopyWithImpl<T, $Res>
+    extends _$CategoryStateCopyWithImpl<T, $Res, _$LoadingFromCacheImpl<T>>
+    implements _$$LoadingFromCacheImplCopyWith<T, $Res> {
+  __$$LoadingFromCacheImplCopyWithImpl(_$LoadingFromCacheImpl<T> _value,
+      $Res Function(_$LoadingFromCacheImpl<T>) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CategoryState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$LoadingFromCacheImpl<T> implements LoadingFromCache<T> {
+  const _$LoadingFromCacheImpl();
+
+  @override
+  String toString() {
+    return 'CategoryState<$T>.loadingFromCache()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LoadingFromCacheImpl<T>);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() loadingFromCache,
+    required TResult Function(T data) success,
+    required TResult Function(ApiException e) error,
+  }) {
+    return loadingFromCache();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? loadingFromCache,
+    TResult? Function(T data)? success,
+    TResult? Function(ApiException e)? error,
+  }) {
+    return loadingFromCache?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? loadingFromCache,
+    TResult Function(T data)? success,
+    TResult Function(ApiException e)? error,
+    required TResult orElse(),
+  }) {
+    if (loadingFromCache != null) {
+      return loadingFromCache();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Initial<T> value) initial,
+    required TResult Function(Loading<T> value) loading,
+    required TResult Function(LoadingFromCache<T> value) loadingFromCache,
+    required TResult Function(Success<T> value) success,
+    required TResult Function(Error<T> value) error,
+  }) {
+    return loadingFromCache(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Initial<T> value)? initial,
+    TResult? Function(Loading<T> value)? loading,
+    TResult? Function(LoadingFromCache<T> value)? loadingFromCache,
+    TResult? Function(Success<T> value)? success,
+    TResult? Function(Error<T> value)? error,
+  }) {
+    return loadingFromCache?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Initial<T> value)? initial,
+    TResult Function(Loading<T> value)? loading,
+    TResult Function(LoadingFromCache<T> value)? loadingFromCache,
+    TResult Function(Success<T> value)? success,
+    TResult Function(Error<T> value)? error,
+    required TResult orElse(),
+  }) {
+    if (loadingFromCache != null) {
+      return loadingFromCache(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LoadingFromCache<T> implements CategoryState<T> {
+  const factory LoadingFromCache() = _$LoadingFromCacheImpl<T>;
 }
 
 /// @nodoc
@@ -394,6 +536,7 @@ class _$SuccessImpl<T> implements Success<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() loadingFromCache,
     required TResult Function(T data) success,
     required TResult Function(ApiException e) error,
   }) {
@@ -405,6 +548,7 @@ class _$SuccessImpl<T> implements Success<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function()? loadingFromCache,
     TResult? Function(T data)? success,
     TResult? Function(ApiException e)? error,
   }) {
@@ -416,6 +560,7 @@ class _$SuccessImpl<T> implements Success<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? loadingFromCache,
     TResult Function(T data)? success,
     TResult Function(ApiException e)? error,
     required TResult orElse(),
@@ -431,6 +576,7 @@ class _$SuccessImpl<T> implements Success<T> {
   TResult map<TResult extends Object?>({
     required TResult Function(Initial<T> value) initial,
     required TResult Function(Loading<T> value) loading,
+    required TResult Function(LoadingFromCache<T> value) loadingFromCache,
     required TResult Function(Success<T> value) success,
     required TResult Function(Error<T> value) error,
   }) {
@@ -442,6 +588,7 @@ class _$SuccessImpl<T> implements Success<T> {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Initial<T> value)? initial,
     TResult? Function(Loading<T> value)? loading,
+    TResult? Function(LoadingFromCache<T> value)? loadingFromCache,
     TResult? Function(Success<T> value)? success,
     TResult? Function(Error<T> value)? error,
   }) {
@@ -453,6 +600,7 @@ class _$SuccessImpl<T> implements Success<T> {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Initial<T> value)? initial,
     TResult Function(Loading<T> value)? loading,
+    TResult Function(LoadingFromCache<T> value)? loadingFromCache,
     TResult Function(Success<T> value)? success,
     TResult Function(Error<T> value)? error,
     required TResult orElse(),
@@ -546,6 +694,7 @@ class _$ErrorImpl<T> implements Error<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function() loadingFromCache,
     required TResult Function(T data) success,
     required TResult Function(ApiException e) error,
   }) {
@@ -557,6 +706,7 @@ class _$ErrorImpl<T> implements Error<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function()? loadingFromCache,
     TResult? Function(T data)? success,
     TResult? Function(ApiException e)? error,
   }) {
@@ -568,6 +718,7 @@ class _$ErrorImpl<T> implements Error<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function()? loadingFromCache,
     TResult Function(T data)? success,
     TResult Function(ApiException e)? error,
     required TResult orElse(),
@@ -583,6 +734,7 @@ class _$ErrorImpl<T> implements Error<T> {
   TResult map<TResult extends Object?>({
     required TResult Function(Initial<T> value) initial,
     required TResult Function(Loading<T> value) loading,
+    required TResult Function(LoadingFromCache<T> value) loadingFromCache,
     required TResult Function(Success<T> value) success,
     required TResult Function(Error<T> value) error,
   }) {
@@ -594,6 +746,7 @@ class _$ErrorImpl<T> implements Error<T> {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(Initial<T> value)? initial,
     TResult? Function(Loading<T> value)? loading,
+    TResult? Function(LoadingFromCache<T> value)? loadingFromCache,
     TResult? Function(Success<T> value)? success,
     TResult? Function(Error<T> value)? error,
   }) {
@@ -605,6 +758,7 @@ class _$ErrorImpl<T> implements Error<T> {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Initial<T> value)? initial,
     TResult Function(Loading<T> value)? loading,
+    TResult Function(LoadingFromCache<T> value)? loadingFromCache,
     TResult Function(Success<T> value)? success,
     TResult Function(Error<T> value)? error,
     required TResult orElse(),

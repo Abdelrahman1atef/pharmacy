@@ -1,4 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:pharmacy/core/enum/payment_method.dart';
+import 'package:pharmacy/core/enum/delivery_method.dart';
+import 'package:pharmacy/core/enum/order_status.dart';
+import 'package:pharmacy/generated/l10n.dart';
 
 part 'admin_user_detail_response.g.dart';
 
@@ -38,13 +43,13 @@ class OrderHistory {
   final int orderId;
   @JsonKey(name: 'created_at')
   final String createdAt;
-  final String status;
+  final OrderStatus status;
   @JsonKey(name: 'total_price')
   final double totalPrice;
   @JsonKey(name: 'payment_method')
-  final String paymentMethod;
+  final PaymentMethod? paymentMethod;
   @JsonKey(name: 'delivery_method')
-  final String deliveryMethod;
+  final DeliveryMethod? deliveryMethod;
   @JsonKey(name: 'address_name')
   final String addressName;
   @JsonKey(name: 'address_street')
@@ -78,6 +83,32 @@ class OrderHistory {
 
   factory OrderHistory.fromJson(Map<String, dynamic> json) => _$OrderHistoryFromJson(json);
   Map<String, dynamic> toJson() => _$OrderHistoryToJson(this);
+  
+  String getStatusText(BuildContext context) {
+    switch (status) {
+      case OrderStatus.pending:
+        return S.of(context).orderStatusPending;
+      case OrderStatus.preparing:
+        return S.of(context).orderStatusPreparing;
+      case OrderStatus.shipped:
+        return S.of(context).orderStatusShipped;
+      case OrderStatus.delivered:
+        return S.of(context).orderStatusDelivered;
+      case OrderStatus.cancelled:
+        return S.of(context).orderStatusCancelled;
+      default:
+        return 'Unknown';
+    }
+  }
+  String getDeliveryMethodText(BuildContext context) {
+    if (deliveryMethod == null) return 'Unknown';
+    return deliveryMethod!.getLocalizedDisplayName(S.of(context));
+  }
+
+  String getPaymentMethodText(BuildContext context) {
+    if (paymentMethod == null) return 'Unknown';
+    return paymentMethod!.getLocalizedDisplayName(S.of(context));
+  }
 }
 
 @JsonSerializable()
@@ -91,14 +122,14 @@ class AdminUserDetailResponse {
   final String lastName;
   @JsonKey(name: 'full_name')
   final String fullName;
-  final String birthdate;
-  final String gender;
+  final String? birthdate;
+  final String? gender;
   @JsonKey(name: 'auth_type')
   final String authType;
   @JsonKey(name: 'social_id')
   final String? socialId;
   @JsonKey(name: 'profile_picture')
-  final String profilePicture;
+  final String? profilePicture;
   @JsonKey(name: 'is_active')
   final bool isActive;
   @JsonKey(name: 'is_staff')
@@ -108,7 +139,7 @@ class AdminUserDetailResponse {
   @JsonKey(name: 'updated_at')
   final String updatedAt;
   @JsonKey(name: 'last_login')
-  final String lastLogin;
+  final String? lastLogin;
   @JsonKey(name: 'total_orders')
   final int totalOrders;
   @JsonKey(name: 'total_spent')

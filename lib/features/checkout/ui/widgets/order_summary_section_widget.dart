@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy/features/checkout/logic/toggle_buttons_logic/checkout_cubit.dart';
 import 'package:pharmacy/features/checkout/logic/toggle_buttons_logic/checkout_state.dart';
+import 'package:pharmacy/utils/constant.dart';
 import '../../../../core/db/cart/model/product.dart';
 import '../../../../core/themes/text/text_styles.dart';
 import '../../../../gen/colors.gen.dart';
@@ -18,7 +19,7 @@ class OrderSummarySectionWidget extends StatelessWidget {
     return BlocBuilder<CheckoutCubit, CheckoutState>(
       builder: (context, state) {
         double? subtotal = 0;
-        const double deliveryFee = 15;
+        const double deliveryFee = Constant.deliveryFee;
         double total = 0;
         subtotal = cartItems.fold(
             0, (sum, item) => sum + (item.selectedUnitPrice! * item.quantity));

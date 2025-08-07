@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import '../../generated/l10n.dart';
 
 enum OrderStatus {
@@ -23,6 +24,36 @@ extension OrderStatusLocalization on OrderStatus {
         return s.orderStatusCancelled;
       default:
         return s.unknown;
+    }
+  }
+
+  Color getStatusColor() {
+    switch (this) {
+      case OrderStatus.pending:
+        return Colors.orange;
+      case OrderStatus.preparing:
+        return Colors.blue;
+      case OrderStatus.shipped:
+        return Colors.purple;
+      case OrderStatus.delivered:
+        return Colors.green;
+      case OrderStatus.cancelled:
+        return Colors.red;
+    }
+  }
+
+  IconData getStatusIcon() {
+    switch (this) {
+      case OrderStatus.pending:
+        return Icons.schedule;
+      case OrderStatus.preparing:
+        return Icons.build;
+      case OrderStatus.shipped:
+        return Icons.local_shipping;
+      case OrderStatus.delivered:
+        return Icons.check_circle;
+      case OrderStatus.cancelled:
+        return Icons.cancel;
     }
   }
 }

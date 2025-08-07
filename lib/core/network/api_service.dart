@@ -3,11 +3,12 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:pharmacy/core/models/category/category_response.dart';
 import 'package:pharmacy/core/models/order/create/order_request.dart';
-import 'package:pharmacy/core/models/product/product_response.dart';
+import 'package:pharmacy/core/models/product/product_response.dart' as product_response;
 import 'package:pharmacy/core/models/register_login/login_response.dart';
 import 'package:pharmacy/core/models/search/search_response.dart';
 import 'package:pharmacy/core/models/admin_user/admin_user_list_response.dart';
 import 'package:pharmacy/core/models/admin_user/admin_user_detail_response.dart';
+import 'package:pharmacy/core/models/branch/branch_response.dart';
 import 'package:pharmacy/core/network/constant.dart';
 import 'package:pharmacy/features/admin/dashboard/data/models/dashboard_response.dart';
 import '../../app_config_provider/logic/auth/model/data.dart';
@@ -17,28 +18,29 @@ import '../models/order/create/order_response.dart';
 import '../models/order/customer/customer_order_model.dart';
 import '../models/register_login/login_request.dart';
 import '../models/register_login/register_request.dart';
+import '../models/register_login/register_response.dart';
 import 'api_exception.dart';
 import 'api_result.dart';
 
 abstract class ApiService {
   Future<bool> checkServerStatus();
 
-  Future<ApiResult<ProductResponse>> fetchAllProduct(int page);
+  Future<ApiResult<product_response.ProductResponse>> fetchAllProduct(int page);
 
-  Future<ApiResult<ProductResponse>> fetchBestSellers(int page);
+  Future<ApiResult<product_response.ProductResponse>> fetchBestSellers(int page);
 
-  Future<ApiResult<ProductResponse>> fetchSeeOurProducts(int page);
+  Future<ApiResult<product_response.ProductResponse>> fetchSeeOurProducts(int page);
 
-  Future<ApiResult<Results>> fetchProductDetails(int productId);
+  Future<ApiResult<product_response.Results>> fetchProductDetails(int productId);
 
-  Future<ApiResult<ProductResponse>> fetchProductByCategory(
+  Future<ApiResult<product_response.ProductResponse>> fetchProductByCategory(
       {required int categoryId, required int page});
 
-  Future<ApiResult<List<CategoryResponse>>> fetchAllCategory();
+  Future<ApiResult<CategoryResponse>> fetchAllCategory();
 
   Future<ApiResult<List<SearchResponse>>> searchProduct(String query);
 
-  Future<ApiResult<RegisterRequest>> userRegister(RegisterRequest registerBody);
+  Future<ApiResult<RegisterResponse>> userRegister(RegisterRequest registerBody);
 
   Future<ApiResult<LoginResponse>> userLogin(LoginRequest loginBody);
 
@@ -46,12 +48,12 @@ abstract class ApiService {
 
   Future<ApiResult<OrderResponse>> createOrder(OrderRequest orderBody, token);
 
-  Future<ApiResult<List<AdminOrderModel>>> getAdminOrders(token);
+  Future<ApiResult<AdminOrderResponse>> getAdminOrders(token);
 
   Future<void> updateOrderStatus(
       int orderId, OrderStatus newStatus, token);
 
-  Future<ApiResult<List<CustomerOrderModel>>> getCustomerOrders(token);
+  Future<ApiResult<CustomerOrderResponse>> getCustomerOrders(token);
 
   Future<ApiResult<AdminUserListResponse>> fetchAdminUsers({String? search, required int page,required token});
   Future<ApiResult<AdminUserDetailResponse>> fetchAdminUserDetail(int userId,{required token});
@@ -59,6 +61,11 @@ abstract class ApiService {
   Future<ApiResult<DashboardResponse>> fetchAdminDashboard({required String token});
 
   Future<void> sendFCMToken(String fcmToken, String userToken);
+ 
+  Future<void> verifyOtp(String email, String otp);
+  Future<void> resendOtp(String email);
+  
+  Future<ApiResult<BranchResponse>> getBranches();
 }
 
 class ApiServiceImpl implements ApiService {
@@ -85,71 +92,69 @@ class ApiServiceImpl implements ApiService {
   }
 
   @override
-  Future<ApiResult<ProductResponse>> fetchAllProduct(int page) async {
+  Future<ApiResult<product_response.ProductResponse>> fetchAllProduct(int page) async {
     try {
       Response response = await _dio
           .get(Constant.allProductsEndPoint, queryParameters: {'page': page});
       if (response.statusCode == 200) {
-        return ApiResult<ProductResponse>.success(
-            ProductResponse.formJson(response.data));
+        return ApiResult<product_response.ProductResponse>.success(
+            product_response.ProductResponse.fromJson(response.data));
       } else {
-        return ApiResult<ProductResponse>.failure(
+        return ApiResult<product_response.ProductResponse>.failure(
             ApiException.fromJson(response.data));
       }
     } on DioException catch (e) {
-      return ApiResult<ProductResponse>.failure(ApiException(
+      return ApiResult<product_response.ProductResponse>.failure(ApiException(
           message: e.message ?? "Unable to fetch Now Showing Movies",
           code: e.response?.statusCode ?? 0));
     }
   }
 
   @override
-  Future<ApiResult<ProductResponse>> fetchBestSellers(int page) async {
+  Future<ApiResult<product_response.ProductResponse>> fetchBestSellers(int page) async {
     try {
       Response response = await _dio
           .get(Constant.bestSellersEndPoint, queryParameters: {'page': page});
       if (response.statusCode == 200) {
-        return ApiResult<ProductResponse>.success(
-            ProductResponse.formJson(response.data));
+        return ApiResult<product_response.ProductResponse>.success(
+            product_response.ProductResponse.fromJson(response.data));
       } else {
-        return ApiResult<ProductResponse>.failure(
+        return ApiResult<product_response.ProductResponse>.failure(
             ApiException.fromJson(response.data));
       }
     } on DioException catch (e) {
-      return ApiResult<ProductResponse>.failure(ApiException(
+      return ApiResult<product_response.ProductResponse>.failure(ApiException(
           message: e.message ?? "Unable to fetch Best Sellers",
           code: e.response?.statusCode ?? 0));
     }
   }
 
   @override
-  Future<ApiResult<ProductResponse>> fetchSeeOurProducts(int page) async {
+      Future<ApiResult<product_response.ProductResponse>> fetchSeeOurProducts(int page) async {
     try {
       Response response = await _dio
           .get(Constant.seeOurProductsEndPoint, queryParameters: {'page': page});
       if (response.statusCode == 200) {
-        return ApiResult<ProductResponse>.success(
-            ProductResponse.formJson(response.data));
+        return ApiResult<product_response.ProductResponse>.success(
+            product_response.ProductResponse.fromJson(response.data));
       } else {
-        return ApiResult<ProductResponse>.failure(
+        return ApiResult<product_response.ProductResponse>.failure(
             ApiException.fromJson(response.data));
       }
     } on DioException catch (e) {
-      return ApiResult<ProductResponse>.failure(ApiException(
+      return ApiResult<product_response.ProductResponse>.failure(ApiException(
           message: e.message ?? "Unable to fetch See Our Products",
           code: e.response?.statusCode ?? 0));
     }
   }
 
   @override
-  Future<ApiResult<List<CategoryResponse>>> fetchAllCategory() async {
+  Future<ApiResult<CategoryResponse>> fetchAllCategory() async {
     try {
       Response response = await _dio.get(Constant.allCategoriesEndPoint);
       if (response.statusCode == 200) {
-        final List<dynamic> data = response.data as List<dynamic>;
-        final List<CategoryResponse> categoryResults =
-            CategoryResponse.fromJsonList(data);
-        return ApiResult<List<CategoryResponse>>.success(categoryResults);
+        return ApiResult<CategoryResponse>.success(
+            CategoryResponse.fromJson(response.data));
       } else {
         throw ApiException.fromJson(response.data);
       }
@@ -164,38 +169,38 @@ class ApiServiceImpl implements ApiService {
   }
 
   @override
-  Future<ApiResult<ProductResponse>> fetchProductByCategory(
+  Future<ApiResult<product_response.ProductResponse>> fetchProductByCategory(
       {required int categoryId, required int page}) async {
     try {
       Response response = await _dio.get(
           '${Constant.allProductsOfCategoriesEndPoint}$categoryId',
           queryParameters: {'page': page});
       if (response.statusCode == 200) {
-        return ApiResult<ProductResponse>.success(
-            ProductResponse.formJson(response.data));
+        return ApiResult<product_response.ProductResponse>.success(
+            product_response.ProductResponse.fromJson(response.data));
       } else {
-        return ApiResult<ProductResponse>.failure(
+        return ApiResult<product_response.ProductResponse>.failure(
             ApiException.fromJson(response.data));
       }
     } on DioException catch (e) {
-      return ApiResult<ProductResponse>.failure(ApiException(
+      return ApiResult<product_response.ProductResponse>.failure(ApiException(
           message: e.message ?? "Unable to fetch Now Showing Movies",
           code: e.response?.statusCode ?? 0));
     }
   }
 
   @override
-  Future<ApiResult<Results>> fetchProductDetails(int productId) async {
+  Future<ApiResult<product_response.Results>> fetchProductDetails(int productId) async {
     try {
       Response response =
           await _dio.get('${Constant.productDetailsEndPoint}$productId');
       if (response.statusCode == 200) {
-        return ApiResult<Results>.success(Results.fromJson(response.data));
+        return ApiResult<product_response.Results>.success(product_response.Results.fromJson(response.data));
       } else {
-        return ApiResult<Results>.failure(ApiException.fromJson(response.data));
+        return ApiResult<product_response.Results>.failure(ApiException.fromJson(response.data));
       }
     } on DioException catch (e) {
-      return ApiResult<Results>.failure(ApiException(
+      return ApiResult<product_response.Results>.failure(ApiException(
           message: e.message ?? "Unable to fetch Now Showing Movies",
           code: e.response?.statusCode ?? 0));
     }
@@ -225,7 +230,7 @@ class ApiServiceImpl implements ApiService {
   }
 
   @override
-  Future<ApiResult<RegisterRequest>> userRegister(
+  Future<ApiResult<RegisterResponse>> userRegister(
       RegisterRequest registerBody) async {
     try {
       final registerRequestBody = registerBody.toJson();
@@ -236,15 +241,15 @@ class ApiServiceImpl implements ApiService {
         data: jsonBody,
       );
 
-      if (response.statusCode == 201) {
-        return ApiResult<RegisterRequest>.success(
-            RegisterRequest.fromJson(response.data));
+      if (response.statusCode==200) {
+        return ApiResult<RegisterResponse>.success(
+            RegisterResponse.fromJson(response.data));
       } else {
-        return ApiResult<RegisterRequest>.failure(
+        return ApiResult<RegisterResponse>.failure(
             ApiException.fromJson(response.data));
       }
     } on DioException catch (e) {
-      return ApiResult<RegisterRequest>.failure(ApiException(
+      return ApiResult<RegisterResponse>.failure(ApiException(
           message: e.message ?? "Unable to Register New User",
           code: e.response?.statusCode ?? 0));
     }
@@ -300,7 +305,7 @@ class ApiServiceImpl implements ApiService {
   Future<ApiResult<OrderResponse>> createOrder(
       OrderRequest orderBody, token) async {
     final jsonBody = json.encode(orderBody.toJson());
-    Response response = await _dio.post(Constant.createOrder,
+    Response response = await _dio.post(Constant.customerCreateOrdersEndPoint,
         data: jsonBody,
         options: Options(
           headers: {
@@ -316,7 +321,7 @@ class ApiServiceImpl implements ApiService {
   }
 
   @override
-  Future<ApiResult<List<AdminOrderModel>>> getAdminOrders(token) async {
+  Future<ApiResult<AdminOrderResponse>> getAdminOrders(token) async {
     try {
       Response response = await _dio.get(Constant.adminOrdersEndPoint,
           options: Options(
@@ -326,22 +331,20 @@ class ApiServiceImpl implements ApiService {
             },
           ));
       if (response.statusCode == 200) {
-        final List<dynamic> data = response.data;
-        final orders = data.map((e) => AdminOrderModel.fromJson(e)).toList();
-        return ApiResult<List<AdminOrderModel>>.success(orders);
+        return ApiResult<AdminOrderResponse>.success(AdminOrderResponse.fromJson(response.data));
       } else {
-        return ApiResult<List<AdminOrderModel>>.failure(
+        return ApiResult<AdminOrderResponse>.failure(
             ApiException.fromJson(response.data));
       }
     } on DioException catch (e) {
-      return ApiResult<List<AdminOrderModel>>.failure(ApiException(
+      return ApiResult<AdminOrderResponse>.failure(ApiException(
           message: e.message ?? "Unable to Get User Info",
           code: e.response?.statusCode ?? 0));
     }
   }
 
   @override
-  Future<ApiResult<List<CustomerOrderModel>>> getCustomerOrders(token) async {
+  Future<ApiResult<CustomerOrderResponse>> getCustomerOrders(token) async {
     try {
       Response response = await _dio.get(Constant.customerOrdersEndPoint,
           options: Options(
@@ -351,15 +354,13 @@ class ApiServiceImpl implements ApiService {
             },
           ));
       if (response.statusCode == 200) {
-        final List<dynamic> data = response.data;
-        final orders = data.map((e) => CustomerOrderModel.fromJson(e)).toList();
-        return ApiResult<List<CustomerOrderModel>>.success(orders);
+        return ApiResult<CustomerOrderResponse>.success(CustomerOrderResponse.fromJson(response.data));
       } else {
-        return ApiResult<List<CustomerOrderModel>>.failure(
+        return ApiResult<CustomerOrderResponse>.failure(
             ApiException.fromJson(response.data));
       }
     } on DioException catch (e) {
-      return ApiResult<List<CustomerOrderModel>>.failure(ApiException(
+      return ApiResult<CustomerOrderResponse>.failure(ApiException(
           message: e.message ?? "Unable to Get User Info",
           code: e.response?.statusCode ?? 0));
     }
@@ -369,7 +370,7 @@ class ApiServiceImpl implements ApiService {
   Future<void> updateOrderStatus(
       int orderId, OrderStatus newStatus, token) async {
      await _dio.patch(
-      "${Constant.adminChangeOrderStatusEndPoint}$orderId/",
+      Constant.adminChangeOrderStatusEndPoint.replaceAll('{id}', orderId.toString()),
       options: Options(
         headers: {
           'Accept': 'application/json',
@@ -390,7 +391,7 @@ class ApiServiceImpl implements ApiService {
         params['search'] = search;
       }
       final response = await _dio.get(
-        Constant.adminUsersEndPoint,
+        search == null?Constant.adminUsersEndPoint:Constant.adminUsersSearchEndPoint,
         queryParameters: params,
         options: Options(
           headers: {
@@ -463,6 +464,33 @@ class ApiServiceImpl implements ApiService {
     } catch (e) {
       // Optionally handle/log error
       rethrow;
+    }
+  }
+
+  @override
+  Future<void> verifyOtp(String email, String otp) async {
+    await _dio.post(Constant.verifyOtp, data: {'email': email, 'otp': otp});
+  }
+
+  @override
+  Future<void> resendOtp(String email) async {
+    await _dio.post(Constant.resendOtp, data: {'email': email});
+  }
+
+  @override
+  Future<ApiResult<BranchResponse>> getBranches() async {
+    try {
+      Response response = await _dio.get(Constant.branchesEndPoint);
+      if (response.statusCode == 200) {
+        return ApiResult.success(BranchResponse.fromJson(response.data));
+      } else {
+        return ApiResult.failure(ApiException.fromJson(response.data));
+      }
+    } on DioException catch (e) {
+      return ApiResult.failure(ApiException(
+        message: e.message ?? 'Unable to fetch branches',
+        code: e.response?.statusCode ?? 0,
+      ));
     }
   }
 }

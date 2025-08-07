@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmacy/core/enum/order_status.dart';
 import 'package:pharmacy/core/models/admin_user/admin_user_detail_response.dart';
 import 'package:pharmacy/core/themes/theme_mode/colors.dart';
 import 'package:pharmacy/generated/l10n.dart';
@@ -80,15 +81,15 @@ class _OrderHistoryCard extends StatelessWidget {
                 vertical: 4,
               ),
               decoration: BoxDecoration(
-                color: _getStatusColor(order.status).withOpacity(0.1),
+                color: order.status.getStatusColor().withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
-                _getLocalizedStatus(context, order.status),
+                order.getStatusText(context),
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
-                  color: _getStatusColor(order.status),
+                  color: order.status.getStatusColor(),
                 ),
               ),
             ),
@@ -131,9 +132,10 @@ class _OrderHistoryCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildOrderInfo(S.of(context).paymentMethod, order.paymentMethod),
+
+                _buildOrderInfo(S.of(context).paymentMethod, order.getPaymentMethodText(context)),
                 const SizedBox(height: 8),
-                _buildOrderInfo(S.of(context).deliveryMethod, order.deliveryMethod),
+                _buildOrderInfo(S.of(context).deliveryMethod, order.getDeliveryMethodText(context)),
                 const SizedBox(height: 8),
                 _buildOrderInfo(S.of(context).address, order.addressStreet),
                 const SizedBox(height: 16),
@@ -269,46 +271,12 @@ class _OrderHistoryCard extends StatelessWidget {
     );
   }
 
-  Color _getStatusColor(String status) {
-    switch (status.toLowerCase()) {
-      case 'pending':
-        return Colors.orange;
-      case 'preparing':
-        return Colors.blue;
-      case 'shipped':
-        return Colors.purple;
-      case 'delivered':
-        return Colors.green;
-      case 'cancelled':
-        return Colors.red;
-      default:
-        return AppColors.black;
-    }
-  }
-
   String _formatDate(String dateString) {
     try {
       final date = DateTime.parse(dateString);
       return '${date.day}/${date.month}/${date.year}';
     } catch (e) {
       return dateString;
-    }
-  }
-
-  String _getLocalizedStatus(BuildContext context, String status) {
-    switch (status.toLowerCase()) {
-      case 'pending':
-        return S.of(context).orderStatusPending;
-      case 'preparing':
-        return S.of(context).orderStatusPreparing;
-      case 'shipped':
-        return S.of(context).orderStatusShipped;
-      case 'delivered':
-        return S.of(context).orderStatusDelivered;
-      case 'cancelled':
-        return S.of(context).orderStatusCancelled;
-      default:
-        return status.toUpperCase();
     }
   }
 } 

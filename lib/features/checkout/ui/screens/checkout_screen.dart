@@ -1,5 +1,4 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,6 +16,7 @@ import '../../../../core/db/cart/model/product.dart';
 import '../../../../core/models/order/create/order_request.dart';
 import '../../../../core/routes/routes.dart';
 import '../../../../generated/l10n.dart';
+import '../../../../utils/constant.dart';
 import '../../../cart/logic/cart/cart_cubit.dart';
 import '../../../cart/logic/order/order_cubit.dart';
 import '../../logic/toggle_buttons_logic/checkout_cubit.dart';
@@ -27,6 +27,7 @@ import '../widgets/order_summary_section_widget.dart';
 import '../widgets/payment_section_widget.dart';
 import '../../logic/location/location_cubit.dart';
 import '../../logic/payment/payment_helper.dart';
+import '../../logic/branch/branch_cubit.dart';
 
 class CheckoutScreen extends StatelessWidget {
   final List<Product> cartItems;
@@ -70,7 +71,7 @@ class CheckoutScreen extends StatelessWidget {
             context.read<CartCubit>().dropCartItem();
             scaffold.showSnackBar(
               SnackBar(
-                content: Text("Order successful! ID: ${data.orderId}"),
+                content: Text("Order successful! ID: ${data.message}"),
                 backgroundColor: Colors.green,
                 duration: const Duration(seconds: 4),
               ),
@@ -161,24 +162,161 @@ void _handleCheckout(BuildContext context, List<Product> cartItems,
   final paymentState = context.read<PaymentCubit>().state;
   final selectedLocation = context.read<LocationCubit>().state;
 
+  // Validate delivery method selection
+  if (checkoutState.isHomeDeliverySelected) {
+    // Validate address selection for home delivery
+    if (selectedLocation == null) {
+      _showAddressErrorDialog(context);
+      return;
+    }
+  } else {
+    // Validate pharmacy selection for pharmacy pickup
+    final branchState = context.read<BranchCubit>().state;
+    branchState.when(
+      initial: () {
+        _showPharmacyErrorDialog(context);
+        return;
+      },
+      loading: () {
+        _showPharmacyErrorDialog(context);
+        return;
+      },
+      loaded: (branches) {
+        _showPharmacyErrorDialog(context);
+        return;
+      },
+      selected: (branches, selectedBranch) {
+        // Pharmacy is selected, continue with checkout
+      },
+      error: (message) {
+        _showPharmacyErrorDialog(context);
+        return;
+      },
+    );
+  }
+
   // Convert payment index to PaymentMethod enum using helper
   final paymentMethod = PaymentHelper.getPaymentMethodFromIndex(paymentState.selectedPaymentIndex);
 
-  final orderRequest = OrderRequest(
-    userId: user.id,
-    products: cartItems,
-    address: selectedLocation?.name?? "No address selected",
-    addressName: selectedLocation?.name ?? "No street selected",
-    addressStreet: selectedLocation?.street ?? "No address selected",
-    latitude: selectedLocation?.latitude ?? 0.0,
-    longitude: selectedLocation?.longitude ?? 0.0,
-    paymentMethod: paymentMethod,
-    deliveryMethod: checkoutState.deliveryMethod,
-    isHomeDelivery: checkoutState.isHomeDeliverySelected,
-    callRequestEnabled: checkoutState.isCallRequestEnabled,
-    promoCode: checkoutState.promoCode,
-  );
+  // Prepare order request based on delivery method
+  OrderRequest orderRequest;
+  
+  if (checkoutState.isHomeDeliverySelected) {
+    // Home delivery order
+    orderRequest = OrderRequest(
+      userId: user.id,
+      products: cartItems,
+      address: selectedLocation!.name,
+      addressName: selectedLocation.name,
+      addressStreet: selectedLocation.street,
+      latitude: selectedLocation.latitude,
+      longitude: selectedLocation.longitude,
+      paymentMethod: paymentMethod,
+      deliveryMethod: checkoutState.deliveryMethod,
+      deliveryFee: Constant.deliveryFee,
+      isHomeDelivery: true,
+      callRequestEnabled: checkoutState.isCallRequestEnabled,
+      promoCode: checkoutState.promoCode,
+    );
+  } else {
+    // Pharmacy pickup order
+    final branchState = context.read<BranchCubit>().state;
+    orderRequest = branchState.when(
+      initial: () => throw Exception('No pharmacy selected'),
+      loading: () => throw Exception('No pharmacy selected'),
+      loaded: (branches) => throw Exception('No pharmacy selected'),
+      selected: (branches, selectedBranch) => OrderRequest(
+        userId: user.id,
+        products: cartItems,
+        paymentMethod: paymentMethod,
+        deliveryMethod: checkoutState.deliveryMethod,
+        deliveryFee: 0.0, // No delivery fee for pharmacy pickup
+        isHomeDelivery: false,
+        callRequestEnabled: checkoutState.isCallRequestEnabled,
+        promoCode: checkoutState.promoCode,
+        branchId: selectedBranch.branchId,
+        pharmacyName: selectedBranch.branchName,
+      ),
+      error: (message) => throw Exception('No pharmacy selected'),
+    );
+  }
    context.read<OrderCubit>().createOrder(orderRequest);
+}
+
+void _showAddressErrorDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(
+          S.of(context).error,
+          style: TextStyles.orderInfoText.copyWith(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.red,
+          ),
+        ),
+        content: Text(
+          S.of(context).selectAddressError,
+          style: TextStyles.orderInfoText.copyWith(
+            fontSize: 14,
+            color: ColorName.productDetailTextColor,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              'OK',
+              style: TextStyles.orderInfoText.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+            ),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+void _showPharmacyErrorDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(
+          S.of(context).error,
+          style: TextStyles.orderInfoText.copyWith(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.red,
+          ),
+        ),
+        content: Text(
+          S.of(context).selectPharmacyError,
+          style: TextStyles.orderInfoText.copyWith(
+            fontSize: 14,
+            color: ColorName.productDetailTextColor,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              'OK',
+              style: TextStyles.orderInfoText.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+            ),
+          ),
+        ],
+      );
+    },
+  );
 }
 
 

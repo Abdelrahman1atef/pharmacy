@@ -17,7 +17,9 @@ class QuickStatsWidget extends StatelessWidget {
       builder: (context, constraints) {
         // Determine grid layout based on available width
         int crossAxisCount = _getCrossAxisCount(constraints.maxWidth);
-        double childAspectRatio = _getChildAspectRatio(constraints.maxWidth);
+        
+        print('Grid layout: $crossAxisCount columns');
+        print('Available width: ${constraints.maxWidth}, height: ${constraints.maxHeight}');
         
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,43 +32,46 @@ class QuickStatsWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            GridView.count(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              crossAxisCount: crossAxisCount,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-              childAspectRatio: childAspectRatio,
-              children: [
-                _buildStatCard(
-                  context,
-                  S.of(context).pendingOrders,
-                  stats.pendingOrders.toString(),
-                  Icons.pending,
-                  Colors.orange,
-                ),
-                _buildStatCard(
-                  context,
-                  S.of(context).deliveredOrders,
-                  stats.deliveredOrders.toString(),
-                  Icons.check_circle,
-                  Colors.green,
-                ),
-                _buildStatCard(
-                  context,
-                  S.of(context).totalProducts,
-                  stats.totalProducts.toString(),
-                  Icons.inventory,
-                  Colors.blue,
-                ),
-                _buildStatCard(
-                  context,
-                  S.of(context).outOfStock,
-                  stats.outOfStockProducts.toString(),
-                  Icons.warning,
-                  Colors.red,
-                ),
-              ],
+            SizedBox(
+              width: double.infinity,
+              child: GridView.count(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisCount: crossAxisCount,
+                crossAxisSpacing: 15,
+                mainAxisSpacing: 15,
+                childAspectRatio: _calculateAspectRatio(constraints.maxWidth, crossAxisCount),
+                children: [
+                  _buildStatCard(
+                    context,
+                    S.of(context).pendingOrders,
+                    stats.pendingOrders.toString(),
+                    Icons.pending,
+                    Colors.orange,
+                  ),
+                  _buildStatCard(
+                    context,
+                    S.of(context).deliveredOrders,
+                    stats.deliveredOrders.toString(),
+                    Icons.check_circle,
+                    Colors.green,
+                  ),
+                  _buildStatCard(
+                    context,
+                    S.of(context).totalProducts,
+                    stats.totalProducts.toString(),
+                    Icons.inventory,
+                    Colors.blue,
+                  ),
+                  _buildStatCard(
+                    context,
+                    S.of(context).outOfStock,
+                    stats.outOfStockProducts.toString(),
+                    Icons.warning,
+                    Colors.red,
+                  ),
+                ],
+              ),
             ),
           ],
         );
@@ -75,60 +80,105 @@ class QuickStatsWidget extends StatelessWidget {
   }
 
   int _getCrossAxisCount(double width) {
-    if (width < 400) return 1;      // Very small screens
-    if (width < 600) return 2;      // Small screens
-    if (width < 900) return 3;      // Medium screens
-    return 4;                       // Large screens
+    print('QuickStatsWidget width: $width');
+    
+    if (width < 450) {
+      print('Using 1 column for width: $width');
+      return 1;
+    }
+    if (width < 500) {
+      print('Using 2 columns for width: $width');
+      return 2;
+    }
+    if (width < 900) {
+      print('Using 3 columns for width: $width');
+      return 3;
+    }
+    if (width < 1200) {
+      print('Using 4 columns for width: $width');
+      return 4;
+    }
+    print('Using 5 columns for width: $width');
+    return 5;
   }
 
-  double _getChildAspectRatio(double width) {
-    if (width < 400) return 2.5;    // Taller cards for narrow screens
-    if (width < 600) return 2.0;    // Medium height
-    if (width < 900) return 1.8;    // Slightly shorter
-    return 1.5;                     // Standard ratio for large screens
+  double _calculateAspectRatio(double width, int crossAxisCount) {
+    // Calculate available width per card (accounting for spacing)
+    double availableWidth = width - (12 * (crossAxisCount - 1)); // Subtract spacing
+    double cardWidth = availableWidth / crossAxisCount;
+    
+    // Calculate optimal aspect ratio based on content needs
+    double aspectRatio;
+    
+    if (crossAxisCount == 1) {
+      aspectRatio = 3.0; // Taller for single column
+    } else if (crossAxisCount == 2) {
+      aspectRatio = 2.5; // Good balance for 2 columns
+    } else if (crossAxisCount == 3) {
+      aspectRatio = 2.0; // Slightly shorter for 3 columns
+    } else if (crossAxisCount == 4) {
+      aspectRatio = 1.8; // Compact for 4 columns
+    } else {
+      aspectRatio = 1.5; // Very compact for 5+ columns
+    }
+    
+    print('Card width: $cardWidth, Aspect ratio: $aspectRatio');
+    return aspectRatio;
   }
 
   Widget _buildStatCard(BuildContext context, String title, String value, IconData icon, Color color) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Adjust font sizes based on available space
-        double iconSize = constraints.maxWidth < 120 ? 24 : 32;
-        double valueFontSize = constraints.maxWidth < 120 ? 18 : 24;
-        double titleFontSize = constraints.maxWidth < 120 ? 10 : 12;
+        // Calculate responsive sizes based on card dimensions
+        double cardWidth = constraints.maxWidth;
+        double cardHeight = constraints.maxHeight;
+        
+        // Calculate optimal sizes based on available space
+        double iconSize = _calculateIconSize(cardWidth, cardHeight);
+        double valueFontSize = _calculateValueFontSize(cardWidth, cardHeight);
+        double titleFontSize = _calculateTitleFontSize(cardWidth, cardHeight);
+        double padding = _calculatePadding(cardWidth);
+        double spacing = _calculateSpacing(cardWidth);
+        
+        print('Card dimensions: ${cardWidth.toStringAsFixed(1)}x${cardHeight.toStringAsFixed(1)}');
+        print('Sizes - Icon: $iconSize, Value: $valueFontSize, Title: $titleFontSize');
         
         return Card(
           elevation: 4,
           child: Container(
-            padding: EdgeInsets.all(constraints.maxWidth < 120 ? 8 : 12),
+            padding: EdgeInsets.all(padding),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // Icon
                 Icon(icon, size: iconSize, color: color),
-                SizedBox(height: constraints.maxWidth < 120 ? 4 : 8),
-                Flexible(
-                  child: Text(
-                    value,
-                    style: TextStyle(
-                      fontSize: valueFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
+                SizedBox(height: spacing),
+                
+                // Value
+                Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: valueFontSize,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
                   ),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
-                SizedBox(height: constraints.maxWidth < 120 ? 2 : 4),
-                Flexible(
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: titleFontSize,
-                    ),
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
+                
+                SizedBox(height: spacing / 2),
+                
+                // Title
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: titleFontSize,
                   ),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
                 ),
               ],
             ),
@@ -136,5 +186,41 @@ class QuickStatsWidget extends StatelessWidget {
         );
       },
     );
+  }
+
+  double _calculateIconSize(double width, double height) {
+    double minDimension = width < height ? width : height;
+    if (minDimension < 80) return 16;
+    if (minDimension < 120) return 20;
+    if (minDimension < 150) return 24;
+    return 28;
+  }
+
+  double _calculateValueFontSize(double width, double height) {
+    double minDimension = width < height ? width : height;
+    if (minDimension < 80) return 14;
+    if (minDimension < 120) return 16;
+    if (minDimension < 150) return 18;
+    return 22;
+  }
+
+  double _calculateTitleFontSize(double width, double height) {
+    double minDimension = width < height ? width : height;
+    if (minDimension < 80) return 8;
+    if (minDimension < 120) return 10;
+    if (minDimension < 150) return 11;
+    return 12;
+  }
+
+  double _calculatePadding(double width) {
+    if (width < 100) return 6;
+    if (width < 150) return 8;
+    return 12;
+  }
+
+  double _calculateSpacing(double width) {
+    if (width < 100) return 2;
+    if (width < 150) return 4;
+    return 6;
   }
 } 

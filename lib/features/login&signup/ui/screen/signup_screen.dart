@@ -1,19 +1,15 @@
-// ... imports remain unchanged
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pharmacy/core/common_widgets/gradient_button.dart';
 import 'package:pharmacy/core/common_widgets/pharmacy_app_bar.dart';
-import 'package:pharmacy/core/models/register_login/login_request.dart';
 import 'package:pharmacy/core/routes/routes.dart';
 import 'package:pharmacy/core/themes/text/text_styles.dart';
 import 'package:pharmacy/features/login&signup/logic/signup/signup_cubit.dart';
 import 'package:pharmacy/features/login&signup/logic/signup/signup_state.dart';
 import 'package:pharmacy/gen/colors.gen.dart';
 
-import '../../../../app_config_provider/logic/auth/logic/auth_cubit.dart';
 import '../../../../core/models/register_login/register_request.dart';
 import '../../../../generated/l10n.dart';
 
@@ -133,13 +129,17 @@ class _SignupScreenState extends State<SignupScreen> {
                           );
                         },
                         success: (data) {
-                          LoginRequest loginBody = LoginRequest(
-                              email: _emailController.text,
-                              password: _passwordController.text);
-                          context.read<AuthCubit>().login(loginBody);
                           Navigator.pop(context);
-                          Navigator.pop(context);
-                          // Handle success (e.g., show success message or navigate)
+                          Navigator.pushNamed(context, Routes.otpValidation,arguments:data.email).then((value) {
+                            if(value == true){
+                              Navigator.pushReplacementNamed(context, Routes.login);
+                              //check if user is logged in
+                              // if(getIt<SharedPreferences>().getString(Constant.token) != null){
+                              //   Navigator.pushReplacementNamed(context, Routes.home);
+                              // }
+                            }
+                          });
+                          
                         },
                         error: (e) async{
                           Navigator.pop(context);
@@ -169,7 +169,6 @@ class _SignupScreenState extends State<SignupScreen> {
                           : () {
                               if (_formKey.currentState!.validate()) {
                                 final registerRequest = RegisterRequest(
-
                                   email: _emailController.text,
                                   phone: _phoneController.text,
                                   firstName: _firstNameController.text,
@@ -178,14 +177,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                   gender: selectedGender,
                                   password: _passwordController.text,
                                   profilePicture: "",
-                                  // Assuming no profile picture for now
-                                  isActive: true,
-                                  // Default value for isActive
-                                  isStaff: false, // Default value for isStaff
                                 );
-                                context
-                                    .read<SignupCubit>()
-                                    .emitUserRegister(registerRequest);
+                                context.read<SignupCubit>().emitUserRegister(registerRequest);
                               }
                             },
                       haveBorder: true,
@@ -429,7 +422,6 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
     );
   }
-
   Widget _buildConfirmPasswordInput(
       String hint,
       TextEditingController confirmController,

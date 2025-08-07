@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../enum/order_status.dart';
@@ -8,6 +9,25 @@ import '../../../../generated/l10n.dart';
 import 'admin_order_item_model.dart';
 
 part 'admin_order_model.g.dart';
+@JsonSerializable()
+class AdminOrderResponse {
+  final int count;
+  final String? next;
+  final String? previous;
+  final List<AdminOrderModel> results;
+
+  AdminOrderResponse({
+    required this.count,
+    required this.next,
+    required this.previous,
+    required this.results,
+  });
+
+  factory AdminOrderResponse.fromJson(Map<String, dynamic> json) =>
+      _$AdminOrderResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AdminOrderResponseToJson(this);
+}
 
 @JsonSerializable()
 class AdminOrderModel {
@@ -68,6 +88,12 @@ class AdminOrderModel {
   @JsonKey(name: "promo_code")
   final String? promoCode;
 
+  @JsonKey(name: "pharmacy_name")
+  final String? pharmacyName;
+
+  @JsonKey(name: "branch_id")
+  final int? branchId;
+
   AdminOrderModel({
     this.id,
     this.userId,
@@ -88,6 +114,8 @@ class AdminOrderModel {
     this.isHomeDelivery,
     this.callRequestEnabled,
     this.promoCode,
+    this.pharmacyName,
+    this.branchId,
   });
 
   factory AdminOrderModel.fromJson(Map<String, dynamic> json) =>
@@ -141,4 +169,27 @@ class AdminOrderModel {
 
   // Helper method to check if order is active
   bool get isActive => status != null && status != OrderStatus.cancelled && status != OrderStatus.delivered;
+
+  // Helper method to check if order has location data
+  bool get hasLocation => latitude != null && longitude != null;
+
+  // Helper method to get location as LatLng
+  LatLng? get location {
+    if (hasLocation) {
+      return LatLng(latitude!, longitude!);
+    }
+    return null;
+  }
+
+  // Helper method to get full address
+  String get fullAddress {
+    final parts = <String>[];
+    if (addressName != null && addressName!.isNotEmpty) {
+      parts.add(addressName!);
+    }
+    if (addressStreet != null && addressStreet!.isNotEmpty) {
+      parts.add(addressStreet!);
+    }
+    return parts.isEmpty ? 'No address provided' : parts.join(', ');
+  }
 }

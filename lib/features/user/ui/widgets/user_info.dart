@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pharmacy/core/themes/text/text_styles.dart';
+import '../../../../core/routes/routes.dart';
 import '../../../../gen/colors.gen.dart';
 import '../../../../app_config_provider/logic/auth/model/data.dart';
+import '../../../../generated/l10n.dart';
 
 class UserInfo extends StatelessWidget {
   final Data user;
@@ -41,6 +44,41 @@ class UserInfo extends StatelessWidget {
             fontSize: 15.sp,
           ),
         ),
+        SizedBox(height: 8.h),
+        InkWell(
+          onTap: () => Navigator.pushNamed(
+            context,
+            Routes.userOrdersScreen,
+          ),
+          child: Card(
+            child: Padding(
+              padding: const EdgeInsetsDirectional.all(25.0),
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 4.h),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '${user.totalOrders}',
+                      style: TextStyles.settingsTitle.copyWith(
+                        fontSize: 15.sp
+                      )
+                    ),
+                    Text(
+                      S.of(context).userOrdersCount,
+                      style: TextStyles.settingsTitle.copyWith(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.normal
+                      )
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(height: 10.h),
+        
       ],
     );
   }

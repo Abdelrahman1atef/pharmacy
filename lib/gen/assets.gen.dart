@@ -25,6 +25,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/admin.svg
   SvgGenImage get admin => const SvgGenImage('assets/images/admin.svg');
 
+  /// File path: assets/images/app_icon.svg
+  SvgGenImage get appIcon => const SvgGenImage('assets/images/app_icon.svg');
+
   /// File path: assets/images/arrow-left-svgrepo-com.svg
   SvgGenImage get arrowLeftSvgrepoCom =>
       const SvgGenImage('assets/images/arrow-left-svgrepo-com.svg');
@@ -130,6 +133,7 @@ class $AssetsImagesGen {
         pWatermarkV2,
         rPIcon,
         admin,
+        appIcon,
         arrowLeftSvgrepoCom,
         arrowRightSvgrepoCom,
         cartNoItem,

@@ -29,6 +29,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(id) => "طلب رقم ${id}";
 
+  static String m4(timer) => "إعادة إرسال الرمز (${timer})";
+
+  static String m5(productName, price, productUrl) =>
+      "🔔 شاهد هذا المنتج المذهل!\n\n📦 ${productName}\n💰 السعر: ${price} جنيه\n🔗 عرض التفاصيل: ${productUrl}\n\nاحصل عليه الآن من تطبيق صيدلية د.رمزي! 💊";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "CreatedAt": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
@@ -84,6 +89,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "changeTimePickup": MessageLookupByLibrary.simpleMessage(
       "تغيير وقت الاستلام",
     ),
+    "checkOutProduct": MessageLookupByLibrary.simpleMessage(
+      "شاهد هذا المنتج المذهل!",
+    ),
+    "checkSpamFolder": MessageLookupByLibrary.simpleMessage(
+      "تحقق من مجلد الرسائل غير المرغوب فيها أو",
+    ),
     "checkout": MessageLookupByLibrary.simpleMessage("تأكيد الطلب"),
     "closeNow": MessageLookupByLibrary.simpleMessage("مغلق الان"),
     "confirm": MessageLookupByLibrary.simpleMessage("تأكيد"),
@@ -96,6 +107,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirm_password": MessageLookupByLibrary.simpleMessage(
       "تأكيد كلمة المرور",
     ),
+    "contactSupport": MessageLookupByLibrary.simpleMessage("تواصل مع الدعم"),
     "continueShopping": MessageLookupByLibrary.simpleMessage("متابعة التسوق"),
     "continue_": MessageLookupByLibrary.simpleMessage("الإستمرار"),
     "create_password": MessageLookupByLibrary.simpleMessage(
@@ -154,6 +166,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "deliveryFees": MessageLookupByLibrary.simpleMessage("رسوم التوصيل"),
     "deliveryMethod": MessageLookupByLibrary.simpleMessage("طريقة التوصيل"),
     "details": MessageLookupByLibrary.simpleMessage("التفاصيل"),
+    "didntReceiveCode": MessageLookupByLibrary.simpleMessage("لم تستلم الرمز؟"),
     "directReorder": MessageLookupByLibrary.simpleMessage("إعادة طلب سريعة"),
     "directReorderDescription": MessageLookupByLibrary.simpleMessage(
       "إعادة الطلب بنفس تفاصيل الطلب الأصلي",
@@ -161,6 +174,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "edit": MessageLookupByLibrary.simpleMessage("تعديل"),
     "email": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
     "english": MessageLookupByLibrary.simpleMessage("English"),
+    "enterSixDigitCode": MessageLookupByLibrary.simpleMessage(
+      "أدخل الرمز المكون من 6 أرقام",
+    ),
     "enter_email": MessageLookupByLibrary.simpleMessage(
       "الرجاء إدخال البريد الإلكتروني",
     ),
@@ -176,6 +192,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "firstOrder": MessageLookupByLibrary.simpleMessage("أول طلب"),
     "first_name": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
     "gender": MessageLookupByLibrary.simpleMessage("النوع"),
+    "getItNow": MessageLookupByLibrary.simpleMessage(
+      "احصل عليه الآن من تطبيق الصيدلية!",
+    ),
     "goToCart": MessageLookupByLibrary.simpleMessage("اذهب الى العربة"),
     "growthRate": MessageLookupByLibrary.simpleMessage("معدل النمو"),
     "homeDelivery": MessageLookupByLibrary.simpleMessage("التوصيل للمنزل"),
@@ -279,6 +298,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "orderStatusUndefined": MessageLookupByLibrary.simpleMessage("غير محدد"),
     "orderSummary": MessageLookupByLibrary.simpleMessage("ملخص الطلب"),
     "orders": MessageLookupByLibrary.simpleMessage("طلبات"),
+    "other": MessageLookupByLibrary.simpleMessage("اخر"),
+    "otpSentTo": MessageLookupByLibrary.simpleMessage(
+      "لقد أرسلنا رمز التحقق إلى",
+    ),
     "outOfStock": MessageLookupByLibrary.simpleMessage("نفذ من المخزون"),
     "outOfStockProducts": MessageLookupByLibrary.simpleMessage(
       "المنتجات النافدة من المخزون",
@@ -303,6 +326,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pickup": MessageLookupByLibrary.simpleMessage("الاستلام"),
     "pound": MessageLookupByLibrary.simpleMessage("جنيه"),
     "preparing": MessageLookupByLibrary.simpleMessage("قيد التحضير"),
+    "price": MessageLookupByLibrary.simpleMessage("السعر"),
     "proceedToCheckout": MessageLookupByLibrary.simpleMessage("تابع الشراء"),
     "processingOrder": MessageLookupByLibrary.simpleMessage(
       "جاري معالجة الطلب",
@@ -310,6 +334,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "product": MessageLookupByLibrary.simpleMessage("منتج"),
     "productDescription": MessageLookupByLibrary.simpleMessage("وصف المنتج:"),
     "productId": MessageLookupByLibrary.simpleMessage("معرف المنتج"),
+    "productName": MessageLookupByLibrary.simpleMessage("اسم المنتج"),
     "productPerformance": MessageLookupByLibrary.simpleMessage("أداء المنتجات"),
     "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
     "quantity": MessageLookupByLibrary.simpleMessage("الكمية"),
@@ -332,6 +357,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "requestACallToConfirmTheOrder": MessageLookupByLibrary.simpleMessage(
       "طلب مكالمة لتأكيد الطلب",
     ),
+    "resendCode": MessageLookupByLibrary.simpleMessage("إعادة إرسال الرمز"),
+    "resendCodeAvailable": MessageLookupByLibrary.simpleMessage(
+      "إعادة إرسال الرمز",
+    ),
+    "resendCodeTimer": m4,
     "retry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
     "revenueTrends": MessageLookupByLibrary.simpleMessage("اتجاهات الإيرادات"),
     "salesOverview": MessageLookupByLibrary.simpleMessage(
@@ -344,9 +374,15 @@ class MessageLookup extends MessageLookupByLibrary {
       "البحث عن الدواء(عربى او انجليزى)",
     ),
     "see_our_products": MessageLookupByLibrary.simpleMessage("شاهد منتجاتنا"),
+    "selectAddressError": MessageLookupByLibrary.simpleMessage(
+      "يرجى اختيار عنوان التوصيل قبل المتابعة مع إتمام الطلب.",
+    ),
     "selectDate": MessageLookupByLibrary.simpleMessage("اختر التاريخ"),
     "selectDeliveryTime": MessageLookupByLibrary.simpleMessage(
       "اختر وقت التوصيل",
+    ),
+    "selectPharmacyError": MessageLookupByLibrary.simpleMessage(
+      "يرجى اختيار صيدلية قبل المتابعة مع إتمام الطلب.",
     ),
     "selectPickupTime": MessageLookupByLibrary.simpleMessage(
       "اختر وقت الاستلام",
@@ -363,6 +399,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "سنرسل رسالة نصية قصيرة إلى هذا الرقم للتحقق منه",
     ),
     "settings_item": MessageLookupByLibrary.simpleMessage("الاعدادات"),
+    "share": MessageLookupByLibrary.simpleMessage("مشاركة"),
+    "shareProductMessage": m5,
+    "shareWithDetails": MessageLookupByLibrary.simpleMessage(
+      "مشاركة مع التفاصيل",
+    ),
     "shipped": MessageLookupByLibrary.simpleMessage("تم الشحن"),
     "show_all": MessageLookupByLibrary.simpleMessage("عرض الكل"),
     "signup": MessageLookupByLibrary.simpleMessage("التسجيل"),
@@ -387,11 +428,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "unitType": MessageLookupByLibrary.simpleMessage("نوع الوحدة"),
     "unknown": MessageLookupByLibrary.simpleMessage("غير معروف"),
     "userDetails": MessageLookupByLibrary.simpleMessage("تفاصيل المستخدم"),
+    "userOrdersCount": MessageLookupByLibrary.simpleMessage("طلباتى"),
     "userStatistics": MessageLookupByLibrary.simpleMessage(
       "إحصائيات المستخدمين",
     ),
     "user_item": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
     "usersManagement": MessageLookupByLibrary.simpleMessage("إدارة المستخدمين"),
+    "verifyCode": MessageLookupByLibrary.simpleMessage("تحقق من الرمز"),
+    "verifyYourEmail": MessageLookupByLibrary.simpleMessage(
+      "تحقق من بريدك الإلكتروني",
+    ),
+    "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
     "yourAccount": MessageLookupByLibrary.simpleMessage("الحساب الخاص بك"),
     "yourDiscount": MessageLookupByLibrary.simpleMessage("خصمك"),
   };

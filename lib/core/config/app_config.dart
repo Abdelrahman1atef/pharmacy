@@ -1,11 +1,13 @@
+import 'package:pharmacy/core/network/constant.dart';
+
 class AppConfig {
   // Base URLs
-  static const String apiBaseUrl = 'https://locust-eminent-urchin.ngrok-free.app/';
-  static const String webBaseUrl = 'https://locust-eminent-urchin.ngrok-free.app/';
+  static  String apiBaseUrl = Constant.baseUrl;
+  static const String webBaseUrl =Constant.baseUrl;
   
   // Sharing configuration
   static const String shareBaseUrl = webBaseUrl;
-  static const String productSharePath = '/product/';
+  static const String productSharePath = Constant.productDetailsEndPoint;
   
   // App information for sharing
   static const String appName = 'Pharmacy App';
@@ -13,13 +15,13 @@ class AppConfig {
   
   // Social media and sharing
   static const String shareMessageTemplate = '''
-🔔 Check out this amazing product!
+🔔 Check out this product!
 
 📦 {productName}
 💰 Price: {price} EGP
-🔗 View details: {productUrl}
+🔗 {productUrl}
 
-Get it now from our pharmacy app! 💊
+Get it now from our Razy Pharmacy app! 💊
 ''';
   
   // Generate product share URL

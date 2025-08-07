@@ -1,4 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:flutter/material.dart';
+import 'package:pharmacy/core/enum/delivery_method.dart';
+import 'package:pharmacy/core/enum/payment_method.dart';
+import 'package:pharmacy/core/enum/order_status.dart';
+import 'package:pharmacy/generated/l10n.dart';
 
 part 'dashboard_response.g.dart';
 
@@ -207,13 +212,13 @@ class RecentOrder {
   final String customerPhone;
   @JsonKey(name: "total_amount")
   final double totalAmount;
-  final String status;
+  final OrderStatus status;
   @JsonKey(name: "created_at")
   final String createdAt;
   @JsonKey(name: "payment_method")
-  final String paymentMethod;
+  final PaymentMethod paymentMethod;
   @JsonKey(name: "delivery_method")
-  final String deliveryMethod;
+  final DeliveryMethod deliveryMethod;
 
   RecentOrder({
     required this.orderId,
@@ -229,6 +234,44 @@ class RecentOrder {
 
   factory RecentOrder.fromJson(Map<String, dynamic> json) => _$RecentOrderFromJson(json);
   Map<String, dynamic> toJson() => _$RecentOrderToJson(this);
+
+  String getStatusText(BuildContext context) {
+    return status.getLocalizedDisplayName(S.of(context));
+  }
+
+  Color getStatusColor() {
+    switch (status) {
+      case OrderStatus.pending:
+        return OrderStatus.pending.getStatusColor();
+      case OrderStatus.preparing:
+        return OrderStatus.preparing.getStatusColor();
+      case OrderStatus.shipped:
+        return OrderStatus.shipped.getStatusColor();
+      case OrderStatus.delivered:
+        return OrderStatus.delivered.getStatusColor();
+      case OrderStatus.cancelled:
+        return OrderStatus.cancelled.getStatusColor();
+      default:
+        return Colors.grey;
+    }
+  }
+
+  IconData getStatusIcon() {
+    switch (status) {
+      case OrderStatus.pending:
+        return OrderStatus.pending.getStatusIcon();
+      case OrderStatus.preparing:
+        return OrderStatus.preparing.getStatusIcon();
+      case OrderStatus.shipped:
+        return OrderStatus.shipped.getStatusIcon();
+      case OrderStatus.delivered:
+        return OrderStatus.delivered.getStatusIcon();
+      case OrderStatus.cancelled:
+        return OrderStatus.cancelled.getStatusIcon();
+      default:
+        return Icons.help;
+    }
+  }
 }
 
 @JsonSerializable()
@@ -277,9 +320,12 @@ class PaymentMethodDistribution {
 class DeliveryMethodDistribution {
   @JsonKey(name: "home_delivery")
   final int homeDelivery;
+  @JsonKey(name: "pharmacy_pickup")
+  final int pharmacyPickup;
 
   DeliveryMethodDistribution({
     required this.homeDelivery,
+    required this.pharmacyPickup,
   });
 
   factory DeliveryMethodDistribution.fromJson(Map<String, dynamic> json) => _$DeliveryMethodDistributionFromJson(json);

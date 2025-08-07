@@ -11,7 +11,7 @@ SearchResponse _$SearchResponseFromJson(Map<String, dynamic> json) =>
       productId: (json['product_id'] as num?)?.toInt(),
       productNameEn: json['product_name_en'] as String?,
       productNameAr: json['product_name_ar'] as String?,
-      sellPrice: json['sell_price'] as double?,
+      sellPrice: (json['sell_price'] as num?)?.toDouble(),
       productImageUrl: json['product_image_url'] as String?,
     );
 

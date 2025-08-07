@@ -175,10 +175,12 @@ RecentOrder _$RecentOrderFromJson(Map<String, dynamic> json) => RecentOrder(
       customerEmail: json['customer_email'] as String,
       customerPhone: json['customer_phone'] as String,
       totalAmount: (json['total_amount'] as num).toDouble(),
-      status: json['status'] as String,
+      status: $enumDecode(_$OrderStatusEnumMap, json['status']),
       createdAt: json['created_at'] as String,
-      paymentMethod: json['payment_method'] as String,
-      deliveryMethod: json['delivery_method'] as String,
+      paymentMethod:
+          $enumDecode(_$PaymentMethodEnumMap, json['payment_method']),
+      deliveryMethod:
+          $enumDecode(_$DeliveryMethodEnumMap, json['delivery_method']),
     );
 
 Map<String, dynamic> _$RecentOrderToJson(RecentOrder instance) =>
@@ -188,11 +190,30 @@ Map<String, dynamic> _$RecentOrderToJson(RecentOrder instance) =>
       'customer_email': instance.customerEmail,
       'customer_phone': instance.customerPhone,
       'total_amount': instance.totalAmount,
-      'status': instance.status,
+      'status': _$OrderStatusEnumMap[instance.status]!,
       'created_at': instance.createdAt,
-      'payment_method': instance.paymentMethod,
-      'delivery_method': instance.deliveryMethod,
+      'payment_method': _$PaymentMethodEnumMap[instance.paymentMethod]!,
+      'delivery_method': _$DeliveryMethodEnumMap[instance.deliveryMethod]!,
     };
+
+const _$OrderStatusEnumMap = {
+  OrderStatus.pending: 'pending',
+  OrderStatus.preparing: 'preparing',
+  OrderStatus.shipped: 'shipped',
+  OrderStatus.delivered: 'delivered',
+  OrderStatus.cancelled: 'cancelled',
+};
+
+const _$PaymentMethodEnumMap = {
+  PaymentMethod.cashOnDelivery: 'cash_on_delivery',
+  PaymentMethod.debitCreditCard: 'debit_credit_card',
+  PaymentMethod.debitCreditCardOnDelivery: 'debit_credit_card_on_delivery',
+};
+
+const _$DeliveryMethodEnumMap = {
+  DeliveryMethod.homeDelivery: 'home_delivery',
+  DeliveryMethod.pharmacyPickup: 'pharmacy_pickup',
+};
 
 RevenueTrends _$RevenueTrendsFromJson(Map<String, dynamic> json) =>
     RevenueTrends(
@@ -235,12 +256,14 @@ DeliveryMethodDistribution _$DeliveryMethodDistributionFromJson(
         Map<String, dynamic> json) =>
     DeliveryMethodDistribution(
       homeDelivery: (json['home_delivery'] as num).toInt(),
+      pharmacyPickup: (json['pharmacy_pickup'] as num).toInt(),
     );
 
 Map<String, dynamic> _$DeliveryMethodDistributionToJson(
         DeliveryMethodDistribution instance) =>
     <String, dynamic>{
       'home_delivery': instance.homeDelivery,
+      'pharmacy_pickup': instance.pharmacyPickup,
     };
 
 QuickStats _$QuickStatsFromJson(Map<String, dynamic> json) => QuickStats(

@@ -35,7 +35,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[50],
-      appBar: PharmacyAppBar(
+      appBar: const PharmacyAppBar(
         isGeneralLayout: false,
         heightFactor: 1.1,
       ),

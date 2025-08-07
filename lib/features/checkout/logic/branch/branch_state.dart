@@ -1,26 +1,13 @@
-part of 'branch_cubit.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pharmacy/core/models/branch/branch_response.dart';
 
-abstract class BranchState {}
+part 'branch_state.freezed.dart';
 
-class BranchInitial extends BranchState {}
-
-class BranchLoading extends BranchState {}
-
-class BranchLoaded extends BranchState {
-  final BranchResponse branches;
-  
-  BranchLoaded(this.branches);
-}
-
-class BranchSelected extends BranchState {
-  final BranchResponse branches;
-  final Branch selectedBranch;
-  
-  BranchSelected(this.branches, this.selectedBranch);
-}
-
-class BranchError extends BranchState {
-  final String message;
-  
-  BranchError(this.message);
+@freezed
+class BranchState with _$BranchState {
+  const factory BranchState.initial() = Initial;
+  const factory BranchState.loading() = Loading;
+  const factory BranchState.loaded(BranchResponse branches) = Loaded;
+  const factory BranchState.selected(BranchResponse branches, Branch selectedBranch) = Selected;
+  const factory BranchState.error(String message) = Error;
 } 

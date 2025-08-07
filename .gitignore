@@ -41,3 +41,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# flutter_native_splash
+flutter_native_splash.yaml
+# firebase
+firebase.json

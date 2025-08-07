@@ -31,7 +31,7 @@ class CacheManager {
   }
 
   Future<void> clearCategoryProductsCache(int categoryId) async {
-    await _cacheService.clearCache('${productsByCategoryCacheKey}$categoryId');
+    await _cacheService.clearCache('$productsByCategoryCacheKey$categoryId');
   }
 
   /// Get cache statistics
@@ -42,6 +42,11 @@ class CacheManager {
   /// Check if cache is available for specific data
   Future<bool> hasValidCache(String cacheKey) async {
     return await _cacheService.hasValidCache(cacheKey);
+  }
+
+  /// Clear specific cache entry
+  Future<void> clearCache(String cacheKey) async {
+    await _cacheService.clearCache(cacheKey);
   }
 
   /// Preload essential cache data

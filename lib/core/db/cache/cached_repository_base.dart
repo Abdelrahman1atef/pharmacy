@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:pharmacy/core/network/api_result.dart';
 import 'package:pharmacy/core/network/api_exception.dart';
 import 'cache_service.dart';
-import '../dbHelper/db_constants.dart';
 
 abstract class CachedRepositoryBase {
   final CacheService _cacheService = CacheService();
@@ -27,7 +26,21 @@ abstract class CachedRepositoryBase {
       // If API call successful, save to cache
       apiResult.when(
         success: (data) async {
-          final jsonData = jsonDecode(jsonEncode(data));
+          // Convert the response object to JSON using its toJson() method
+          Map<String, dynamic> jsonData;
+          try {
+            // Try to use toJson() method if available
+            final dynamic dynamicData = data;
+            if (dynamicData != null && dynamicData.toJson != null) {
+              jsonData = dynamicData.toJson();
+            } else {
+              // Fallback: try to encode and decode to get a Map
+              jsonData = jsonDecode(jsonEncode(data));
+            }
+          } catch (e) {
+            // If toJson() fails, use fallback method
+            jsonData = jsonDecode(jsonEncode(data));
+          }
           await _cacheService.saveToCache(cacheKey, jsonData, expiryMs);
         },
         failure: (error) {
@@ -37,7 +50,7 @@ abstract class CachedRepositoryBase {
 
       return apiResult;
     } catch (e) {
-      return ApiResult.failure(Exception('Cache operation failed: $e'));
+      return ApiResult.failure(ApiException(message: 'Cache operation failed: $e', code: 500));
     }
   }
 

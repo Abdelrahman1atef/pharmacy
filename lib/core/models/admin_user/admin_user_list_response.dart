@@ -13,24 +13,24 @@ class AdminUser {
   final String lastName;
   @JsonKey(name: 'full_name')
   final String fullName;
-  final String birthdate;
-  final String gender;
+  final String? birthdate;
+  final String? gender;
   @JsonKey(name: 'auth_type')
   final String authType;
   @JsonKey(name: 'social_id')
   final String? socialId;
   @JsonKey(name: 'profile_picture')
-  final String profilePicture;
+  final String? profilePicture;
   @JsonKey(name: 'is_active')
   final bool isActive;
   @JsonKey(name: 'is_staff')
   final bool isStaff;
   @JsonKey(name: 'created_at')
-  final String createdAt;
+  final String? createdAt;
   @JsonKey(name: 'updated_at')
-  final String updatedAt;
+  final String? updatedAt;
   @JsonKey(name: 'last_login')
-  final String lastLogin;
+  final String? lastLogin;
   @JsonKey(name: 'total_orders')
   final int totalOrders;
   @JsonKey(name: 'total_spent')

@@ -26,6 +26,9 @@ class PharmacyApp extends StatelessWidget {
           return BlocBuilder<AuthCubit, AuthState>(
             builder: (context, state) {
               return MaterialApp(
+                theme: ThemeData(
+                  useMaterial3: true,
+                ),
                 debugShowCheckedModeBanner: false,
                 locale: Locale(provider.appLang),
                 localizationsDelegates: const [

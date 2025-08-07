@@ -19,82 +19,95 @@ class CategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final crossAxisCount = (screenWidth ~/ 90).clamp(2, 6);
-    return  Padding(
+    return Padding(
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
       child: Column(
-              children: [
-                HeaderWidget(
-                  widgetTitle: S.of(context).titles_category,
-                  showAllIsVisible: false,
-                ),
-                SizedBox(
-                  height: 12.h,
-                ),
-                BlocBuilder<CategoryCubit, CategoryState>(
-                  builder: (context, state) {
-                    if (state is Loading) {
-                      return const _ShimmerWidget();
-                    } else if (state is Error) {
-                      return Center(
-                        child: Text(
-                          'Error:  [${state.e}',
-                          style: TextStyle(color: Colors.red, fontSize: 14.sp),
+        children: [
+          HeaderWidget(
+            widgetTitle: S.of(context).titles_category,
+            showAllIsVisible: false,
+          ),
+          SizedBox(
+            height: 12.h,
+          ),
+          BlocBuilder<CategoryCubit, CategoryState>(
+            builder: (context, state) {
+              return state.when(
+                initial: () => const _ShimmerWidget(),
+                loading: () => const _ShimmerWidget(),
+                loadingFromCache: () => const _CacheLoadingWidget(),
+                                 success: (data) {
+                   final categoriesResponse = data as CategoryResponse;
+                   final categories = categoriesResponse.results;
+                   return GridView.builder(
+                     shrinkWrap: true,
+                     physics: const NeverScrollableScrollPhysics(),
+                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                       crossAxisCount: crossAxisCount,
+                       mainAxisSpacing: 8.w,
+                       crossAxisSpacing: 8.w,
+                       childAspectRatio: 1,
+                     ),
+                     itemCount: categories?.length ?? 0,
+                     itemBuilder: (BuildContext context, int index) {
+                       final category = categories?[index];
+                      return InkWell(
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          Routes.itemListScreen,
+                          arguments: category,
                         ),
-                      );
-                    } else if (state is Success) {
-                      final categories = state.data;
-                      return GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: crossAxisCount,
-                          mainAxisSpacing: 8.w,
-                          crossAxisSpacing: 8.w,
-                          childAspectRatio: 1,
-                        ),
-                        itemCount: categories.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final category = categories[index] as CategoryResponse;
-                          return InkWell(
-                            onTap: () => Navigator.pushNamed(context,Routes.itemListScreen ,arguments: category),
-                            child: Card(
-                              elevation: 5,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    height: 30.h,
-                                    width: 20.w,
-                                    child: Image.network(
-                                      "",
-                                      fit: BoxFit.cover,
-                                      loadingBuilder: loadingBuilder(),
-                                      errorBuilder: (context, error, stackTrace) => Assets.images.categoryDefaultIcon.svg(),
-                                    ),
-                                  ),
-                                  Flexible(
-                                    child: Text(
-                                      category.categoryNameAr ??"",
-                                      textAlign: TextAlign.center,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(fontSize: 12.sp),
-                                    ),
-                                  ),
-                                ],
+                        child: Card(
+                          elevation: 5,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: 30.h,
+                                width: 20.w,
+                                child: Image.network(
+                                  "",
+                                  fit: BoxFit.cover,
+                                  loadingBuilder: loadingBuilder(),
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Assets.images.categoryDefaultIcon.svg(),
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                              Flexible(
+                                                                 child: Text(
+                                   category?.categoryNameAr ?? "",
+                                   textAlign: TextAlign.center,
+                                   maxLines: 2,
+                                   overflow: TextOverflow.ellipsis,
+                                   style: TextStyle(fontSize: 12.sp),
+                                 ),
+                              ),
+                            ],
+                          ),
+                        ),
                       );
-                    } else {
-                      return Container();
-                    }
-                  },
-                )
-              ],
-
-
+                    },
+                  );
+                },
+                error: (error) => Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        'Error: ${error.message}',
+                        style: TextStyle(color: Colors.red, fontSize: 14.sp),
+                      ),
+                      SizedBox(height: 8.h),
+                      ElevatedButton(
+                        onPressed: () => context.read<CategoryCubit>().refreshCategories(),
+                        child: const Text('Retry'),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
@@ -133,14 +146,46 @@ class _ShimmerWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 8.h),
                 Container(
-                  height: 12.h,
-                  width: 40.w,
+                  width: 60,
+                  height: 12,
                   color: Colors.white,
                 ),
               ],
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class _CacheLoadingWidget extends StatelessWidget {
+  const _CacheLoadingWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 16.w,
+            height: 16.w,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue[400]!),
+            ),
+          ),
+          SizedBox(width: 8.w),
+          Text(
+            'Loading from cache...',
+            style: TextStyle(
+              fontSize: 12.sp,
+              color: Colors.blue[600],
+            ),
+          ),
+        ],
       ),
     );
   }

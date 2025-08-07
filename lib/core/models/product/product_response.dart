@@ -10,8 +10,10 @@ class ProductResponse {
   final String? previous;
   ProductResponse({required this.results, required this.count, this.next, this.previous});
 
-  factory ProductResponse.formJson(Map<String, dynamic> json) =>
+  factory ProductResponse.fromJson(Map<String, dynamic> json) =>
       _$ProductResponseFromJson(json);
+      
+  Map<String, dynamic> toJson() => _$ProductResponseToJson(this);
 }
 
 @JsonSerializable()
@@ -52,14 +54,14 @@ class Results {
   @JsonKey(name: 'unit3_sell_price')
   double? unit3SellPrice;
 
-  @JsonKey(name: 'amount')
-  int? amount;
+  @JsonKey(name: 'stock_amount')
+  int? stockAmount;
 
   @JsonKey(name: 'product_image_url')
   String? productImageUrl;
 
   @JsonKey(name: 'product_description')
-  String? productDescription;
+  ProductDescription? productDescription;
 
   @JsonKey(name: 'company')
   Company? company;
@@ -83,7 +85,7 @@ class Results {
     required this.productUnit3,
     required this.productUnit1_3,
     required this.unit3SellPrice,
-    required this.amount,
+    required this.stockAmount,
     this.productImageUrl,
     required this.productDescription,
     required this.company,
@@ -93,6 +95,27 @@ class Results {
 
   factory Results.fromJson(Map<String, dynamic> json) =>
       _$ResultsFromJson(json);
+      
+  Map<String, dynamic> toJson() => _$ResultsToJson(this);
+}
+
+@JsonSerializable()
+class ProductDescription {
+  @JsonKey(name: 'pd_name_ar')
+  String? pdNameAr;
+
+  @JsonKey(name: 'pd_name_en')
+  String? pdNameEn;
+
+  ProductDescription({
+    required this.pdNameAr,
+    required this.pdNameEn,
+  });
+
+  factory ProductDescription.fromJson(Map<String, dynamic> json) =>
+      _$ProductDescriptionFromJson(json);
+      
+  Map<String, dynamic> toJson() => _$ProductDescriptionToJson(this);
 }
 
 @JsonSerializable()
@@ -114,6 +137,8 @@ class Company {
 
   factory Company.fromJson(Map<String, dynamic> json) =>
       _$CompanyFromJson(json);
+      
+  Map<String, dynamic> toJson() => _$CompanyToJson(this);
 }
 
 @JsonSerializable()
@@ -135,4 +160,6 @@ class ProductGroup {
 
   factory ProductGroup.fromJson(Map<String, dynamic> json) =>
       _$ProductGroupFromJson(json);
+      
+  Map<String, dynamic> toJson() => _$ProductGroupToJson(this);
 }

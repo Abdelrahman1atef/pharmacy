@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/themes/text/text_styles.dart';
 import '../../../../gen/colors.gen.dart';
-import '../../model/account_action.dart';
 import '../../../../generated/l10n.dart';
 import 'user_info.dart';
 import 'account_details.dart';
@@ -35,7 +34,7 @@ class UserInfoBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AccountDetails(user: user),
-            AccountActions(),
+            const AccountActions(),
           ],
         ),
         SizedBox(height: 50.h,)

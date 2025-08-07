@@ -7,6 +7,7 @@ part 'best_seller_state.freezed.dart';
 class BestSellerState<T> with _$BestSellerState {
   const factory BestSellerState.initial() = Initial;
   const factory BestSellerState.loading() = Loading;
+  const factory BestSellerState.loadingFromCache() = LoadingFromCache;
   const factory BestSellerState.success(T data) = Success<T>;
   const factory BestSellerState.error(ApiException e) = Error;
 }

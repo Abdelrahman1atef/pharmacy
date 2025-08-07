@@ -11,7 +11,7 @@ class UserOrdersRepository {
 
   UserOrdersRepository(this._apiService);
   
-  Future<ApiResult<List<CustomerOrderModel>>> getCustomerOrders()async{
+  Future<ApiResult<CustomerOrderResponse>> getCustomerOrders()async{
     final token = CashHelper.getToken();
     print('UserOrdersRepository - Token: $token');
     

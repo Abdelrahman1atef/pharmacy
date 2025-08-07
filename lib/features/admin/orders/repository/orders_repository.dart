@@ -12,13 +12,13 @@ class AdminOrdersRepository {
 
   AdminOrdersRepository(this._apiService);
   
-  Future<ApiResult<List<AdminOrderModel>>> getAdminOrders()async{
+  Future<ApiResult<AdminOrderResponse>> getAdminOrders()async{
     final token = CashHelper.getToken();
     print('AdminOrdersRepository - Token: $token');
     
     if (token == null || token.isEmpty) {
       print('AdminOrdersRepository - No token found!');
-      return Future.value(ApiResult<List<AdminOrderModel>>.failure(ApiException(
+      return Future.value(ApiResult<AdminOrderResponse>.failure(ApiException(
         message: 'Authentication token not found',
         code: 401,
       )));
@@ -29,8 +29,7 @@ class AdminOrdersRepository {
   
   Future<void> updateOrderStatus(int orderId, OrderStatus newStatus)async{
     final token = CashHelper.getToken();
-    print('AdminOrdersRepository - Update Order Status Token: $token');
-    
+
     if (token == null || token.isEmpty) {
       print('AdminOrdersRepository - No token found for update!');
       throw ApiException(

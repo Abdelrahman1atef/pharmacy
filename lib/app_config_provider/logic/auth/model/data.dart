@@ -12,7 +12,7 @@ class Data {
   @JsonKey(name: "last_name")
   final String lastName;
   final String? birthdate;
-  final String gender;
+  final String? gender;
   final String? password;
   @JsonKey(name: "profile_picture")
   final String? profilePicture;
@@ -24,6 +24,8 @@ class Data {
   final bool isSuperuser;
   @JsonKey(name: "is_email_verified")
   final bool isEmailVerified;
+  @JsonKey(name: "total_orders")
+  final int totalOrders;
 
   Data({
     required this.id,
@@ -39,6 +41,7 @@ class Data {
     required this.isStaff,
     required this.isSuperuser,
     required this.isEmailVerified,
+    required this.totalOrders,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
